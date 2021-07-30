@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <title>html元素速览</title>
+        <script src="js/jquery.min.js"></script>
+        <style>
+            hgroup > h1 {
+                margin-bottom: 0px;
+                background: gray;
+                color: white;
+            }
+            hgroup > h2 {
+                margin-top: 0px;
+                background: gray;
+                color: white;
+            }
+            header, footer {
+                border: medium solid black;
+                padding-left: 5px;
+                margin: 10px 0 10px 0;
+            }
+            #Float {
+                width: 200px;
+                border: 1px solid black;
+                border-radius: 15px;
+                position: absolute;
+                top: 80px;
+                right: 10px;
+                background: whitesmoke;
+            }
+        </style>
+        <script language="javascript">
+            $(document).ready(function(){
+                $(window).scroll(function(){
+                    var offsetTop = $(window).scrollTop() + 80 +"px";
+                    $("#Float").animate({top : offsetTop },{ duration:500, queue:false });
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div>
+            <h1 id="wbys">文本元素</h1>
+            <div style="border: 1px solid black; padding: 5px;">
+                <a href="http://www.baidu.com">a 元素，生成超链接</a>
+                <abbr title="缩略语">abbr 元素，缩略语</abbr>
+                <b>b 元素，不带强调或着重意味地标记一段文字（加粗）</b>
+                <br>br 元素，表示换行
+                <cite>cite 元素，表示其他作品的标题</cite><br>
+                <code>code 元素，表示计算机代码片段</code><br>
+                <del>del 元素，表示从文档中删除的文字</del><br>
+                <dfn>dfn 元素，表示术语定义</dfn><br>
+                <em>em 元素，表示着重强调的一段文字</em><br>
+                <i>i 元素，表示与周边内容秉性不同的一段文字，例如来自另一种语言的词语</i><br>
+                <ins>ins 元素，表示加入文档的文字</ins><br>
+                <kbd>kbd 元素，表示用户输入的内容</kbd><br>
+                <mark>mark 元素，表示一段因为上下文中另一词语相关而被突出显示的内容</mark><br>
+                <q>q 元素，表示引自他处的内容</q><br>
+                <rp>(</rp>rp 元素，与ruby元素结合使用，标记括号<rp>)</rp><br>
+                <rt>rt 元素，与ruby元素结合使用，标记注音符号</rt><br>
+                <ruby>ruby 元素，表示位于表意文字上方或右方的注音符号</ruby><br>
+                <q>
+                    <ruby style="margin: 0 5px 0 5px;">魑<rp>(</rp><rt>chi</rt><rp>)</rp></ruby>
+                    <ruby style="margin: 0 5px 0 5px;">魅<rp>(</rp><rt>mei</rt><rp>)</rp></ruby>
+                    <ruby style="margin: 0 5px 0 5px;">魍<rp>(</rp><rt>wang</rt><rp>)</rp></ruby>
+                    <ruby style="margin: 0 5px 0 5px;">魉<rp>(</rp><rt>liang</rt><rp>)</rp></ruby>
+                </q><br>
+                <s>s 元素，表示文字已不再准确</s><br>
+                <samp>samp 元素，表示计算机程序的输出内容</samp><br>
+                <small>small 元素，表示小号字体内容</small><br>
+                <span style="border: 1px solid black;">span 元素</span>，一个没有自己的语义的通用元素。可以用在希望应用一些全局属性却又不想引入额外语义的情况。<br>
+                <strong>strong 元素，表示重要内容</strong><br>
+                <sub>sub 元素，表示下标文字</sub><br>
+                <sup>sup 元素，表示上标文字</sup><br>
+                <time datetime="2019-10-01">建国70周年</time>time 元素，表示时间或日期<br>
+                <u>u 元素，不带强调或着重意味地标记一段文字（下划线）</u><br>
+                <var>var 元素，表示程序或计算机系统中的变量</var><br>
+                wbr 元素，表示可以安<wbr>全换行的地方，主要作用是告诉浏览器一个长单词最适合在什么地方进行拆分<br>
+            </div>
+            <h1 id="dnrfz">对内容分组</h1>
+            <div style="border: 1px solid black; padding: 5px;">
+                div 元素，一个没有任何既定语义的通用元素，是span元素在流元素中的对应物
+                <blockquote>blockquote 元素，表示引自他处的大段内容</blockquote>
+                <dl>
+                    dl 元素，表示包含一系列术语和定义的说明列表
+                    <dt>dt 元素，用在dl元素之中，表示术语，用于定义列表中的项目</dt>
+                    <dd>dd 元素，用在dl元素之中，表示定义，用于描述列表中的项目</dd>
+                </dl>
+                <figure>
+                    figure 元素，表示图片
+                    <figcaption>figcaption 元素，表示figure元素的标题</figcaption>
+                </figure>
+                <hr>hr 元素，表示段落级别的主题转换（一条长直线）
+                <p>p 元素，表示段落</p>
+                <ol>
+                    ol 元素，表示有序列表
+                    <li>li 元素，用在ul、ol和menu元素中，表示列表项</li>
+                </ol>
+                <pre>pre 元素，表示其格式应被保留的内容</pre>
+                <ul>
+                    ul 元素，表示无序列表
+                    <li>li 元素，用在ul、ol和menu元素中，表示列表项</li>
+                </ul>
+            </div>
+            <br>
+            <h1 id="hfnr">划分内容</h1>
+            <div style="border: 1px solid black; padding: 5px;">
+                <h1>h1 元素，表示一级标题</h1>
+                <h2>h2 元素，表示二级标题</h2>
+                <h3>h3 元素，表示二级标题</h3>
+                <h4>h4 元素，表示二级标题</h4>
+                <h5>h5 元素，表示二级标题</h5>
+                <h6>h6 元素，表示二级标题</h6>
+                <hgroup style="border: 1px solid black; margin: 5px;">
+                    <h1>hgroup 元素中的h1 元素</h1>
+                    <h2>hgroup 元素中的h2 元素</h2>
+                    hgroup 元素，表示一个标题组，在文档大纲中只会显示第一个标题
+                </hgroup>
+                <section style="border: 1px solid black; margin: 5px;">
+                    <h1>第一层section 元素中的h1 元素</h1>
+                    section 元素，表示文档中的一个重要的概念或主题（隐含的节）
+                    <section>
+                        <h1>第二层section 元素中的h1 元素</h1>
+                        <section>
+                            <h1>第三层section 元素中的h1 元素</h1>
+                        </section>
+                    </section>
+                </section>
+                <header>
+                    <h1>header 元素中的h1 元素</h1>
+                    header 元素，表示一节的首部，包含任何适合出现在首部的东西，其中通常包含一个标题元素或者一个hgroup元素或者该节的导航元素。
+                </header>
+                <footer>
+                    footer 元素，header 元素的配套元素，表示一节的结尾，通常包含着该节的总结信息或者作者介绍、版权信息、相关内容的链接、徽标以及免责声明等。
+                </footer>
+                <nav>nav 元素，表示文档中的一个区域，包含着到其他页面或同一页面的其他部分的链接。</nav>
+                <article>
+                    article 元素，表示HTML文档中一段独立成篇的内容
+                    <aside> aside 元素，表示与周边内容稍有牵涉的内容，类似于书籍或杂志中的侧边栏</aside>
+                    <address>address 元素，表示文档或者article元素的联系信息</address>
+                </article>
+                <details style="border: 1px solid black; margin: 5px;">
+                    <summary>details 元素，生成一个区域，用户可以将其展开以获得更多信息</summary>
+                    <summary>summary 元素，用于details 元素中，表示该元素内容的标题或说明</summary>
+                </details>
+            </div>
+            <h1 id="zb">制表</h1>
+            <div style="border: 1px solid black;padding: 5px;">
+                <style>
+                    th {
+                        background-color: gray;
+                    }
+                    td {
+                        background-color: darkgray;
+                    }
+                    #colgroup1 {
+                        width: 100px;
+                    }
+                    #col1 {
+                        width: 200px;
+                    }
+                    #col2 {
+                        width: 50px;
+                    }
+                </style>
+                <table>
+                    <caption>表格元素</caption>
+                    <colgroup id="colgroup1" span="1">
+                        
+                    </colgroup>
+                    <colgroup id="colgroup2" span="2">
+                        <col id="col1" span="1">
+                        <col id="col2" span="1">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>元素</th>
+                            <th>说明</th>
+                            <th>类型</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>caption</td>
+                            <td>表示表格标题</td>
+                            <td>无</td>
+                        </tr>
+                        <tr>
+                            <td>col</td>
+                            <td>表示一列</td>
+                            <td>无</td>
+                        </tr>
+                        <tr>
+                            <td>colgroup</td>
+                            <td>表示一组列</td>
+                            <td>无</td>
+                        </tr>
+                        <tr>
+                            <td>table</td>
+                            <td>表示表格</td>
+                            <td>流</td>
+                        </tr>
+                        <tr>
+                            <td>tbody</td>
+                            <td>表示表格主体</td>
+                            <td>无</td>
+                        </tr>
+                        <tr>
+                            <td>td</td>
+                            <td>表示单元格</td>
+                            <td>无</td>
+                        </tr>
+                        <tr>
+                            <td>tfoot</td>
+                            <td>表示表脚</td>
+                            <td>无</td>
+                        </tr>
+                        <tr>
+                            <td>th</td>
+                            <td>表示标题行单元格</td>
+                            <td>无</td>
+                        </tr>
+                        <tr>
+                            <td>thead</td>
+                            <td>表示标题行</td>
+                            <td>无</td>
+                        </tr>
+                        <tr>
+                            <td>tr</td>
+                            <td>表示一行单元格</td>
+                            <td>无</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>元素</th>
+                            <th>说明</th>
+                            <th>类型</th>
+                        </tr>
+                    </tfoot>
+                </table>
+
+            </div>
+        </div>
+        <h1 id="cjbd">创建表单</h1>
+        <div style="border: 1px solid black; padding: 5px;">
+            <style>
+                form input {
+                    width: 600px;
+                }
+            </style>
+            <form method="POST" action="">
+                <fieldset>
+                    fieldset 元素，表示一组表单元素。
+                    <legend>legend 元素，表示fieldset元素的说明性标签</legend>
+                    <p>
+                        <label for="fave">label 元素，表示对表单元素的说明标签。</label>
+                        <input type="text" name="fave" id="fave" placeholder="input 元素，表示用来收集用户输入数据的控件" />
+                    </p>
+                    <button>button 元素，表示可用来提交或重置表单的按钮（或一般按钮）</button>
+                </fieldset>
+                <fieldset>
+                    <legend>input 元素类型</legend>
+                    <input type="text" name="text" id="text" placeholder="text 类型的input元素，用于一般的单行文本输入。" /><br>
+                    <input type="text" name="dl" id="dl" list="datalist" placeholder="使用了数据列表的text类型的input元素。" /><br>
+                    <input type="password" name="password" id="password" placeholder="password 类型的input元素，用于密码文本的输入。" /><br>
+                    <input type="button" value="button 类型的input元素，用于设置一个普通按钮，提交/重置，请使用submit/reset类型。" /><br>
+                    <input type="number" name="num" id="num" placeholder="number 类型的input元素，用于数值的输入。" /><br>
+                    <p>
+                        <label for="range">range 类型的input元素，通过滑动滑动条上的滑块，输入指定范围内的数值：</label>
+                        <input type="range" name="range" id="range" step="1" min="0" max="100" value="1" />
+                    </p>
+                    <p>
+                        <label for="checkbox">checkbox 类型的input元素，生成一个复选框。</label>
+                        <input type="checkbox" name="checkbox" id="checkbox" style="width: auto;" />
+                    </p>
+                    <fieldset>
+                        <legend>radio 类型的input元素，用于生成一组固定选项</legend>
+                        <label for="xx1">
+                            <input type="radio" name="xx1" id="xx1" value="选项1" style="width: auto;" />选项1
+                        </label>
+                        <label for="xx2">
+                            <input type="radio" name="xx2" id="xx2" value="选项2" style="width: auto;" />选项2
+                        </label>
+                    </fieldset>
+                    <input type="email" name="email" id="email" placeholder="email 类型的input元素，用于有效的电子邮箱地址的输入。" /><br>
+                    <input type="tel" name="tel" id="tel" placeholder="tel 类型的input元素，用于有效的电话号码的输入。" /><br>
+                    <input type="url" name="url" id="url" placeholder="url 类型的input元素，用于有效的URL的输入。" /><br>
+                    <fieldset>
+                        <legend>获取时间和日期</legend>
+                        <label for="datetime">
+                            datetime 类型的input元素，用于获取世界时日期和时间，包括时区信息：
+                            <input type="datetime" name="datetime" id="datetime" />
+                        </label><br>
+                        <label for="datelocal">
+                            datetime-local 类型的input元素，用于获取本地日期和时间（不含时区信息）：
+                            <input type="datetime-local" name="datelocal" id="datelocal" />
+                        </label><br>
+                        <label for="date">
+                            date 类型的input元素，用于获取本地日期（不包含时间和时区信息）：
+                            <input type="date" name="date" id="date" />
+                        </label><br>
+                        <label for="month">
+                            month 类型的input元素，用于获取年月信息（不包含日、时间和时区信息）：
+                            <input type="month" name="month" id="month">
+                        </label><br>
+                        <label for="time">
+                            time 类型的input元素，用于获取时间：
+                            <input type="time" name="time" id="time" />
+                        </label><br>
+                        <label for="week">
+                            week 类型的input元素，用于回去当前星期：
+                            <input type="week" name="week" id="week" />
+                        </label><br>
+                    </fieldset>
+                    <p>
+                        <label for="color">
+                            color 类型的input元素，用于获取颜色值：
+                            <input type="color" name="color" id="color" />
+                        </label>
+                    </p>
+                    <p>
+                        <label for="search">
+                            search 类型的input元素，用于获取搜索用词：
+                            <input type="search" name="search" id="search" />
+                        </label>
+                    </p>
+                    <p>
+                        <label for="hidden">
+                            hidden 类型的input元素，用于提供一个隐藏的数据项：
+                            <input type="hidden" name="hidden" id="hidden" />
+                        </label>
+                    </p>
+                    <p>
+                        <label for="image">
+                            image 类型的input元素，用于设置一个图片按钮：
+                            <input type="image" src="imgs/yslogo.54971d8b.png" alt="这是云枢的logo" style="width: 100px;" />
+                        </label>
+                    </p>
+                    <p>
+                        <label for="file">
+                            file 类型的input元素，用于文件的上传：
+                            <input type="file" name="file" id="file" />
+                        </label>
+                    </p>
+                </fieldset>
+                
+                <fieldset>
+                    <legend>其他表单元素</legend>
+                    <p>
+                        <select name="select" id="select">
+                            <optgroup label="SELECT">
+                                <option value="select">select 元素，用于生成一个可以供用户选择的选项列表</option>
+                            </optgroup>
+                            <optgroup label="OPTGROUP">
+                                <option value="optgroup">optgroup 元素，用于对option元素进行编组</option>
+                            </optgroup>
+                        </select>
+                    </p>
+                    <p>
+                        <textarea name="textarea" id="textarea" cols="30" rows="10" placeholder="textarea元素，用于输入多行文字"></textarea>
+                    </p>
+                </fieldset>
+            </form>
+            <form onsubmit="return false" oninput="res.value = calnum1.valueAsNumber * calnum2.valueAsNumber">
+                <fieldset>
+                    <legend>output 元素，表示计算结果</legend>
+                    <input type="number" name="calnum1" id="calnum1" style="width: 100px;" /> X
+                    <input type="number" name="calnum2" id="calnum2" style="width: 100px;" /> =
+                    <output for="calnum1 calnum2" name="res"></output>
+                </fieldset>
+            </form>
+
+            <datalist id="datalist">
+                <option value="datalist" label="datalist 元素，定义一组提供给用户的建议值"></option>
+                <option value="option">option 元素，表示供用户选择的一个选项</option>
+            </datalist>
+        </div>
+        <h1 id="qrnr">嵌入内容</h1>
+        <div style="border: 1px solid black; padding: 5px;">
+            <p>
+                img 元素，用于嵌入图像：
+                <img src="imgs/yslogo.54971d8b.png" alt="这是一个用img元素嵌入的图像" usemap="#mymap" width="100px" /><br>
+                map 元素，用于创建分区响应图。<br>
+                area 元素，用于标注分区响应图的范围。
+            </p>
+            <map name="mymap">
+                <area shape="rect" coords="3,5,68,62" href="#wbys" alt="云枢">
+            </map>
+            <a href="HtmlTest02.html" target="myframe">iframe 元素，用于在一个HTML文档中插入另一个HTML文档。</a><br>
+            <iframe name="myframe" width="300" height="200"></iframe>
+            <iframe src="HtmlTest02.html" frameborder="0" width="300" height="200"></iframe>
+            <p>
+                embed 元素，作为插件，用于在HTML文档中嵌入内容：<br>
+                <embed src="https://web.kandian.qq.com/tpl/sharePage?_bid=4563&pgyid=2008&rowkey=63460c6005d519bw&enc_u=jDxxwpnDglmtzfY5lcr9vQ==&from_uin=OTk1MDE5ODEz&viola_share_url=http%3A%2F%2Fviola.qq.com%2Fjs%2FsharePage.js%3F_rij_violaUrl%3D1%26v_tid%3D6%26v_bid%3D3740%26v_bundleName%3DsharePage%26hideNav%3D1%26v_nav_immer%3D1%26rowkey%3D63460c6005d519bw%26enc_u%3DjDxxwpnDglmtzfY5lcr9vQ%3D%3D%26from_uin%3DOTk1MDE5ODEz"
+                       type="application/x-shockwave-flash" width="560" height="349" allowfullscreen="true" />
+            </p>
+            <p>
+                object 元素，用于在HTML文档中嵌入内容，同时可以包含备用内容；<br>
+                param 元素，表示将通过object元素传递给插件的参数：<br>
+                <object data="https://web.kandian.qq.com/tpl/sharePage?_bid=4563&pgyid=2008&rowkey=63460c6005d519bw&enc_u=jDxxwpnDglmtzfY5lcr9vQ==&from_uin=OTk1MDE5ODEz&viola_share_url=http%3A%2F%2Fviola.qq.com%2Fjs%2FsharePage.js%3F_rij_violaUrl%3D1%26v_tid%3D6%26v_bid%3D3740%26v_bundleName%3DsharePage%26hideNav%3D1%26v_nav_immer%3D1%26rowkey%3D63460c6005d519bw%26enc_u%3DjDxxwpnDglmtzfY5lcr9vQ%3D%3D%26from_uin%3DOTk1MDE5ODEz"
+                        type="application/x-shockwave-flash" width="560" height="349">
+                    <param name="allowFullScreen" value="true" />
+                    这是object元素包含的备用内容。
+                </object>
+                通过object元素嵌入一张图片：<br>
+                <object data="./imgs/bj.402cd9b6.png" type="image/png"></object><br>
+                通过object元素创建分区响应图：<br>
+                <object data="./imgs/bj.402cd9b6.png" type="image/png" usemap="#secmap"></object><br>
+                <map name="secmap">
+                    <area shape="rect" coords="3,5,68,62" href="#dnrfz" alt="云枢">
+                </map>
+                <a href="HtmlTest02.html" target="frame">通过object元素浏览上下文环境</a>：<br>
+                <object name="frame" width="300" height="200" type="text/html"></object>
+            </p>
+            progress 元素，嵌入目标进展或者任务完成情况的图形表示，进度条：
+            <progress id="myprogress" value="10" max="100"></progress><br>
+            meter 元素，嵌入数值在许可值范围背景中的图形表示：
+            <meter id="mymeter" value="90" min="10" max="100" low="40" high="80" optimum="60"></meter>
+            <p>
+                <button type="button" value="30">30%</button>
+                <button type="button" value="60">60%</button>
+                <button type="button" value="90">90%</button>
+            </p>
+            <script>
+                var buttons = document.getElementsByTagName('BUTTON');
+                var progress = document.getElementById('myprogress');
+                var meter = document.getElementById('mymeter');
+                for(var i=0;i<buttons.length;i++){
+                    buttons[i].onclick = function(e){
+                        progress.value=e.target.value;
+                        meter.value=e.target.value;
+                    };
+                }
+            </script>
+
+
+        </div>
+        <div id="Float">
+            <nav>
+                <ul>
+                    <li><a href="#wbys">文本元素</a></li>
+                    <li><a href="#dnrfz">对内容分组</a></li>
+                    <li><a href="#hfnr">划分内容</a></li>
+                    <li><a href="#zb">制表</a></li>
+                    <li><a href="#cjbd">创建表单</a></li>
+                    <li><a href="#qrnr">嵌入内容</a></li>
+                </ul>
+            </nav>
+        </div>
+
+    </body>
+</html>

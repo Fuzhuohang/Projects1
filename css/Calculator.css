@@ -1,0 +1,117 @@
+body {
+    padding: 20px;
+}
+
+#calculator {
+    float: left;
+    padding: 10px;
+    border: 2px solid black;
+    border-right: 1px solid black;
+    border-radius: 10px 0px 0px 10px;
+    width: 400px;
+    background-color: whitesmoke;
+}
+
+#screen {
+    margin-bottom: 5px;
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 390px;
+    background-color: white;
+}
+
+#key {
+    margin-top: 5px;
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 390px;
+}
+
+input {
+    padding: 1px;
+    width: 388px;
+    border-style: none;
+}
+
+#result {
+    margin-top: 3px;
+    text-align: right;
+    font-size: 24px;
+}
+
+#formula {
+    margin-bottom: 3px;
+    font-size: 16px;
+}
+
+table {
+    width: 390px;
+}
+
+button {
+    width: 93px;
+    font-size: 20px;
+    font-weight: bolder;
+    height: 50px;
+}
+
+.number {
+    background: lightgray;
+}
+
+.symbol {
+    background: #b1b1b1;
+}
+
+.operation {
+    background: gray;
+}
+
+#history{
+    float: left;
+    width: 223px;
+    height: 433px;
+}
+
+#historytitle {
+    padding: 10px 10px 5px 10px;
+    border: 2px solid black;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+    border-radius: 0px 10px 0px 0px;
+    width: 200px;
+    height: 20px;
+    background-color: whitesmoke;
+}
+
+#historydata{
+    overflow-y: auto;
+    overflow-x: hidden;
+    border: 2px solid black;
+    border-left: 1px solid black;
+    border-top: 1px solid black;
+    padding: 5px 10px 10px 10px;
+    border-radius: 0px 0px 10px 0px;
+    width: 200px;
+    height: 381px;
+    background-color: whitesmoke;
+}
+
+#historydatainfo{
+    display: flex;
+    flex-direction: column-reverse;
+    background-color: whitesmoke;
+    
+}
+
+#title {
+    text-align: center;
+    font-weight: bolder;
+    color: black;
+    font-size: 18px;
+    width: 200px;
+    background-color: whitesmoke;
+
+}
