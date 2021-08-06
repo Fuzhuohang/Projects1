@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>CSS盒子</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <style>
+        body {
+            border: 1px solid black;
+        }
+        
+        article {
+            margin: 20px;
+            border: 1px solid black;
+        }
+        
+        .box {
+            width: 100px;
+            border: 1px solid black;
+            padding: 10px;
+            margin: 5px;
+        }
+        
+        .father {
+            width: 100px;
+        }
+        
+        .son {
+            border: 1px solid black;
+            padding: 10px;
+            margin: 5px;
+        }
+        
+        .box02 {
+            box-sizing: border-box;
+            width: 100px;
+            border: 1px solid black;
+            padding: 10px;
+            margin: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <article>
+        <div class="box02">
+            <!-- <div class="son">
+
+            </div> -->
+        </div>
+
+    </article>
+</body>
+
+</html>

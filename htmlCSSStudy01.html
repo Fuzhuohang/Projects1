@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>CSS学习练习01</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <style>
+        .box {
+            padding: 10px;
+            background-color: #1dcbff;
+            border: 1px solid black;
+        }
+        
+        .box>img {
+            float: left;
+            border: inherit;
+        }
+        
+        .clear:after {
+            content: '';
+            display: table;
+            clear: both;
+        }
+    </style>
+</head>
+
+<body>
+    <article class="box after">
+        <img src="./imgs/bj.402cd9b6.png">
+    </article>
+</body>
+
+</html>
