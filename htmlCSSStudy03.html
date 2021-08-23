@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>盒尺寸</title>
+    <script src="js/jquery.min.js"></script>
+    <style>
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 50px;
+            background-color: white;
+        }
+        
+        article {
+            padding-top: 50px;
+        }
+        
+        h3>span,
+        h4>span {
+            padding-top: 80px;
+        }
+        
+        .part {
+            border: 4px double skyblue;
+            margin: 2px 0;
+        }
+        
+        .item {
+            border: 1px solid black;
+            margin: 2px;
+        }
+        
+        #Float {
+            width: 300px;
+            border: 1px solid black;
+            border-radius: 5px;
+            padding: 5px;
+            position: absolute;
+            top: 40px;
+            right: 20px;
+            background: whitesmoke;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+    </style>
+    <script language="javascript">
+        $(document).ready(function() {
+            $(window).scroll(function() {
+                var offsetTop = $(window).scrollTop() + 80 + "px";
+                $("#Float").animate({
+                    top: offsetTop
+                }, {
+                    duration: 500,
+                    queue: false
+                });
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <header>
+
+    </header>
+    <article>
+        <div class="part">
+            <h3><span id="part01">替换元素的默认尺寸</span></h3>
+            <div id="item01-01" class="item">
+                <strong>img元素作为替换元素时的默认尺寸为0px*0px。</strong>
+                <br> img: <img>
+            </div>
+            <strong>iframe、video、canvas等替换元素的默认尺寸为300px*150px。</strong>
+            <div id="item01-02" class="item">
+                iframe: <iframe></iframe>
+            </div>
+            <div id="item01-03" class="item">
+                video: <video></video>
+            </div>
+            <div id="item01-04" class="item">
+                canvas: <canvas></canvas>
+            </div>
+            <strong>表单元素的替换元素如select、input、button、textarea等的默认尺寸与使用的浏览器有关。</strong>
+            <div id="item01-05" class="item">
+                select: <select></select>
+            </div>
+            <div id="item01-06" class="item">
+                input: <input>
+                <br> range|input: <input type="range">
+                <br> file|input: <input type="file">
+                <br> hidden|input: <input type="hidden">
+            </div>
+            <div id="item01-07" class="item">
+                button: <button></button>
+            </div>
+            <div id="item01-08" class="item">
+                textarea: <textarea></textarea>
+            </div>
+        </div>
+        <div class="part">
+            <h3><span id="part02">替换元素的尺寸计算规则</span></h3>
+            <div id="item02-01" class="item">
+                <strong>不存在使用CSS或者使用HTML标签属性设置尺寸的情况下，替换元素的尺寸使用元素内容单独在文件中打开时的尺寸。</strong>
+                <br>文件尺寸为671px*418px的图片: <img src="./imgs/bj.402cd9b6.png">
+            </div>
+            <div id="item02-02" class="item">
+                <strong>不存在使用CSS设置尺寸的情况下，替换元素使用HTML标签属性设置的尺寸。</strong>
+                <br>HTML标签属性设置为400px*266px: <img src="./imgs/bj.402cd9b6.png" width="400px" height="266px">
+            </div>
+            <div id="item02-03" class="item">
+                <strong>存在使用CSS设置尺寸的情况下，替换元素使用CSS设置的尺寸。</strong>
+                <br>CSS设置属性为300px*200px；HTML标签属性设置为400px*266px: <img src="./imgs/bj.402cd9b6.png" id="img01" width="400px" height="266px">
+                <style>
+                    #img01 {
+                        width: 300px;
+                        height: 200px;
+                    }
+                </style>
+            </div>
+            <div id="item02-04" class="item">
+                <strong>当元素内容存在固定的宽高比例，同时CSS或者HTML标签属性仅设置了宽度或仅设置了高度，则元素仍然会按照固有的宽高比例显示。</strong>
+                <br>文件尺寸为671px*418px，宽高比61:38，HTML标签属性仅设置width=305px: <img src="./imgs/bj.402cd9b6.png" width="305px">
+                <br>文件尺寸为671px*418px，宽高比61:38，HTML标签属性仅设置height=228px: <img src="./imgs/bj.402cd9b6.png" height="228px">
+                <br>文件尺寸为671px*418px，宽高比61:38，CSS仅设置width=244px: <img src="./imgs/bj.402cd9b6.png" id="img02">
+                <br>文件尺寸为671px*418px，宽高比61:38，CSS仅设置height=114px: <img src="./imgs/bj.402cd9b6.png" id="img03">
+                <style>
+                    #img02 {
+                        width: 244px;
+                    }
+                    
+                    #img03 {
+                        height: 114px;
+                    }
+                </style>
+            </div>
+            <div id="item02-05" class="item">
+                <strong>以上情况都不符合时，替换元素的尺寸按照<a href="#part01">默认尺寸</a>显示</strong>
+            </div>
+            <div id="item02-06" class="item">
+                <strong>内联替换元素和块级替换元素使用上面同一套尺寸计算规则。</strong>
+                <br><img src="./imgs/bj.402cd9b6.png" id="img04">
+                <style>
+                    #img04 {
+                        display: block;
+                    }
+                </style>
+            </div>
+            <div id="item02-07" class="item">
+                <strong>我们是无法改变替换元素内容的固有尺寸的</strong>
+                <div id="div01"></div>
+                <style>
+                    #div01::before {
+                        content: url(./imgs/bj.402cd9b6.png);
+                        display: block;
+                        width: 500px;
+                        height: 500px;
+                    }
+                </style>
+            </div>
+            <div id="item02-08" class="item">
+                <strong>通过CSS更改img等替换元素的替换内容的适配方式“object-fit”属性</strong>
+                <br>img默认适配方式为object-fit:fill: <img src="./imgs/yslogo.54971d8b.png" id="img05">
+                <br>设置img适配方式为object-fit:none: <img src="./imgs/yslogo.54971d8b.png" id="img06">
+                <br>设置img适配方式为object-fit:contain: <img src="./imgs/yslogo.54971d8b.png" id="img07">
+                <style>
+                    #img05 {
+                        width: 250px;
+                        height: 150px;
+                    }
+                    
+                    #img06 {
+                        object-fit: none;
+                        width: 250px;
+                        height: 150px;
+                    }
+                    
+                    #img07 {
+                        object-fit: contain;
+                        width: 250px;
+                        height: 150px;
+                    }
+                </style>
+            </div>
+        </div>
+        <div id="part03" class="part">
+            <h3>content属性和替换元素的关系</h3>
+            <strong>content属性生成内容都是替换元素。</strong>
+            <br><strong>content属性生成的文本都是无法被选中的。</strong>
+            <div class="item">
+                <strong>content属性不能左右:empty伪类。</strong>
+                <h4>有内容</h4>
+                <div class="box01">有内容</div>
+                <h4>无内容</h4>
+                <div class="box01"></div>
+                <h4>空格也算内容</h4>
+                <div class="box01"> </div>
+                <h4>伪元素不算内容</h4>
+                <div class="box01 pseudo01"></div>
+                <style>
+                    .box01 {
+                        width: 200px;
+                        padding: 5px;
+                        border: 5px solid #0000fc;
+                    }
+                    
+                    .box01:empty {
+                        border-style: dashed;
+                    }
+                    
+                    .pseudo01::after {
+                        content: "这是一个伪元素生成的内容";
+                    }
+                </style>
+            </div>
+            <strong>content属性的动态生成值无法被获取</strong>
+        </div>
+        <div id="part04" class="part">
+            <h3>content内容生成技术</h3>
+            <div id="part04-01" class="item">
+                <h4>content辅助元素生成</h4>
+                <div class="box02">
+                    <i class="bar01"></i>
+                    <i class="bar01"></i>
+                    <i class="bar01"></i>
+                    <i class="bar01"></i>
+                    <i class="bar01"></i>
+                    <i class="bar01"></i>
+                    <i class="bar01"></i>
+                    <i class="bar01"></i>
+                    <i class="bar01"></i>
+                </div>
+                <style>
+                    .box02 {
+                        width: 256px;
+                        height: 256px;
+                        border-bottom: 1px dashed #ccc;
+                        /* 两端对齐 */
+                        text-align: justify;
+                    }
+                    
+                    .box02::before {
+                        content: "";
+                        display: inline-block;
+                        height: 100%;
+                    }
+                    
+                    .box02::after {
+                        content: "";
+                        display: inline-block;
+                        width: 100%;
+                    }
+                    
+                    .bar01 {
+                        display: inline-block;
+                        width: 20px;
+                        height: 100px;
+                        background-color: aqua;
+                    }
+                </style>
+            </div>
+            <div id="part04-02" class="item">
+                <h4>content字符内容生成</h4>
+                正在加载
+                <dot>...</dot>
+                <style>
+                    dot {
+                        display: inline-block;
+                        height: 1em;
+                        line-height: 1;
+                        text-align: left;
+                        vertical-align: -.25em;
+                        overflow: hidden;
+                    }
+                    
+                    dot::before {
+                        display: block;
+                        content: '...\A..\A.';
+                        white-space: pre-wrap;
+                        animation: dot 3s infinite step-start both;
+                    }
+                    
+                    @keyframes dot {
+                        33% {
+                            transform: translateY(-2em);
+                        }
+                        66% {
+                            transform: translateY(-1em);
+                        }
+                    }
+                </style>
+            </div>
+            <div id="part04-03" class="item">
+                <h4>content图片生成</h4>
+                实际开发中，直接使用content图片生成的场景并不多，原因在于我们无法直接修改图片的固有尺寸，从而导致图片的尺寸非常的不好控制。
+                <br>因此，在伪元素中，图片更多的是使用content辅助background-image来模拟生成。
+            </div>
+            <div id="part04-04" class="item">
+                <h4>了解content开启闭合符号生成</h4>
+                <p lang="ch"><q>这本书很赞！</q></p>
+                <p lang="en"><q>This book is very good!</q></p>
+                <p lang="no"><q>denne bog er fantastisk!</q></p>
+
+                <p class="ask">为什么open-quote/close-quote很少使用？</p>
+                <p class="answer">因为直接使用字符更干脆！</p>
+                <style>
+                     :lang(ch)>q {
+                        quotes: '“' '”';
+                    }
+                    
+                     :lang(en)>q {
+                        quotes: '"' '"';
+                    }
+                    
+                     :lang(no)>q {
+                        quotes: '<<' '>>';
+                    }
+                    
+                    q::before {
+                        content: open-quote;
+                    }
+                    
+                    q::after {
+                        content: close-quote;
+                    }
+                    
+                    .ask {
+                        quotes: '提问：“' '”';
+                    }
+                    
+                    .answer {
+                        quotes: '回答：“' '”';
+                    }
+                    
+                    .ask::before,
+                    .answer::before {
+                        content: open-quote;
+                    }
+                    
+                    .ask::after,
+                    .answer::after {
+                        content: close-quote;
+                    }
+                </style>
+            </div>
+            <div id="part04-05" class="item">
+                <h4>content attr属性值内容生成</h4>
+                <img id="img08" alt="这是content attr属性获取的值">
+                <style>
+                    #img08::after {
+                        /* 生成alt信息 */
+                        content: attr(alt);
+                    }
+                </style>
+            </div>
+            <div id="part04-06" class="item">
+                <h4>深入理解content计数器</h4>
+                <p class="counter01"></p>
+                <style>
+                    .counter01 {
+                        counter-reset: counter1 2;
+                        font-size: 32px;
+                        font-family: Arial black;
+                        color: #0000fc;
+                    }
+                    
+                    .counter01::before {
+                        content: counter(counter1);
+                        counter-increment: counter1;
+                    }
+                    
+                    .counter01::after {
+                        content: counter(counter1);
+                        counter-increment: counter1;
+                    }
+                </style>
+                <hr>
+                <strong>counters()方法：</strong>
+                <div class="reset01">
+                    <div class="counter02">
+                        <div class="reset01">
+                            <div class="counter02"></div>
+                            <div class="counter02">
+                                <div class="reset01">
+                                    <div class="counter02"></div>
+                                    <div class="counter02"></div>
+                                    <div class="counter02"></div>
+                                </div>
+                            </div>
+                            <div class="counter02"></div>
+                        </div>
+                    </div>
+                    <div class="counter02"></div>
+                    <div class="counter02">
+                        <div class="reset01">
+                            <div class="counter02"></div>
+                        </div>
+                    </div>
+                </div>
+                <style>
+                    .reset01 {
+                        padding-left: 20px;
+                        counter-reset: counter2;
+                    }
+                    
+                    .counter02::before {
+                        content: counters(counter2, '.') '、 ';
+                        counter-increment: counter2;
+                    }
+                </style>
+            </div>
+        </div>
+        <div id="part05" class="part" style="overflow: auto;">
+            <h3>padding与元素的尺寸</h3>
+            <div id="div02">padding足够大，width无效化。</div>
+            <a href="#part05" id="a01">内联元素的padding同样影响垂直方向上的布局，影响视觉表现。</a>
+            <br>
+            <a href="#" id="a02">登录</a><a href="#" id="a02">注册</a>
+            <style>
+                #div02 {
+                    width: 300px;
+                    margin: 2px;
+                    padding: 20px 200px;
+                    border: 1px solid #0000fc;
+                    box-sizing: border-box;
+                }
+                
+                #a01 {
+                    margin: 2px;
+                    /* padding: 50px; */
+                    /* background-color: #cd0000; */
+                }
+                
+                #a02+#a02::before {
+                    content: "";
+                    font-size: 0;
+                    padding: 10px 3px 1px;
+                    margin-left: 6px;
+                    border-left: 1px solid gray;
+                }
+            </style>
+        </div>
+        <div class="part" style="overflow: auto;">
+            <h3><span id="part06">padding的百分比值</span></h3>
+            <P id="div03">
+                <span>内有文字若干</span>
+                <!-- <span></span> -->
+            </P>
+
+            <style>
+                #div03 {
+                    /* display: inline; */
+                    border: 2px dashed #cd0000;
+                }
+                
+                #div03>span {
+                    padding: 50%;
+                    /* background-color: gray; */
+                }
+            </style>
+        </div>
+        <div class="part">
+            <h3><span id="part07">标签元素内置的padding</span></h3>
+            <button onclick="console.log('button点击')">这是一个没有外设padding的button按钮</button>
+            <button id="button01" onclick="console.log('button01点击')">这是一个外设padding为0的button按钮</button>
+            <button id="button02" onclick="console.log('button02点击')">这是一个设置了行高与padding的button按钮</button>
+            <button id="button03" onclick="console.log('button03点击')"></button>
+            <label id="label01" for="button03">使用label元素可以制作UI效果棒兼容效果好，且良好保留button语义效果的按钮</label>
+            <style>
+                #button01 {
+                    padding: 0;
+                }
+                
+                #button02 {
+                    line-height: 20px;
+                    padding: 10px;
+                    border: none;
+                }
+                
+                #button03 {
+                    position: absolute;
+                    clip: rect(0 0 0 0);
+                }
+                
+                #label01 {
+                    display: inline-block;
+                    line-height: 20px;
+                    padding: 10px;
+                }
+            </style>
+        </div>
+        <div class="part">
+            <h3><span id="part08">padding与图形绘制</span></h3>
+            <i class="icon-menu"></i>
+            <i class="icon-dot"></i>
+            <style>
+                .icon-menu {
+                    display: inline-block;
+                    width: 140px;
+                    height: 10px;
+                    padding: 35px 0;
+                    border-top: 10px solid;
+                    border-bottom: 10px solid;
+                    background-color: currentColor;
+                    background-clip: content-box;
+                }
+                
+                .icon-dot {
+                    display: inline-block;
+                    width: 100px;
+                    height: 100px;
+                    padding: 10px;
+                    border: 10px solid;
+                    border-radius: 50%;
+                    background-color: currentColor;
+                    background-clip: content-box;
+                }
+            </style>
+        </div>
+        <div class="part">
+            <h3><span id="part09"></span></h3>
+        </div>
+    </article>
+    <div id="Float">
+        <nav>
+            <ul>
+                <li><a href="#part01">替换元素的默认尺寸</a></li>
+                <ul>
+                    <li><a href="#item01-01">img元素</a></li>
+                    <li><a href="#item01-02">iframe元素</a></li>
+                    <li><a href="#item01-03">video元素</a></li>
+                    <li><a href="#item01-04">canvas元素</a></li>
+                    <li><a href="#item01-05">select元素</a></li>
+                    <li><a href="#item01-06">input元素</a></li>
+                    <li><a href="#item01-07">button元素</a></li>
+                    <li><a href="#item01-08">textarea元素</a></li>
+                </ul>
+                <li><a href="#part02">替换元素的尺寸计算规则</a></li>
+                <ul>
+                    <li><a href="#item02-01">不存在CSS尺寸和HTML尺寸</a></li>
+                    <li><a href="#item02-02">不存在CSS尺寸</a></li>
+                    <li><a href="#item02-03">存在CSS尺寸</a></li>
+                    <li><a href="#item02-04">存在固有宽高比例，CSS尺寸或HTML尺寸仅设置宽度或仅设置高度</a></li>
+                    <li><a href="#item02-05">其他情况</a></li>
+                    <li><a href="#item02-06">块级替换元素的尺寸计算规则</a></li>
+                    <li><a href="#item02-07">我们无法改变元素内容的固有尺寸</a></li>
+                    <li><a href="#item02-08">更改替换元素的替换内容的适配方式</a></li>
+                </ul>
+                <li><a href="#part03">content与替换元素的关系</a></li>
+                <li><a href="#part04">content内容生成技术</a></li>
+                <ul>
+                    <li><a href="#part04-01">content辅助元素生成</a></li>
+                    <li><a href="#part04-02">content字符内容生成</a></li>
+                    <li><a href="#part04-03">content图片生成</a></li>
+                    <li><a href="#part04-04">了解content开启闭合符号生成</a></li>
+                    <li><a href="#part04-05">content attr属性值内容生成</a></li>
+                    <li><a href="#part04-06">深入理解content计数器</a></li>
+                </ul>
+                <li><a href="#part05">padding与元素的尺寸</a></li>
+                <li><a href="#part06">padding的百分比值</a></li>
+                <li><a href="#part07">标签元素内置的padding</a></li>
+                <li><a href="#part08">padding与图形绘制</a></li>
+            </ul>
+        </nav>
+    </div>
+</body>
+
+</html>
