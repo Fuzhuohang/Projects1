@@ -519,7 +519,231 @@
             </style>
         </div>
         <div class="part">
-            <h3><span id="part09"></span></h3>
+            <h3><span id="part09">margin与元素内部尺寸</span></h3>
+            <div class="father00">
+                <div class="son00"></div>
+            </div>
+            <div class="father01">
+                <div class="son01"></div>
+            </div>
+            <style>
+                .father00 {
+                    width: 300px;
+                    height: 20px;
+                    background-color: aqua;
+                    margin: 0 -20px;
+                }
+                
+                .son00 {
+                    height: 10px;
+                    background-color: antiquewhite;
+                }
+                
+                .father01 {
+                    width: 300px;
+                    height: 20px;
+                    background-color: aqua;
+                }
+                
+                .son01 {
+                    margin: 0 -20px;
+                    height: 10px;
+                    background-color: antiquewhite;
+                }
+            </style>
+            <div id="div04">
+                <img src="./imgs/yslogo.54971d8b.png">
+                <p>奥哲云枢低代码开发平台；奥哲云枢低代码开发平台；奥哲云枢低代码开发平台；奥哲云枢低代码开发平台；奥哲云枢低代码开发平台；奥哲云枢低代码开发平台</p>
+            </div>
+            <style>
+                #div04 {
+                    overflow: hidden;
+                    width: 400px;
+                }
+                
+                #div04>img {
+                    float: left;
+                }
+                
+                #div04>p {
+                    margin-left: 150px;
+                }
+            </style>
+            <div id="div05">
+                <img src="./imgs/yslogo.54971d8b.png">
+                <p>奥哲云枢低代码开发平台；奥哲云枢低代码开发平台；奥哲云枢低代码开发平台；奥哲云枢低代码开发平台；奥哲云枢低代码开发平台；奥哲云枢低代码开发平台</p>
+                <!-- <img src="./imgs/yslogo.54971d8b.png"> -->
+            </div>
+            <style>
+                #div05 {
+                    overflow: hidden;
+                    width: 400px;
+                }
+                
+                #div05>img {
+                    float: right;
+                }
+                
+                #div05>p {
+                    margin-right: 150px;
+                }
+            </style>
+            <div id="div06">
+                <div class="full">
+                    <p>奥哲云枢低代码开发平台；奥哲云枢低代码开发平台；奥哲云枢低代码开发平台；奥哲云枢低代码开发平台；奥哲云枢低代码开发平台；奥哲云枢低代码开发平台</p>
+                </div>
+                <img src="./imgs/yslogo.54971d8b.png">
+            </div>
+            <style>
+                #div06 {
+                    overflow: hidden;
+                    width: 400px;
+                }
+                
+                .full {
+                    width: 100%;
+                    float: left;
+                }
+                
+                #div06>img {
+                    float: left;
+                    margin-left: -144px;
+                }
+                
+                .full>p {
+                    margin-right: 150px;
+                }
+            </style>
+        </div>
+        <div class="part">
+            <h3><span id="part10">margin合并</span></h3>
+            <div class="item">
+                <h4><span id="part10-01">相邻兄弟元素margin合并</span></h4>
+                <p class="p01">这是第一行</p>
+                <p class="p01">这是第二行</p>
+                <style>
+                    .p01 {
+                        margin: 1em 0;
+                    }
+                </style>
+            </div>
+            <div class="item">
+                <h4><span id="part10-02">父级和第一个/最后一个子元素</span></h4>
+                <div class="father02">
+                    <div class="son02"></div>
+                    <div class="son02"></div>
+                    <!-- <div class="son02-1"></div> -->
+                    <div class="son02"></div>
+                </div>
+                <style>
+                    .father02 {
+                        margin: 40px 0;
+                        background-color: aqua;
+                    }
+                    
+                    .son02 {
+                        margin: 40px 0;
+                        height: 10px;
+                        background-color: antiquewhite;
+                    }
+                    
+                    .son02-1 {
+                        margin: -60px 0;
+                        height: 10px;
+                        background-color: antiquewhite;
+                    }
+                </style>
+            </div>
+            <div class="item">
+                <h4><span id="part10-03">空块级元素的margin合并</span></h4>
+                <div class="father03">
+                    <div class="son03"></div>
+                </div>
+                <style>
+                    .father03 {
+                        overflow: hidden;
+                    }
+                    
+                    .son03 {
+                        margin: 40px 0;
+                        /* margin-top: 20px;
+                        margin-bottom: 40px; */
+                    }
+                </style>
+            </div>
+        </div>
+        <div class="part">
+            <h3><span id="part11">border-style类型</span></h3>
+            <div class="dashed">
+                dashed
+            </div>
+            <div class="dotted">
+                dotted
+            </div>
+            <div class="double">
+                double
+            </div>
+            <div class="others">
+                others: inset、outset、groove、ridge
+            </div>
+            <style>
+                .dashed {
+                    border: 20px dashed #0000fc;
+                    color: red;
+                    padding: 15px;
+                    margin: 5px;
+                }
+                
+                .dotted {
+                    border: 20px dotted #0000fc;
+                    padding: 15px;
+                    margin: 5px;
+                }
+                
+                .double {
+                    border: 20px double #0000fc;
+                    padding: 15px;
+                    margin: 5px;
+                }
+                
+                .others {
+                    border-top: 20px inset aqua;
+                    border-bottom: 20px outset aqua;
+                    border-left: 20px groove aqua;
+                    border-right: 20px ridge aqua;
+                    padding: 15px;
+                    margin: 5px;
+                }
+            </style>
+        </div>
+        <div class="part">
+            <h3><span id="part12">border与图形构建</span></h3>
+            <div class="tixing"></div>
+            <div class="xiasanjiao"></div>
+            <div class="xiesanjiao"></div>
+            <div class="sanjiaodiejia"></div>
+            <style>
+                .tixing {
+                    border: 30px solid;
+                    width: 20px;
+                    height: 10px;
+                    border-color: #0000fc transparent transparent;
+                }
+                
+                .xiasanjiao {
+                    border: 30px solid;
+                    width: 0;
+                    height: 10px;
+                    border-color: #0000fc transparent transparent;
+                }
+                
+                .xiesanjiao {
+                    border: 30px solid;
+                    width: 0;
+                    height: 0;
+                    border-color: #0000fc #0000fc transparent transparent;
+                }
+            </style>
         </div>
     </article>
     <div id="Float">
@@ -561,6 +785,14 @@
                 <li><a href="#part06">padding的百分比值</a></li>
                 <li><a href="#part07">标签元素内置的padding</a></li>
                 <li><a href="#part08">padding与图形绘制</a></li>
+                <li><a href="#part09">margin与元素内部尺寸</a></li>
+                <li><a href="#part10">margin合并</a></li>
+                <ul>
+                    <li><a href="#part10-01">相邻兄弟元素margin合并</a></li>
+                    <li><a href="#part10-02">父级和第一个/最后一个子元素</a></li>
+                    <li><a href="#part10-03">空块级元素的margin合并</a></li>
+                </ul>
+                <li><a href="#part11">border-style类型</a></li>
             </ul>
         </nav>
     </div>
