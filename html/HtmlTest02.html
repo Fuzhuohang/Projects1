@@ -1,31 +1,34 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-        <title>test</title>
-        <script>
-            function test() {
-                var num1 = document.getElementById("number1").value;
-                var num2 = document.getElementById("number2").value;
-                var num3 = document.getElementById("number3").value;
-                var num4 = document.getElementById("number4").value;
-                console.log(num1,num2,num3,num4);
-                if(num1==1 && (num2==2 || num3==3) ||num4==4){
-                    console.log("成都");
-                    document.getElementById("text").value="成都";
-                }else{
-                    console.log("深圳");
-                    document.getElementById("text").value="深圳";
-                }
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>test</title>
+    <script>
+        function test() {
+            var num1 = document.getElementById("number1").value;
+            var num2 = document.getElementById("number2").value;
+            var num3 = document.getElementById("number3").value;
+            var num4 = document.getElementById("number4").value;
+            console.log(num1, num2, num3, num4);
+            if (num1 == 1 && (num2 == 2 || num3 == 3) || num4 == 4) {
+                console.log("成都");
+                document.getElementById("text").value = "成都";
+            } else {
+                console.log("深圳");
+                document.getElementById("text").value = "深圳";
             }
-        </script>
-    </head>
-    <body>
-        <input type="text" name="文本框" id="text" placeholder="文本框" /><br>
-        <input type="number" name="数值1" id="number1" placeholder="数值1" /><br>
-        <input type="number" name="数值2" id="number2" placeholder="数值2" /><br>
-        <input type="number" name="数值3" id="number3" placeholder="数值3" /><br>
-        <input type="number" name="数值4" id="number4" placeholder="数值4" /><br>
-        <input type="button" value="提交" onclick="test()">
-    </body>
+        }
+    </script>
+</head>
+
+<body>
+    <input type="text" name="文本框" id="text" placeholder="文本框" /><br>
+    <input type="number" name="数值1" id="number1" placeholder="数值1" /><br>
+    <input type="number" name="数值2" id="number2" placeholder="数值2" /><br>
+    <input type="number" name="数值3" id="number3" placeholder="数值3" /><br>
+    <input type="number" name="数值4" id="number4" placeholder="数值4" /><br>
+    <input type="button" value="提交" onclick="test()">
+</body>
+
 </html>

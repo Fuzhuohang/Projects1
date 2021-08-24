@@ -1,55 +1,58 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>这是一个html练习页面</title>
-        <style type="text/css">
-            body {
-                margin: 0;
-            }
-            .borders {
-                border: 1px solid red;
-            }
 
-            .tag {
-                height: 64px;
-            }
+<head>
+    <meta charset="utf-8">
+    <title>这是一个html练习页面</title>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+        
+        .borders {
+            border: 1px solid red;
+        }
+        
+        .tag {
+            height: 64px;
+        }
+        
+        .mid {
+            width: 100%;
+            background-color: #002638;
+        }
+        
+        .input_ctr {
+            width: 360px;
+            height: 418px;
+            border: 1px solid white;
+            border-radius: 15px;
+            background-color: white;
+        }
+        
+        .hr {
+            border: 1px solid #d1f2ea;
+            height: 0px;
+            width: 80%;
+        }
+    </style>
+</head>
 
-            .mid {
-                width: 100%;
-                background-color: #002638;
-            }
-
-            .input_ctr {
-                width: 360px;
-                height: 418px;
-                border: 1px solid white;
-                border-radius: 15px;
-                background-color: white;
-                
-            }
-
-            .hr {
-                border: 1px solid #d1f2ea;
-                height: 0px;
-                width: 80%;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="borders tag">
-            <img src="./imgs/yslogo.54971d8b.png" alt="云枢logo" style="height: 30px; width: 72px;">
-            <input type="text">
+<body>
+    <div class="borders tag">
+        <img src="../imgs/yslogo.54971d8b.png" alt="云枢logo" style="height: 30px; width: 72px;">
+        <input type="text">
+    </div>
+    <div class="borders mid">
+        <img src="../imgs/bj.402cd9b6.png" alt="云枢首页">
+        <div class="input_ctr">
+            <h3>账号登录</h3>
+            <div class="hr"></div>
+            <input type="text" name="account" id="account" placeholder="请输入账号">
+            <input type="password" name="password" id="password" placeholder="请输入密码">
+            <input type="button" value="登录">
         </div>
-        <div class="borders mid">
-            <img src="./imgs/bj.402cd9b6.png" alt="云枢首页">
-            <div class="input_ctr">
-                <h3>账号登录</h3>
-                <div class="hr"></div>
-                <input type="text" name="account" id="account" placeholder="请输入账号">
-                <input type="password" name="password" id="password" placeholder="请输入密码">
-                <input type="button" value="登录">
-            </div>
-        </div>
-    </body>
+    </div>
+</body>
+
 </html>

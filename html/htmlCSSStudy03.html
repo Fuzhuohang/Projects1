@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <title>盒尺寸</title>
-    <script src="js/jquery.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
     <style>
         header {
             position: fixed;
@@ -103,15 +103,15 @@
             <h3><span id="part02">替换元素的尺寸计算规则</span></h3>
             <div id="item02-01" class="item">
                 <strong>不存在使用CSS或者使用HTML标签属性设置尺寸的情况下，替换元素的尺寸使用元素内容单独在文件中打开时的尺寸。</strong>
-                <br>文件尺寸为671px*418px的图片: <img src="./imgs/bj.402cd9b6.png">
+                <br>文件尺寸为671px*418px的图片: <img src="../imgs/bj.402cd9b6.png">
             </div>
             <div id="item02-02" class="item">
                 <strong>不存在使用CSS设置尺寸的情况下，替换元素使用HTML标签属性设置的尺寸。</strong>
-                <br>HTML标签属性设置为400px*266px: <img src="./imgs/bj.402cd9b6.png" width="400px" height="266px">
+                <br>HTML标签属性设置为400px*266px: <img src="../imgs/bj.402cd9b6.png" width="400px" height="266px">
             </div>
             <div id="item02-03" class="item">
                 <strong>存在使用CSS设置尺寸的情况下，替换元素使用CSS设置的尺寸。</strong>
-                <br>CSS设置属性为300px*200px；HTML标签属性设置为400px*266px: <img src="./imgs/bj.402cd9b6.png" id="img01" width="400px" height="266px">
+                <br>CSS设置属性为300px*200px；HTML标签属性设置为400px*266px: <img src="../imgs/bj.402cd9b6.png" id="img01" width="400px" height="266px">
                 <style>
                     #img01 {
                         width: 300px;
@@ -121,10 +121,10 @@
             </div>
             <div id="item02-04" class="item">
                 <strong>当元素内容存在固定的宽高比例，同时CSS或者HTML标签属性仅设置了宽度或仅设置了高度，则元素仍然会按照固有的宽高比例显示。</strong>
-                <br>文件尺寸为671px*418px，宽高比61:38，HTML标签属性仅设置width=305px: <img src="./imgs/bj.402cd9b6.png" width="305px">
-                <br>文件尺寸为671px*418px，宽高比61:38，HTML标签属性仅设置height=228px: <img src="./imgs/bj.402cd9b6.png" height="228px">
-                <br>文件尺寸为671px*418px，宽高比61:38，CSS仅设置width=244px: <img src="./imgs/bj.402cd9b6.png" id="img02">
-                <br>文件尺寸为671px*418px，宽高比61:38，CSS仅设置height=114px: <img src="./imgs/bj.402cd9b6.png" id="img03">
+                <br>文件尺寸为671px*418px，宽高比61:38，HTML标签属性仅设置width=305px: <img src="../imgs/bj.402cd9b6.png" width="305px">
+                <br>文件尺寸为671px*418px，宽高比61:38，HTML标签属性仅设置height=228px: <img src="../imgs/bj.402cd9b6.png" height="228px">
+                <br>文件尺寸为671px*418px，宽高比61:38，CSS仅设置width=244px: <img src="../imgs/bj.402cd9b6.png" id="img02">
+                <br>文件尺寸为671px*418px，宽高比61:38，CSS仅设置height=114px: <img src="../imgs/bj.402cd9b6.png" id="img03">
                 <style>
                     #img02 {
                         width: 244px;
@@ -140,7 +140,7 @@
             </div>
             <div id="item02-06" class="item">
                 <strong>内联替换元素和块级替换元素使用上面同一套尺寸计算规则。</strong>
-                <br><img src="./imgs/bj.402cd9b6.png" id="img04">
+                <br><img src="../imgs/bj.402cd9b6.png" id="img04">
                 <style>
                     #img04 {
                         display: block;
@@ -152,7 +152,7 @@
                 <div id="div01"></div>
                 <style>
                     #div01::before {
-                        content: url(./imgs/bj.402cd9b6.png);
+                        content: url(../imgs/bj.402cd9b6.png);
                         display: block;
                         width: 500px;
                         height: 500px;
@@ -161,9 +161,9 @@
             </div>
             <div id="item02-08" class="item">
                 <strong>通过CSS更改img等替换元素的替换内容的适配方式“object-fit”属性</strong>
-                <br>img默认适配方式为object-fit:fill: <img src="./imgs/yslogo.54971d8b.png" id="img05">
-                <br>设置img适配方式为object-fit:none: <img src="./imgs/yslogo.54971d8b.png" id="img06">
-                <br>设置img适配方式为object-fit:contain: <img src="./imgs/yslogo.54971d8b.png" id="img07">
+                <br>img默认适配方式为object-fit:fill: <img src="../imgs/yslogo.54971d8b.png" id="img05">
+                <br>设置img适配方式为object-fit:none: <img src="../imgs/yslogo.54971d8b.png" id="img06">
+                <br>设置img适配方式为object-fit:contain: <img src="../imgs/yslogo.54971d8b.png" id="img07">
                 <style>
                     #img05 {
                         width: 250px;
@@ -552,7 +552,7 @@
                 }
             </style>
             <div id="div04">
-                <img src="./imgs/yslogo.54971d8b.png">
+                <img src="../imgs/yslogo.54971d8b.png">
                 <p>奥哲云枢低代码开发平台；奥哲云枢低代码开发平台；奥哲云枢低代码开发平台；奥哲云枢低代码开发平台；奥哲云枢低代码开发平台；奥哲云枢低代码开发平台</p>
             </div>
             <style>
@@ -570,9 +570,9 @@
                 }
             </style>
             <div id="div05">
-                <img src="./imgs/yslogo.54971d8b.png">
+                <img src="../imgs/yslogo.54971d8b.png">
                 <p>奥哲云枢低代码开发平台；奥哲云枢低代码开发平台；奥哲云枢低代码开发平台；奥哲云枢低代码开发平台；奥哲云枢低代码开发平台；奥哲云枢低代码开发平台</p>
-                <!-- <img src="./imgs/yslogo.54971d8b.png"> -->
+                <!-- <img src="../imgs/yslogo.54971d8b.png"> -->
             </div>
             <style>
                 #div05 {
@@ -592,7 +592,7 @@
                 <div class="full">
                     <p>奥哲云枢低代码开发平台；奥哲云枢低代码开发平台；奥哲云枢低代码开发平台；奥哲云枢低代码开发平台；奥哲云枢低代码开发平台；奥哲云枢低代码开发平台</p>
                 </div>
-                <img src="./imgs/yslogo.54971d8b.png">
+                <img src="../imgs/yslogo.54971d8b.png">
             </div>
             <style>
                 #div06 {
