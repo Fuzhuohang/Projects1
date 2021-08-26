@@ -3,24 +3,59 @@ function allowDrop(ev) {
 }
 
 function drag(ev) {
-
-
     ev.dataTransfer.setData("Text", ev.target.id);
 }
 
 function drop(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("Text");
-    var div1 = document.createElement("div");
-    div1.id = "new_div";
-    div1.style.display = "inline-block";
-    div1.style.width = "100%";
-    var div2 = document.createElement("div");
-    div2.style.display = "inline-block";
-    div2.innerText = "单行文本："
-    var input = document.createElement("input");
-    input.style.display = "inline";
-    div1.appendChild(div2);
-    div1.appendChild(input);
+    switch (data) {
+        case form_item_01:
+
+            break;
+        case form_item_02:
+
+            break;
+        case form_item_03:
+
+            break;
+        case form_item_04:
+
+            break;
+        case form_item_05:
+
+            break;
+        case form_item_06:
+
+            break;
+        case form_item_07:
+
+            break;
+        case form_item_08:
+
+            break;
+        case form_item_09:
+
+            break;
+        case form_item_10:
+
+            break;
+        case form_item_11:
+
+            break;
+        case form_item_12:
+
+            break;
+        case form_item_13:
+
+            break;
+        case form_item_14:
+
+            break;
+        case form_item_15:
+
+            break;
+    }
+
     ev.target.appendChild(div1);
 }

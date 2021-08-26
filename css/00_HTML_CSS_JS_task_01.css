@@ -129,7 +129,7 @@ button {
     content: "清空表单";
 }
 
-#form-items {
+#form_items {
     min-width: 100px;
     max-width: 200px;
     border-right: 1px solid gray;
@@ -141,27 +141,27 @@ button {
     right: 0;
 }
 
-#form-item {
+#form_item {
     margin: 10px 0 8px 8px;
 }
 
-#form-item>div {
+#form_item>div {
     margin: 5px;
     border: 1px dashed lightgray;
     height: 38px;
     text-align: center;
 }
 
-#form-item>div:active {
+#form_item>div:active {
     color: #17bc94;
     border-color: #17bc94;
 }
 
-#form-item>div>div {
+#form_item>div>div {
     padding: 8px 0;
 }
 
-#form-body {
+#form_body {
     overflow-y: scroll;
     position: absolute;
     min-width: 500px;

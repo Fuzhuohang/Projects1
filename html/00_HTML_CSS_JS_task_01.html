@@ -12,37 +12,37 @@
         window.onload = function() {
             var header = $("#header").height() + 25;
             var article = $("#article").width();
-            var form_items = $("#form-items").width();
+            var form_items = $("#form_items").width();
 
             $("#article").css('top', header);
             if (article > 700) {
-                $("#form-items").css('width', 200);
-                $("#form-body").css('left', 200);
+                $("#form_items").css('width', 200);
+                $("#form_body").css('left', 200);
             } else if (article > 600) {
                 form_items = article - 500;
-                $("#form-items").css('width', form_items);
-                $("#form-body").css('left', form_items);
+                $("#form_items").css('width', form_items);
+                $("#form_body").css('left', form_items);
             } else {
-                $("#form-items").css('width', 100);
-                $("#form-body").css('left', 100);
+                $("#form_items").css('width', 100);
+                $("#form_body").css('left', 100);
             }
         }
         $(window).resize(function() {
             header = $("#header").height() + 25;
             article = $("#article").width();
-            form_items = $("#form-items").width();
+            form_items = $("#form_items").width();
 
             $("#article").css('top', header);
             if (article > 700) {
-                $("#form-items").css('width', 200);
-                $("#form-body").css('left', 200);
+                $("#form_items").css('width', 200);
+                $("#form_body").css('left', 200);
             } else if (article > 600) {
                 form_items = article - 500;
-                $("#form-items").css('width', form_items);
-                $("#form-body").css('left', form_items);
+                $("#form_items").css('width', form_items);
+                $("#form_body").css('left', form_items);
             } else {
-                $("#form-items").css('width', 100);
-                $("#form-body").css('left', 100);
+                $("#form_items").css('width', 100);
+                $("#form_body").css('left', 100);
             }
         });
     </script>
@@ -60,56 +60,56 @@
         </div>
     </header>
     <article id="article">
-        <div id="form-items">
-            <div id="form-item">
-                <div id="form-item-01" draggable="true" ondragstart="drag(event)">
+        <div id="form_items">
+            <div id="form_item">
+                <div id="form_item_01" draggable="true" ondragstart="drag(event)">
                     <div>单行文本</div>
                 </div>
-                <div id="form-item-02" draggable="true" ondragstart="drag(event)">
+                <div id="form_item_02" draggable="true" ondragstart="drag(event)">
                     <div>密码</div>
                 </div>
-                <div id="form-item-03" draggable="true" ondragstart="drag(event)">
+                <div id="form_item_03" draggable="true" ondragstart="drag(event)">
                     <div>多行文本</div>
                 </div>
-                <div id="form-item-04" draggable="true" ondragstart="drag(event)">
+                <div id="form_item_04" draggable="true" ondragstart="drag(event)">
                     <div>下拉单选</div>
                 </div>
-                <div id="form-item-05" draggable="true" ondragstart="drag(event)">
+                <div id="form_item_05" draggable="true" ondragstart="drag(event)">
                     <div>下拉复选</div>
                 </div>
-                <div id="form-item-06" draggable="true" ondragstart="drag(event)">
+                <div id="form_item_06" draggable="true" ondragstart="drag(event)">
                     <div>单选框</div>
                 </div>
-                <div id="form-item-07" draggable="true" ondragstart="drag(event)">
+                <div id="form_item_07" draggable="true" ondragstart="drag(event)">
                     <div>复选框</div>
                 </div>
-                <div id="form-item-08" draggable="true" ondragstart="drag(event)">
+                <div id="form_item_08" draggable="true" ondragstart="drag(event)">
                     <div>日期</div>
                 </div>
-                <div id="form-item-09" draggable="true" ondragstart="drag(event)">
+                <div id="form_item_09" draggable="true" ondragstart="drag(event)">
                     <div>数值</div>
                 </div>
-                <div id="form-item-10" draggable="true" ondragstart="drag(event)">
+                <div id="form_item_10" draggable="true" ondragstart="drag(event)">
                     <div>邮箱</div>
                 </div>
-                <div id="form-item-11" draggable="true" ondragstart="drag(event)">
+                <div id="form_item_11" draggable="true" ondragstart="drag(event)">
                     <div>电话</div>
                 </div>
-                <div id="form-item-12" draggable="true" ondragstart="drag(event)">
+                <div id="form_item_12" draggable="true" ondragstart="drag(event)">
                     <div>颜色</div>
                 </div>
-                <div id="form-item-13" draggable="true" ondragstart="drag(event)">
+                <div id="form_item_13" draggable="true" ondragstart="drag(event)">
                     <div>URL</div>
                 </div>
-                <div id="form-item-14" draggable="true" ondragstart="drag(event)">
+                <div id="form_item_14" draggable="true" ondragstart="drag(event)">
                     <div>附件</div>
                 </div>
-                <div id="form-item-15" draggable="true" ondragstart="drag(event)">
+                <div id="form_item_15" draggable="true" ondragstart="drag(event)">
                     <div>分组</div>
                 </div>
             </div>
         </div>
-        <div id="form-body">
+        <div id="form_body">
             <form id="form" action="" method="post" ondrop="drop(event)" ondragover="allowDrop(event)">
                 <button type="submit" id="submit">提交表单</button>
                 <button type="reset" id="reset">清除数据</button>
