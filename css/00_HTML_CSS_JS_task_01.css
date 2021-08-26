@@ -1,0 +1,177 @@
+html {
+    overflow: hidden;
+}
+
+body {
+    margin: 0;
+}
+
+header {
+    border-bottom: 1px solid gray;
+    padding-top: 25px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+header>div {
+    margin: 0 auto;
+    min-width: 600px;
+    max-width: 1024px;
+}
+
+article {
+    /* height: auto; */
+    /* display: flex; */
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 139px;
+    bottom: 0;
+}
+
+footer {
+    height: 50px;
+}
+
+footer>div {
+    border-top: 1px solid gray;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, .3);
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: rgba(cc, cc, cc, .1);
+    border-radius: 6px;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 0;
+}
+
+#button {
+    text-align: right;
+}
+
+#button>div {
+    display: inline-block;
+    background-color: gray;
+    margin: 0 5px 10px 5px;
+    border-radius: 5px;
+}
+
+#button label {
+    display: inline-block;
+    width: 80px;
+    height: 38px;
+    font-weight: bolder;
+    border: 1px solid;
+    border-top-color: gray;
+    border-left-color: gray;
+    border-bottom-color: black;
+    border-right-color: black;
+    text-align: center;
+    border-radius: 5px;
+}
+
+#button label:active {
+    border-top-color: black;
+    border-left-color: black;
+    border-bottom-color: gray;
+    border-right-color: gray;
+}
+
+#button label:hover {
+    cursor: pointer;
+}
+
+#button label>div {
+    padding: 8px 0;
+}
+
+button {
+    position: absolute;
+    clip: rect(0 0 0 0);
+}
+
+#sub {
+    background-color: #17bc94;
+    color: white;
+}
+
+#sub>div::after {
+    content: "提交表单";
+}
+
+#res {
+    background-color: whitesmoke;
+}
+
+#res>div::after {
+    content: "清除数据";
+}
+
+#cle {
+    background-color: lightgray;
+}
+
+#cle>div::after {
+    content: "清空表单";
+}
+
+#form-items {
+    min-width: 100px;
+    max-width: 200px;
+    border-right: 1px solid gray;
+    overflow-y: scroll;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+#form-item {
+    margin: 10px 0 8px 8px;
+}
+
+#form-item>div {
+    margin: 5px;
+    border: 1px dashed lightgray;
+    height: 38px;
+    text-align: center;
+}
+
+#form-item>div:active {
+    color: #17bc94;
+    border-color: #17bc94;
+}
+
+#form-item>div>div {
+    padding: 8px 0;
+}
+
+#form-body {
+    overflow-y: scroll;
+    position: absolute;
+    min-width: 500px;
+    top: 0;
+    bottom: 0;
+    left: 201px;
+    right: 0;
+}
+
+#form {
+    height: 100%;
+    padding-left: 8px;
+}

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>position:absolute</title>
+    <style>
+        .part {
+            border: 4px double skyblue;
+            margin: 2px 0;
+        }
+        
+        .item {
+            border: 1px solid black;
+            margin: 2px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="part">
+        <img src="../imgs/top1.png" class="top1">
+        <img src="../imgs/bj.402cd9b6.png">
+        <div>
+            <img src="../imgs/yslogo.54971d8b.png"><i class="icon-hot"></i>
+        </div>
+        <style>
+            .top1 {
+                position: absolute;
+            }
+            
+            .icon-hot {
+                position: absolute;
+                color: red;
+                margin: -6px 0 0 2px;
+                width: 16px;
+                height: 16px;
+                background: url(../imgs/hot-1.png);
+            }
+        </style>
+    </div>
+    <div class="part">
+        <h3>标题<span class="follow01">span</span></h3>
+        <h3>标题
+            <div class="follow01">div</div>
+        </h3>
+        <style>
+            .follow01 {
+                position: absolute;
+            }
+        </style>
+    </div>
+    <div class="part" style="height: 50px;">
+        <div class="nav01">导航1</div>
+        <img src="../imgs/hot-1.png" class="follow02">
+        <div class="nav01">导航2</div>
+        <style>
+            .follow02 {
+                position: absolute;
+            }
+            
+            .nav01 {
+                width: 100px;
+                line-height: 40px;
+                background-color: #333;
+                color: #fff;
+                text-align: center;
+                float: left;
+            }
+        </style>
+    </div>
+    <div class="part" style="">
+        overflow不是定位元素，且absolute与overflo之间没有定位元素，不会被裁剪
+        <div style="overflow: hidden;">
+            <img src="../imgs/yslogo.54971d8b.png" style="position: absolute;">
+        </div>
+        <br><br><br> overflow元素父级是定位元素，不会被裁剪
+        <div style="position: relative;">
+            <div style="overflow: hidden;">
+                <img src="../imgs/yslogo.54971d8b.png" style="position: absolute;">
+            </div>
+        </div>
+        <br><br><br> overflow是定位元素，会被裁剪
+        <div style="overflow: hidden; position: relative;">
+            <img src="../imgs/yslogo.54971d8b.png" style="position: absolute;">
+        </div>
+        <br><br><br> overflow和absolute之间有定位元素，会被裁剪
+        <div style="overflow: hidden;">
+            <div style="position: relative;">
+                <img src="../imgs/yslogo.54971d8b.png" style="position: absolute;">
+            </div>
+        </div>
+        <br><br><br>
+        <div class="box01">
+            <img src="../imgs/yslogo.54971d8b.png">
+        </div>
+        <style>
+            .box01 {
+                width: 300px;
+                height: 100px;
+                background-color: #f0f3f9;
+                overflow: auto;
+            }
+            
+            .box01>img {
+                width: 256px;
+                height: 192px;
+                position: absolute;
+            }
+        </style>
+    </div>
+    <div class="part">
+        <div class="item box02" style="height: 300px;">
+            <img src="../imgs/bj.402cd9b6.png" onclick="javascript:location.href='#'">
+        </div>
+        <style>
+            .box02 {
+                background-color: #f0f3f9;
+                position: relative;
+                overflow: auto;
+            }
+            
+            .box02>img {
+                position: absolute;
+                clip: rect(0, 0, 0, 0);
+            }
+        </style>
+    </div>
+</body>
+
+</html>

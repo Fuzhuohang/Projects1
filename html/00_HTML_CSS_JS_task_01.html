@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>具有基本校验和拖拽效果的表单</title>
+    <link rel="stylesheet" href="../css/00_HTML_CSS_JS_task_01.css">
+    <link rel="stylesheet" href="../css/00_HTML_CSS_JS_task_02.css">
+    <script src="../js/00_HTML_CSS_JS_task_01.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script language="javascript">
+        window.onload = function() {
+            var header = $("#header").height() + 25;
+            var article = $("#article").width();
+            var form_items = $("#form-items").width();
+
+            $("#article").css('top', header);
+            if (article > 700) {
+                $("#form-items").css('width', 200);
+                $("#form-body").css('left', 200);
+            } else if (article > 600) {
+                form_items = article - 500;
+                $("#form-items").css('width', form_items);
+                $("#form-body").css('left', form_items);
+            } else {
+                $("#form-items").css('width', 100);
+                $("#form-body").css('left', 100);
+            }
+        }
+        $(window).resize(function() {
+            header = $("#header").height() + 25;
+            article = $("#article").width();
+            form_items = $("#form-items").width();
+
+            $("#article").css('top', header);
+            if (article > 700) {
+                $("#form-items").css('width', 200);
+                $("#form-body").css('left', 200);
+            } else if (article > 600) {
+                form_items = article - 500;
+                $("#form-items").css('width', form_items);
+                $("#form-body").css('left', form_items);
+            } else {
+                $("#form-items").css('width', 100);
+                $("#form-body").css('left', 100);
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <header id="header">
+        <div>
+            <h1>具有基本校验和拖拽效果的表单</h1>
+            <div id="button">
+                <div><label id="sub" for="submit"><div></div></label></div>
+                <div><label id="res" for="reset"><div></div></label></div>
+                <div><label id="cle" for="clear"><div></div></label></div>
+            </div>
+        </div>
+    </header>
+    <article id="article">
+        <div id="form-items">
+            <div id="form-item">
+                <div id="form-item-01" draggable="true" ondragstart="drag(event)">
+                    <div>单行文本</div>
+                </div>
+                <div id="form-item-02" draggable="true" ondragstart="drag(event)">
+                    <div>密码</div>
+                </div>
+                <div id="form-item-03" draggable="true" ondragstart="drag(event)">
+                    <div>多行文本</div>
+                </div>
+                <div id="form-item-04" draggable="true" ondragstart="drag(event)">
+                    <div>下拉单选</div>
+                </div>
+                <div id="form-item-05" draggable="true" ondragstart="drag(event)">
+                    <div>下拉复选</div>
+                </div>
+                <div id="form-item-06" draggable="true" ondragstart="drag(event)">
+                    <div>单选框</div>
+                </div>
+                <div id="form-item-07" draggable="true" ondragstart="drag(event)">
+                    <div>复选框</div>
+                </div>
+                <div id="form-item-08" draggable="true" ondragstart="drag(event)">
+                    <div>日期</div>
+                </div>
+                <div id="form-item-09" draggable="true" ondragstart="drag(event)">
+                    <div>数值</div>
+                </div>
+                <div id="form-item-10" draggable="true" ondragstart="drag(event)">
+                    <div>邮箱</div>
+                </div>
+                <div id="form-item-11" draggable="true" ondragstart="drag(event)">
+                    <div>电话</div>
+                </div>
+                <div id="form-item-12" draggable="true" ondragstart="drag(event)">
+                    <div>颜色</div>
+                </div>
+                <div id="form-item-13" draggable="true" ondragstart="drag(event)">
+                    <div>URL</div>
+                </div>
+                <div id="form-item-14" draggable="true" ondragstart="drag(event)">
+                    <div>附件</div>
+                </div>
+                <div id="form-item-15" draggable="true" ondragstart="drag(event)">
+                    <div>分组</div>
+                </div>
+            </div>
+        </div>
+        <div id="form-body">
+            <form id="form" action="" method="post" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <button type="submit" id="submit">提交表单</button>
+                <button type="reset" id="reset">清除数据</button>
+                <button id="clear">清空表单</button>
+            </form>
+        </div>
+    </article>
+    <!-- <footer>
+        <div>
+
+        </div>
+    </footer> -->
+</body>
+
+</html>

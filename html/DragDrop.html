@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>表单拖放</title>
+    <style>
+        .div {
+            width: 500px;
+            height: 66px;
+            margin: 10px;
+        }
+        
+        #div01 {
+            height: 100%;
+        }
+        
+        #div02 {
+            height: 100%;
+            border: 1px dashed gray;
+        }
+        
+        #draged {
+            height: 100%;
+            border: 1px dashed gray;
+            text-align: center;
+            align-items: center;
+        }
+    </style>
+    <script>
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drag(ev) {
+
+
+            ev.dataTransfer.setData("Text", ev.target.id);
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            var data = ev.dataTransfer.getData("Text");
+            var div1 = document.createElement("div");
+            div1.id = "new_div";
+            div1.style.display = "inline-block";
+            div1.style.width = "100%";
+            var div2 = document.createElement("div");
+            div2.style.display = "inline-block";
+            div2.innerText = "单行文本："
+            var input = document.createElement("input");
+            input.style.display = "inline";
+            div1.appendChild(div2);
+            div1.appendChild(input);
+            ev.target.appendChild(div1);
+        }
+    </script>
+</head>
+
+<body>
+    <div class="div">
+        <div id="div01">
+            <div id="draged" draggable="true" ondragstart="drag(event)">这是一个被拖拽的元素</div>
+            <!-- <img src="../imgs/yslogo.54971d8b.png" draggable="true" ondragstart="drag(event)" id="drag1"> -->
+        </div>
+    </div>
+    <div class="div">
+        <div id="div02" ondrop="drop(event)" ondragover="allowDrop(event)">
+
+        </div>
+    </div>
+</body>
+
+</html>
