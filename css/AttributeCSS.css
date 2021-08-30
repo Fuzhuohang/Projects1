@@ -1,0 +1,66 @@
+.clearfix::after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+.abs-clip {
+    position: absolute;
+    clip: rect(0 0 0 0);
+}
+
+.dn {
+    display: none;
+}
+
+.db {
+    display: block;
+}
+
+.dib {
+    display: inline-block;
+}
+
+.df {
+    display: flex;
+}
+
+.dg {
+    display: grid;
+}
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+.tl {
+    text-align: left;
+}
+
+.tr {
+    text-align: right;
+}
+
+.tc {
+    text-align: center;
+}
+
+.tj {
+    text-align: justify;
+}
+
+.vt {
+    vertical-align: top;
+}
+
+.vm {
+    vertical-align: middle;
+}
+
+.vb {
+    vertical-align: bottom;
+}
