@@ -351,10 +351,10 @@
                     <input type="checkbox" id="checkbox">
                     <label for="checkbox" class="checkbox">提交</label>
                     <style>
-                        [type="checkbox"] {
+                        /* [type="checkbox"] {
                             position: absolute;
                             clip: rect(0 0 0 0);
-                        }
+                        } */
                         
                         .checkbox {
                             border: 1px solid gray;
@@ -491,6 +491,223 @@
                 </style>
             </div>
         </div>
+        <div class="part">
+            <h3><span id="part07">输入伪类</span></h3>
+            <div class="item">
+                <h4><span id="part07_01">:disabled和:enabled</span></h4>
+                <div class="item">
+                    <input disabled>
+                    <style>
+                        /* :disabled {
+                            border: 1px dashed lightgray;
+                            background: #f0f0f3;
+                        } */
+                        /* [disabled] {
+                            border: 1px dashed lightgray;
+                            background: #f0f0f3;
+                        } */
+                    </style>
+                </div>
+                <div class="item">
+                    <input disabled value="禁用">
+                    <input readonly value="只读">
+                    <input value="普通">
+                    <style>
+                        /* :enabled {
+                            border: 1px dashed deepskyblue;
+                            background: lightskyblue;
+                        } */
+                    </style>
+                </div>
+            </div>
+            <div class="item">
+                <h4><span id="part07_02">:read-only和:read-write</span></h4>
+                <div class="item">
+                    <textarea>默认</textarea>
+                    <textarea readonly>只读</textarea>
+                    <textarea disabled>禁用</textarea>
+                    <style>
+                        textarea {
+                            border: 1px dashed gray;
+                            background: white;
+                        }
+                        
+                        textarea:read-write {
+                            border: 1px solid black;
+                            background: gray;
+                        }
+                        
+                        textarea:read-only {
+                            border: 1px solid gray;
+                            background: lightgray;
+                        }
+                    </style>
+                </div>
+            </div>
+            <div class="item">
+                <h4><span id="part07_03">:placeholder-shown</span></h4>
+                <div class="item">
+                    <input placeholder="输入任意内容">
+                    <style>
+                        /* input {
+                            border: 2px solid gray;
+                        }
+                        
+                        input:placeholder-shown {
+                            border: 2px solid black;
+                        } */
+                    </style>
+                </div>
+                <div class="item">
+                    <div class="input-fill-x">
+                        <input class="input-full input-control" placeholder="邮箱">
+                        <label class="input-label">邮箱</label>
+                    </div>
+                    <style>
+                        .input-control:placeholder-shown::placeholder {
+                            color: transparent;
+                        }
+                        
+                        .input-fill-x {
+                            width: -webkit-fit-content;
+                            width: -moz-fit-content;
+                            width: fit-content;
+                            border-bottom: 1px solid #d0d0d5;
+                            position: relative;
+                        }
+                        
+                        .input-fill-x::after {
+                            content: "";
+                            position: absolute;
+                            border-bottom: 2px solid #2486ff;
+                            left: 0;
+                            right: 0;
+                            bottom: -1px;
+                            transform: scaleX(0);
+                            transition: transform .25s;
+                        }
+                        
+                        .input-fill-x:focus-within::after {
+                            transform: scaleX(1);
+                        }
+                        
+                        .input-control {
+                            margin: 0;
+                            font-size: 16px;
+                            line-height: 1.5;
+                            outline: none;
+                        }
+                        
+                        .input-fill {
+                            padding: 20px 16px 6px;
+                            border: 1px solid transparent;
+                            background: #f5f5f5;
+                        }
+                        
+                        .input-label {
+                            position: absolute;
+                            font-size: 16px;
+                            line-height: 1.5;
+                            left: 16px;
+                            top: 14px;
+                            color: #a2a9b6;
+                            padding: 0 2px;
+                            transform-origin: 0 0;
+                            pointer-events: none;
+                            transition: all .25s;
+                        }
+                        
+                        .input-control:not(:placeholder-shown)~.input-label,
+                        .input-control:focus~.input-label {
+                            color: #2486ff;
+                            transform: scale(0.75) translate(-2px, -32px);
+                        }
+                        
+                        .input-fill:not(:placeholder-shown)~.input-label,
+                        .input-fill:focus~.input-label {
+                            transform: scale(0.75) translate(0, -14px);
+                        }
+                    </style>
+                </div>
+                <div class="item">
+                    <input placeholder=" "><small></small>
+                    <textarea placeholder=" "></textarea> <small></small>
+                    <style>
+                        /* textarea:placeholder-shown+small::before,
+                        input:placeholder-shown+small::before {
+                            content: '尚未输入内容';
+                            color: red;
+                            font-size: 87.5%;
+                        } */
+                    </style>
+                </div>
+            </div>
+            <div class="item">
+                <h4><span id="part07_04">:checked</span></h4>
+                <div class="item">
+                    <input type="checkbox">
+                    <input type="checkbox" checked>
+                    <style>
+                        /* input:checked {
+                            box-shadow: 0 0 0 2px red;
+                        } */
+                    </style>
+                </div>
+                <div class="item">
+                    <h5>自定义单复选框</h5>
+                    <input type="radio" id="radio">
+                    <label for="radio" class="cs-radio"></label>
+                    <label for="radio">单选项</label>
+                    <style>
+                        [type="radio"] {
+                            position: absolute;
+                            width: 20px;
+                            height: 20px;
+                            opacity: 0;
+                            cursor: pointer;
+                        }
+                        
+                        .cs-radio {
+                            display: inline-block;
+                            width: 20px;
+                            height: 20px;
+                            border: 1px solid gray;
+                            border-radius: 50%;
+                            background-color: #fff;
+                            box-sizing: border-box;
+                            vertical-align: -.5ex;
+                            user-select: none;
+                            transition: border-color .2s;
+                            overflow: hidden;
+                        }
+                        
+                         :checked+.cs-radio {
+                            border-color: deepskyblue;
+                        }
+                        
+                         :focus+.cs-radio {
+                            border-color: deepskyblue;
+                        }
+                        
+                         :checked+.cs-radio::before {
+                            content: "";
+                            display: block;
+                            width: 10px;
+                            height: 10px;
+                            margin: 4px auto 0;
+                            border-radius: 50%;
+                            background-color: deepskyblue;
+                        }
+                        
+                         :disabled+.cs-radio {
+                            background-color: #f5f5f5;
+                            opacity: .4;
+                        }
+                    </style>
+                </div>
+            </div>
+        </div>
+
     </article>
     <div id="Float">
         <nav>
@@ -501,6 +718,7 @@
                 <li id="part04"><a href="#part04">属性选择器</a></li>
                 <li id="part05"><a href="#part05">用户行为伪类</a></li>
                 <li id="part06"><a href="#part06">URL定位伪类</a></li>
+                <li id="part07"><a href="#part07">输入伪类</a></li>
             </ul>
         </nav>
     </div>
