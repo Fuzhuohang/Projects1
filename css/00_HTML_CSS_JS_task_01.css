@@ -8,39 +8,6 @@ body {
     margin: 0;
 }
 
-header {
-    border-bottom: 1px solid gray;
-    padding-top: 25px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-}
-
-header>div {
-    margin: 0 auto;
-    min-width: 500px;
-    max-width: 1024px;
-}
-
-article {
-    /* height: auto; */
-    /* display: flex; */
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 139px;
-    bottom: 0;
-}
-
-footer {
-    height: 50px;
-}
-
-footer>div {
-    border-top: 1px solid gray;
-}
-
 ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -56,85 +23,34 @@ footer>div {
     border-radius: 6px;
 }
 
+header {
+    border-bottom: 1px solid gray;
+    background-color: whitesmoke;
+    padding-top: 25px;
+    position: absolute;
+    height: 84px;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
 h1 {
     text-align: center;
-    margin-top: 0;
+    min-width: 1024px;
 }
 
-#button {
-    text-align: right;
-}
-
-#button>div {
-    display: inline-block;
-    background-color: gray;
-    margin: 0 5px 10px 5px;
-    border-radius: 5px;
-}
-
-#button label {
-    display: inline-block;
-    width: 80px;
-    height: 38px;
-    font-weight: bolder;
-    border: 1px solid;
-    border-top-color: gray;
-    border-left-color: gray;
-    border-bottom-color: black;
-    border-right-color: black;
-    text-align: center;
-    border-radius: 5px;
-}
-
-#button label:active {
-    border-top-color: black;
-    border-left-color: black;
-    border-bottom-color: gray;
-    border-right-color: gray;
-}
-
-#button label:hover {
-    cursor: pointer;
-}
-
-#button label>div {
-    padding: 8px 0;
-}
-
-button {
+article {
     position: absolute;
-    clip: rect(0 0 0 0);
+    left: 0;
+    right: 0;
+    top: 110px;
+    bottom: 0;
 }
 
-#sub {
-    background-color: #17bc94;
-    color: white;
-}
-
-#sub>div::after {
-    content: "提交表单";
-}
-
-#res {
-    background-color: whitesmoke;
-}
-
-#res>div::after {
-    content: "清除数据";
-}
-
-#cle {
-    background-color: lightgray;
-}
-
-#cle>div::after {
-    content: "清空表单";
-}
-
-#form_items {
-    min-width: 100px;
-    max-width: 200px;
+.itg-group {
+    width: 200px;
     border-right: 1px solid gray;
+    background-color: whitesmoke;
     overflow-y: scroll;
     position: absolute;
     top: 0;
@@ -143,37 +59,70 @@ button {
     right: 0;
 }
 
-#form_item {
-    margin: 10px 0 8px 8px;
-}
-
-#form_item>div {
+.itg {
     margin: 5px;
     border: 1px dashed lightgray;
     height: 38px;
     text-align: center;
 }
 
-#form_item>div:active {
+.itg:active {
     color: #17bc94;
     border-color: #17bc94;
+    background-color: rgba(23, 188, 148, .1);
 }
 
-#form_item>div>div {
-    padding: 8px 0;
-}
-
-#form_body {
-    overflow-y: scroll;
+.form-design {
     position: absolute;
-    min-width: 400px;
+    min-width: 824px;
     top: 0;
     bottom: 0;
     left: 201px;
     right: 0;
 }
 
-#form {
-    height: 100%;
-    padding-left: 8px;
+.form-tab {
+    position: absolute;
+    height: 50px;
+    background-color: whitesmoke;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.d-title {
+    padding: 9px 10px;
+}
+
+.d-title>h2 {
+    margin: 0;
+}
+
+.btn-group {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 20px;
+    padding: 5px;
+}
+
+.btn {
+    width: 80px;
+    height: 40px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.f-fill {
+    color: white;
+    background-color: #17bc94;
+}
+
+.form-canvas {
+    overflow-y: scroll;
+    position: absolute;
+    top: 50px;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }

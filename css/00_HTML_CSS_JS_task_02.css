@@ -1,58 +1,28 @@
 /* 拖入表单元素样式 */
 
 .item {
-    position: relative;
-    height: 60px;
-    border-bottom: 1px dashed gray;
+    min-height: 40px;
+    padding: 5px;
+    font-size: 0;
 }
 
-.item_name {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
+.i-title {
+    display: inline-block;
     width: 100px;
-    height: auto;
+    vertical-align: 50%;
+    font-size: 16px;
+    height: 40px;
+    vertical-align: bottom;
 }
 
-.item_name>label {
-    display: block;
-    padding: 5px;
-    height: auto;
-}
-
-.item_body {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 100px;
-    right: 30px;
-    height: auto;
-    padding: 5px;
-}
-
-.item_value {
-    box-sizing: border-box;
-    width: 274px;
-    min-width: 244px;
-    max-width: 1180px;
-    height: 50px;
-}
-
-.item_options {
-    position: absolute;
-    width: 30px;
-    height: 60px;
-    top: 0;
-    bottom: 0;
-    right: 0;
-}
-
-.item_options>div {
-    width: 16px;
-    height: 16px;
-    padding: 3px;
+.i-body {
+    display: inline-block;
+    min-height: 38px;
+    width: 100px;
     border: 1px solid black;
-    margin: 3px 6px 3px 0;
-    border-radius: 50%;
+    border-radius: 5px;
+}
+
+.item+.item {
+    border-top: 1px dashed gray;
 }

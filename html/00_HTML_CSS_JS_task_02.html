@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>具有基本校验和拖拽效果的表单</title>
+    <link rel="stylesheet" href="../css/00_HTML_CSS_JS_task_01.css">
+    <link rel="stylesheet" href="../css/00_HTML_CSS_JS_task_02.css">
+    <link rel="stylesheet" href="../css/AttributeCSS.css">
+    <script src="../js/00_HTML_CSS_JS_task_02.js"></script>
+    <script src="../js/jquery.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <div>
+            <h1>具有基本校验和拖拽效果的表单</h1>
+            <!-- <div class="btn-group">
+                <div><label id="sub" for="submit"><div></div></label></div>
+                <div><label id="res" for="reset"><div></div></label></div>
+                <div><label id="cle" for="clear"><div></div></label></div>
+            </div> -->
+        </div>
+    </header>
+    <article id="form_design">
+        <div class="itg-group">
+            <div class="mt10 ml8 mb8">
+                <div id="form_item_01" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">单行文本</div>
+                </div>
+                <div id="form_item_02" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">密码</div>
+                </div>
+                <div id="form_item_03" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">多行文本</div>
+                </div>
+                <div id="form_item_04" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">下拉单选</div>
+                </div>
+                <div id="form_item_05" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">下拉复选</div>
+                </div>
+                <div id="form_item_06" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">单选框</div>
+                </div>
+                <div id="form_item_07" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">复选框</div>
+                </div>
+                <div id="form_item_08" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">日期</div>
+                </div>
+                <div id="form_item_09" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">数值</div>
+                </div>
+                <div id="form_item_10" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">邮箱</div>
+                </div>
+                <div id="form_item_11" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">电话</div>
+                </div>
+                <div id="form_item_12" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">颜色</div>
+                </div>
+                <div id="form_item_13" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">URL</div>
+                </div>
+                <div id="form_item_14" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">附件</div>
+                </div>
+                <div id="form_item_15" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">分组</div>
+                </div>
+            </div>
+        </div>
+        <div class="form-design">
+            <div class="form-tab">
+                <div class="d-title">
+                    <h2>表单设计</h2>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn f-fill">填写表单</button>
+                    <button type="button" class="btn f-clear">清空设计</button>
+                </div>
+            </div>
+            <div class="form-canvas" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <div id="form_canvas" class="mt10 mb8 ml8">
+                    <div class="item">
+                        <!-- <div class="wm-vl dib"> -->
+                        <div class="i-title wm-ht">单行文本：</div>
+                        <!-- </div> -->
+                        <div class="i-body">
+
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="i-title">长文本:</div>
+                        <div class="i-body">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+    <article id="form-fill" class="dn">
+        <div class="form-tab minw1024">
+            <div class="btn-group">
+                <button type="submit" class="btn f-fill">提交</button>
+                <button type="reset" class="btn f-clear">重置</button>
+                <button type="button" class="btn">修改设计</button>
+            </div>
+        </div>
+        <div class="w1024">
+            <form action=""></form>
+        </div>
+    </article>
+</body>
+
+</html>

@@ -64,3 +64,59 @@
 .vb {
     vertical-align: bottom;
 }
+
+.mt10 {
+    margin-top: 10px;
+}
+
+.ml8 {
+    margin-left: 8px;
+}
+
+.mb8 {
+    margin-bottom: 8px;
+}
+
+.pt8 {
+    padding-top: 8px;
+}
+
+.pb8 {
+    padding-bottom: 8px;
+}
+
+.minw1024 {
+    min-width: 1024px;
+}
+
+.w1024 {
+    width: 1024px;
+}
+
+.wa {
+    width: auto;
+}
+
+.ha {
+    height: auto;
+}
+
+.h100p {
+    height: 100%;
+}
+
+.ltr {
+    direction: ltr;
+}
+
+.rtl {
+    direction: rtl;
+}
+
+.wm-ht {
+    writing-mode: horizontal-tb;
+}
+
+.wm-vl {
+    writing-mode: vertical-lr;
+}
