@@ -22,24 +22,24 @@ window.onload = function() {
     // } else {
     //     $(".itg-group").css('width', 100);
     //     $(".form-design").css('left', 101);
-}
-
-$(window).resize(function() {
-    // article = $("#form_design").width();
-    // form_items = $(".itg-group").width();
-
-    // if (article > 820) {
-    //     $(".itg-group").css('width', 200);
-    //     $(".form-design").css('left', 201);
-    // } else if (article > 720) {
-    //     form_items = article - 620;
-    //     $(".itg-group").css('width', form_items);
-    //     $(".form-design").css('left', form_items + 1);
-    // } else {
-    //     $(".itg-group").css('width', 100);
-    //     $(".form-design").css('left', 101);
     // }
-});
+
+    $(window).resize(function() {
+        // article = $("#form_design").width();
+        // form_items = $(".itg-group").width();
+
+        // if (article > 820) {
+        //     $(".itg-group").css('width', 200);
+        //     $(".form-design").css('left', 201);
+        // } else if (article > 720) {
+        //     form_items = article - 620;
+        //     $(".itg-group").css('width', form_items);
+        //     $(".form-design").css('left', form_items + 1);
+        // } else {
+        //     $(".itg-group").css('width', 100);
+        //     $(".form-design").css('left', 101);
+        // }
+    });
 }
 
 
