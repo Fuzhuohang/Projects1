@@ -77,6 +77,10 @@
     margin-bottom: 8px;
 }
 
+.mr2 {
+    margin-right: 2px;
+}
+
 .pt8 {
     padding-top: 8px;
 }
@@ -119,4 +123,20 @@
 
 .wm-vl {
     writing-mode: vertical-lr;
+}
+
+.gtc-3 {
+    grid-template-columns: 1fr 1fr;
+}
+
+.gtc-2 {
+    grid-template-columns: 1fr 1fr;
+}
+
+.pr {
+    position: relative;
+}
+
+.white {
+    color: white;
 }

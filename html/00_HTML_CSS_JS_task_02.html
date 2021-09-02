@@ -15,11 +15,6 @@
     <header>
         <div>
             <h1>具有基本校验和拖拽效果的表单</h1>
-            <!-- <div class="btn-group">
-                <div><label id="sub" for="submit"><div></div></label></div>
-                <div><label id="res" for="reset"><div></div></label></div>
-                <div><label id="cle" for="clear"><div></div></label></div>
-            </div> -->
         </div>
     </header>
     <article id="form_design">
@@ -59,17 +54,17 @@
                     <div class="pt8 pb8">电话</div>
                 </div>
                 <div id="form_item_12" class="itg" draggable="true" ondragstart="drag(event)">
-                    <div class="pt8 pb8">颜色</div>
-                </div>
-                <div id="form_item_13" class="itg" draggable="true" ondragstart="drag(event)">
                     <div class="pt8 pb8">URL</div>
                 </div>
-                <div id="form_item_14" class="itg" draggable="true" ondragstart="drag(event)">
+                <div id="form_item_13" class="itg" draggable="true" ondragstart="drag(event)">
                     <div class="pt8 pb8">附件</div>
                 </div>
-                <div id="form_item_15" class="itg" draggable="true" ondragstart="drag(event)">
+                <!-- <div id="form_item_14" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">颜色</div>
+                </div> -->
+                <!-- <div id="form_item_15" class="itg" draggable="true" ondragstart="drag(event)">
                     <div class="pt8 pb8">分组</div>
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="form-design">
@@ -83,25 +78,105 @@
                 </div>
             </div>
             <div class="form-canvas" ondrop="drop(event)" ondragover="allowDrop(event)">
-                <div id="form_canvas" class="mt10 mb8 ml8">
-                    <div class="item">
-                        <!-- <div class="wm-vl dib"> -->
-                        <div class="i-title wm-ht">单行文本：</div>
-                        <!-- </div> -->
-                        <div class="i-body">
-
-                        </div>
+                <div id="form_canvas" class="mt10 mb8 ml8 mr2">
+                    <div class="i">
+                        <input type="radio" name="item" id="ShortText" hidden>
+                        <label for="ShortText" class="db pr">
+                            <div class="item">
+                                <div class="i-title wm-ht">单行文本：</div>
+                                <div class="i-body-text"></div>
+                            </div>
+                            <button type="button" class="i-icon">
+                                <img src="../imgs/edit.png" alt="编辑">
+                            </button>
+                        </label>
                     </div>
 
-                    <div class="item">
-                        <div class="i-title">长文本:</div>
-                        <div class="i-body">
+                    <div class="i">
+                        <input type="radio" name="item" id="LongText" hidden>
+                        <label for="LongText" class="db pr">
+                            <div class="item">
+                                <div class="i-title">长文本:</div>
+                                <div class="i-body-textarea">
+                                    
+                                </div>
+                            </div>
+                            <button type="button" class="i-icon">
+                                <img src="../imgs/edit.png" alt="编辑">
+                            </button>
+                        </label>
+                    </div>
 
-                        </div>
+                    <div class="i">
+                        <input type="radio" name="item" id="Radio" hidden>
+                        <label for="Radio" class="db pr">
+                            <div class="item">
+                                <div class="i-title">单选框:</div>
+                                <div class="i-body-check">
+                                    <div class="i-check-item">
+                                        <div class="i-check-box-r"></div>
+                                        <div class="i-check-text">选项1</div>
+                                    </div>
+                                    <div class="i-check-item">
+                                        <div class="i-check-box-r"></div>
+                                        <div class="i-check-text">选项2</div>
+                                    </div>
+                                    <div class="i-check-item">
+                                        <div class="i-check-box-r"></div>
+                                        <div class="i-check-text">选项3</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="i-icon">
+                                <img src="../imgs/edit.png" alt="编辑">
+                            </button>
+                        </label>
+                    </div>
+
+                    <div class="i">
+                        <input type="radio" name="item" id="Checkbox" hidden>
+                        <label for="Checkbox" class="db pr">
+                            <div class="item">
+                                <div class="i-title">多选框:</div>
+                                <div class="i-body-check">
+                                    <div class="i-check-item">
+                                        <div class="i-check-box-c"></div>
+                                        <div class="i-check-text">选项1</div>
+                                    </div>
+                                    <div class="i-check-item">
+                                        <div class="i-check-box-c"></div>
+                                        <div class="i-check-text">选项2</div>
+                                    </div>
+                                    <div class="i-check-item">
+                                        <div class="i-check-box-c"></div>
+                                        <div class="i-check-text">选项3</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="i-icon">
+                                <img src="../imgs/edit.png" alt="编辑">
+                            </button>
+                        </label>
+                    </div>
+
+                    <div class="i">
+                        <input type="radio" name="item" id="File" hidden>
+                        <label for="File" class="db pr">
+                            <div class="item">
+                                <div class="i-title">附件:</div>
+                                <div class="i-body-file">
+                                    <div class="i-file-button"></div>
+                                </div>
+                            </div>
+                            <button type="button" class="i-icon">
+                                <img src="../imgs/edit.png" alt="编辑">
+                            </button>
+                        </label>
                     </div>
                 </div>
             </div>
         </div>
+
     </article>
     <article id="form-fill" class="dn">
         <div class="form-tab minw1024">
