@@ -66,6 +66,10 @@
     display: none;
 }
 
+.i-icon::after {
+    content: url(../imgs/edit.png);
+}
+
 :checked+label>.i-icon {
     display: block;
 }

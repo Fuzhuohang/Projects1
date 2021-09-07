@@ -4,7 +4,18 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <title>javascript_study_01</title>
-    <script src="../js/htmlJSStudy01.js"></script>
+    <!-- <script src="../js/htmlJSStudy01.js"></script> -->
+
+    <script>
+        const itemBox = document.createElement("div");
+        console.log(itemBox);
+        let itemBox2 = new Object();
+        itemBox2 = itemBox;
+        console.log(itemBox2);
+        itemBox.className = "i";
+        console.log(itemBox);
+        console.log(itemBox2);
+    </script>
 </head>
 
 <body>

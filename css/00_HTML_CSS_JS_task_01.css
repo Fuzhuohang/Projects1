@@ -113,6 +113,38 @@ article {
     font-weight: bold;
 }
 
+.container {
+    position: fixed;
+    display: none;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .5);
+    text-align: right;
+    font-size: 0;
+    white-space: nowrap;
+    overflow: auto;
+    z-index: 1;
+}
+
+.dialog {
+    display: inline-block;
+    min-width: 600px;
+    max-width: 600px;
+    vertical-align: middle;
+    /* border-radius: 6px; */
+    height: 100%;
+    background-color: white;
+    text-align: left;
+    font-size: 14px;
+    white-space: normal;
+}
+
+.content {
+    padding: 20px;
+}
+
 .f-fill {
     color: white;
     background-color: #17bc94;
