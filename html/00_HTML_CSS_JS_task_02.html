@@ -14,7 +14,7 @@
 <body>
     <header>
         <div>
-            <h1>具有基本校验和拖拽效果的表单</h1>
+            <h1 class="tc minw1024">具有基本校验和拖拽效果的表单</h1>
         </div>
     </header>
     <article id="form_design">
@@ -74,19 +74,19 @@
                 </div>
                 <div class="btn-group">
                     <button type="button" class="btn f-fill">填写表单</button>
-                    <button type="button" class="btn f-clear">清空设计</button>
+                    <button type="button" class="btn f-clear" onclick="clearDesign()">清空设计</button>
                 </div>
             </div>
             <div class="form-canvas" ondrop="drop(event)" ondragover="allowDrop(event)">
                 <div id="form_canvas" class="mt10 mb8 ml8 mr2">
-                    <div class="i">
+                    <!-- <div class="i">
                         <input type="radio" name="item" id="ShortText" hidden>
                         <label for="ShortText" class="db pr">
                             <div class="item">
                                 <div class="i-title wm-ht">单行文本：</div>
                                 <div class="i-body-text"></div>
                             </div>
-                            <button type="button" class="i-icon">
+                            <button type="button" class="i-icon" onclick="edit('ShortText')">
                             </button>
                         </label>
                     </div>
@@ -167,13 +167,57 @@
                             <button type="button" class="i-icon">
                             </button>
                         </label>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
-        <div class="container">
+        <div id="editPanel" class="container db">
             <div class="dialog">
-                <div class="content">内容占位</div>
+                <div class="content">
+                    <div class="edit-item">
+                        <h1>基本属性</h1>
+                        <div class="attr">
+                            <div class="attr-item">
+                                <label for="item_id" class="attr-item-tag">数据项编码: </label>
+                                <input type="text" id="item_id" class="attr-item-value" readonly value="123456">
+                            </div>
+                            <div class="attr-item">
+                                <label for="item_name" class="attr-item-tag">数据项名称: </label>
+                                <input type="text" id="item_name" class="attr-item-value" required>
+                            </div>
+                        </div>
+                        <h1>数据项属性</h1>
+                        <div id="attr" class="attr">
+                            <div class="attr-item">
+                                <label for="item_default" class="attr-item-tag">默认值: </label>
+                                <input type="text" id="item_default" class="attr-item-value">
+                            </div>
+                            <div class="attr-item">
+                                <label for="item_required" class="attr-item-tag va6">是否必填: </label>
+                                <div class="attr-item-value dib tl pt4 pb4 bx">
+                                    <input type="checkbox" name="required" id="item_required" class="logic">
+                                    <label for="item_required" class="logic-i"></label>
+                                </div>
+                            </div>
+                            <div class="attr-item">
+                                <label for="item_readonly" class="attr-item-tag va6">是否只读: </label>
+                                <div class="attr-item-value dib tl pt4 pb4 bx">
+                                    <input type="checkbox" name="required" id="item_readonly" class="logic">
+                                    <label for="item_readonly" class="logic-i"></label>
+                                </div>
+                            </div>
+                            <div class="attr-item">
+                                <label for="item_options" class="attr-item-tag">选项设置: </label>
+                                <input type="text" id="item_options" class="attr-item-value">
+                            </div>
+                        </div>
+                        <div></div>
+                    </div>
+                    <div class="edit-btn-group">
+                        <button type="button" class="btn f-fill mr20">退出编辑</button>
+                        <button type="button" class="btn f-clear ml20">删除控件</button>
+                    </div>
+                </div>
             </div>
         </div>
     </article>

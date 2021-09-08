@@ -316,11 +316,9 @@ window.onload = function() {
     console.log(obj1.valueOf == obj2.valueOf);
 
 
-    let x = [];
-    const a = {};
-    a.name = 1;
-    a.xx = {};
-    a.xx.age = 2;
-    x.push(a);
-    console.log(x);
+    const x = [1, 2, 3];
+
+    for (let i = 0; i < x.length; i++) {
+        console.log(x[i]);
+    }
 }

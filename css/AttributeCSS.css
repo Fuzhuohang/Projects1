@@ -65,12 +65,20 @@
     vertical-align: bottom;
 }
 
+.va6 {
+    vertical-align: 6px;
+}
+
 .mt10 {
     margin-top: 10px;
 }
 
 .ml8 {
     margin-left: 8px;
+}
+
+.ml20 {
+    margin-left: 20px;
 }
 
 .mb8 {
@@ -81,8 +89,24 @@
     margin-right: 2px;
 }
 
+.mr20 {
+    margin-right: 20px;
+}
+
+.pa2 {
+    padding: 2px;
+}
+
+.pt4 {
+    padding-top: 4px;
+}
+
 .pt8 {
     padding-top: 8px;
+}
+
+.pb4 {
+    padding-bottom: 4px;
 }
 
 .pb8 {
@@ -139,4 +163,12 @@
 
 .white {
     color: white;
+}
+
+.minw1024 {
+    min-width: 1024px;
+}
+
+.bx {
+    box-sizing: border-box;
 }
