@@ -3,6 +3,8 @@ let formCanvas;
 
 let itemsData = [];
 
+let editItem;
+
 window.onload = function() {
     formCanvas = document.getElementById("form_canvas");
 
@@ -91,9 +93,15 @@ function drop(ev) {
             itemData.attr.readonly = false;
             itemData.attr.required = false;
             itemData.attr.options = [];
-            itemData.attr.options[0] = "";
-            itemData.attr.options[1] = "";
-            itemData.attr.options[2] = "";
+            itemData.attr.options[0] = {};
+            itemData.attr.options[0].value = "";
+            itemData.attr.options[0].check = false;
+            itemData.attr.options[1] = {};
+            itemData.attr.options[1].value = "";
+            itemData.attr.options[1].check = false;
+            itemData.attr.options[2] = {};
+            itemData.attr.options[2].value = "";
+            itemData.attr.options[2].check = false;
             break;
         case "form_item_05":
             itemData.id = "DropdownMulti_" + Date.now().valueOf();
@@ -104,9 +112,15 @@ function drop(ev) {
             itemData.attr.readonly = false;
             itemData.attr.required = false;
             itemData.attr.options = [];
-            itemData.attr.options[0] = "";
-            itemData.attr.options[1] = "";
-            itemData.attr.options[2] = "";
+            itemData.attr.options[0] = {};
+            itemData.attr.options[0].value = "";
+            itemData.attr.options[0].check = false;
+            itemData.attr.options[1] = {};
+            itemData.attr.options[1].value = "";
+            itemData.attr.options[1].check = false;
+            itemData.attr.options[2] = {};
+            itemData.attr.options[2].value = "";
+            itemData.attr.options[2].check = false;
             break;
         case "form_item_06":
             itemData.id = "Radio_" + Date.now().valueOf();
@@ -117,9 +131,15 @@ function drop(ev) {
             itemData.attr.readonly = false;
             itemData.attr.required = false;
             itemData.attr.options = [];
-            itemData.attr.options[0] = "选项1";
-            itemData.attr.options[1] = "选项2";
-            itemData.attr.options[2] = "选项3";
+            itemData.attr.options[0] = {};
+            itemData.attr.options[0].value = "选项1";
+            itemData.attr.options[0].check = false;
+            itemData.attr.options[1] = {};
+            itemData.attr.options[1].value = "选项2";
+            itemData.attr.options[1].check = false;
+            itemData.attr.options[2] = {};
+            itemData.attr.options[2].value = "选项3";
+            itemData.attr.options[2].check = false;
             break;
         case "form_item_07":
             itemData.id = "Checkbox_" + Date.now().valueOf();
@@ -130,9 +150,15 @@ function drop(ev) {
             itemData.attr.readonly = false;
             itemData.attr.required = false;
             itemData.attr.options = [];
-            itemData.attr.options[0] = "选项1";
-            itemData.attr.options[1] = "选项2";
-            itemData.attr.options[2] = "选项3";
+            itemData.attr.options[0] = {};
+            itemData.attr.options[0].value = "选项1";
+            itemData.attr.options[0].check = false;
+            itemData.attr.options[1] = {};
+            itemData.attr.options[1].value = "选项2";
+            itemData.attr.options[1].check = false;
+            itemData.attr.options[2] = {};
+            itemData.attr.options[2].value = "选项3";
+            itemData.attr.options[2].check = false;
             break;
         case "form_item_08":
             itemData.id = "Date_" + Date.now().valueOf();
@@ -213,8 +239,100 @@ function clearDesign() {
 function edit(id) {
     console.log(id.valueOf());
     const editPanel = document.getElementById("editPanel");
-    editPanel.style.display = "block";
+    editPanel.parentNode.style.backgroundColor = "rgba(0, 0, 0, .5)";
+    editPanel.parentNode.style.left = "0";
+    editPanel.parentNode.style.animation = "none";
+    editPanel.style.animation = "attrfadeIn .5s";
+    editPanel.style.left = "0";
+
+    for (const item of itemsData) {
+        if (id !== item.id) {
+            continue;
+        } else {
+            editItem = item;
+        }
+    }
+
+    const itemId = document.getElementById("item_id");
+    itemId.value = editItem.id;
+    const itemName = document.getElementById("item_name");
+    itemName.value = editItem.name;
+
+    if (editItem.attr.default != undefined) {
+        const Default = document.getElementById("default");
+        Default.style.display = "block";
+        const itemDefault = document.getElementById("item_default");
+        itemDefault.value = editItem.attr.default;
+    }
+
+    if (editItem.attr.required != undefined) {
+        const Required = document.getElementById("required");
+        Required.style.display = "block";
+        const itemRequired = document.getElementById("item_required");
+        itemRequired.value = editItem.attr.required;
+    }
+
+    if (editItem.attr.readonly != undefined) {
+        const Readonly = document.getElementById("readonly");
+        Readonly.style.display = "block";
+        const itemReadonly = document.getElementById("item_readonly");
+        itemReadonly.value = editItem.attr.readonly;
+    }
+
+    if (editItem.attr.options != undefined) {
+        const Options = document.getElementById("options");
+        Options.style.display = "block";
+        const itemOptionGroup = document.getElementById("item_options_group");
+        for (const Option of editItem.attr.options) {
+            // <div class="ma5">
+            //     <input type="radio" name="option_tag">
+            //     <input type="text" name="option_value" class="attr-item-value" value="选项1" placeholder="请输入选项值">
+            //     <button class="attr-option-del" name="option_tag"></button>
+            // </div>
+            const option = document.createElement("div");
+            option.className = "ma5";
+
+            const optionTag = document.createElement("input");
+            switch (editItem.type) {
+                case "dropdown":
+                case "radio":
+                    optionTag.type = "radio";
+                    optionTag.name = "option_tag";
+                    if (Option.check) {
+                        optionTag.setAttribute("checked", true);
+                    }
+                    break;
+                case "dropdownmulti":
+                case "checkbox":
+                    optionTag.type = "checkbox";
+                    optionTag.name = "option_tag";
+                    if (Option.check) {
+                        optionTag.setAttribute("checked", true);
+                    }
+                    break;
+            }
+            option.appendChild(optionTag);
+
+            const optionValue = document.createElement("input");
+            optionValue.type = "text";
+            optionValue.name = "option_value";
+            optionValue.className = "attr-item-value";
+            optionValue.placeholder = "请输入选项值";
+            optionValue.value = Option.value;
+            option.appendChild(optionValue);
+
+            const optionDel = document.createElement("button");
+            optionDel.className = "attr-option-del";
+            optionDel.name = "option_tag";
+            option.appendChild(optionDel);
+
+            itemOptionGroup.appendChild(option);
+        }
+    }
+
 }
+
+
 
 
 function formdesign(obj) {
@@ -275,7 +393,7 @@ function formdesign(obj) {
                 const checkItemTag = document.createElement("div");
                 checkItemTag.id = obj.id + "_option_" + i;
                 checkItemTag.className = "i-check-text";
-                checkItemTag.innerHTML = obj.attr.options[i];
+                checkItemTag.innerHTML = obj.attr.options[i].value;
                 checkItem.appendChild(checkItemBox);
                 checkItem.appendChild(checkItemTag);
                 itemBody.appendChild(checkItem);
@@ -301,6 +419,35 @@ function formdesign(obj) {
     itemBox.appendChild(itemLabel);
 
     formCanvas.appendChild(itemBox);
+}
+
+function addOption() {
+    let attrOptionGroup = document.getElementById("item_options_group");
+}
+
+function exitEdit() {
+    const editPanel = document.getElementById("editPanel");
+    editPanel.parentNode.style.backgroundColor = "transparent";
+    editPanel.style.animation = "attrfadeOut .25s";
+    editPanel.style.left = "100%";
+    editPanel.parentNode.style.animation = "attrfadeOut .5s";
+    editPanel.parentNode.style.left = "100%";
+
+    const Default = document.getElementById("default");
+    Default.style.display = "none";
+    const Required = document.getElementById("required");
+    Required.style.display = "none";
+    const Readonly = document.getElementById("readonly");
+    Readonly.style.display = "none";
+    const Options = document.getElementById("options");
+    Options.style.display = "none";
+
+    const itemOptionGroup = document.getElementById("item_options_group");
+    while (itemOptionGroup.hasChildNodes()) {
+        itemOptionGroup.removeChild(itemOptionGroup.firstChild);
+    }
+
+    editItem = null;
 }
 
 

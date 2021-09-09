@@ -171,8 +171,8 @@
                 </div>
             </div>
         </div>
-        <div id="editPanel" class="container db">
-            <div class="dialog">
+        <div class="container">
+            <div id="editPanel" class="dialog">
                 <div class="content">
                     <div class="edit-item">
                         <h1>基本属性</h1>
@@ -188,33 +188,58 @@
                         </div>
                         <h1>数据项属性</h1>
                         <div id="attr" class="attr">
-                            <div class="attr-item">
+                            <div class="attr-item dn" id="default">
                                 <label for="item_default" class="attr-item-tag">默认值: </label>
-                                <input type="text" id="item_default" class="attr-item-value">
+                                <input type="text" id="item_default" class="attr-item-value" placeholder="请输入默认值">
                             </div>
-                            <div class="attr-item">
+                            <div class="attr-item dn" id="required">
                                 <label for="item_required" class="attr-item-tag va6">是否必填: </label>
                                 <div class="attr-item-value dib tl pt4 pb4 bx">
-                                    <input type="checkbox" name="required" id="item_required" class="logic">
+                                    <input type="radio" name="required" id="item_required" class="logic">
                                     <label for="item_required" class="logic-i"></label>
                                 </div>
                             </div>
-                            <div class="attr-item">
+                            <div class="attr-item dn" id="readonly">
                                 <label for="item_readonly" class="attr-item-tag va6">是否只读: </label>
                                 <div class="attr-item-value dib tl pt4 pb4 bx">
-                                    <input type="checkbox" name="required" id="item_readonly" class="logic">
+                                    <input type="radio" name="required" id="item_readonly" class="logic">
                                     <label for="item_readonly" class="logic-i"></label>
                                 </div>
                             </div>
-                            <div class="attr-item">
-                                <label for="item_options" class="attr-item-tag">选项设置: </label>
-                                <input type="text" id="item_options" class="attr-item-value">
+                            <div class="ma5 dn" id="options">
+                                <div class="attr-option-title">
+                                    <label for="item_options" class="attr-item-tag va6">选项设置: </label>
+                                    <div class="attr-item-value dib"></div>
+                                </div>
+                                <div class="attr-option-box">
+                                    <div class="attr-options" id="item_options_group">
+                                        <!-- <div class="ma5">
+                                            <input type="radio" name="option_tag">
+                                            <input type="text" name="option_value" class="attr-item-value" value="选项1" placeholder="请输入选项值">
+                                            <button class="attr-option-del" name="option_tag"></button>
+                                        </div>
+                                        <div class="ma5">
+                                            <input type="radio" name="option_tag">
+                                            <input type="text" name="option_value" class="attr-item-value" value="选项2" placeholder="请输入选项值">
+                                            <button class="attr-option-del" name="option_tag"></button>
+                                        </div>
+                                        <div class="ma5">
+                                            <input type="radio" name="option_tag">
+                                            <input type="text" name="option_value" class="attr-item-value" value="选项3" placeholder="请输入选项值">
+                                            <button class="attr-option-del" name="option_tag"></button>
+                                        </div> -->
+
+                                    </div>
+                                    <button class="attr-option-add" onclick="addOption()">
+                                        添加选项
+                                    </button>
+                                </div>
                             </div>
                         </div>
                         <div></div>
                     </div>
                     <div class="edit-btn-group">
-                        <button type="button" class="btn f-fill mr20">退出编辑</button>
+                        <button type="button" class="btn f-fill mr20" onclick="exitEdit()">退出编辑</button>
                         <button type="button" class="btn f-clear ml20">删除控件</button>
                     </div>
                 </div>

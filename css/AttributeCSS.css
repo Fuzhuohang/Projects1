@@ -69,6 +69,10 @@
     vertical-align: 6px;
 }
 
+.ma5 {
+    margin: 5px;
+}
+
 .mt10 {
     margin-top: 10px;
 }
@@ -97,6 +101,10 @@
     padding: 2px;
 }
 
+.pa10 {
+    padding: 10px;
+}
+
 .pt4 {
     padding-top: 4px;
 }
@@ -111,6 +119,10 @@
 
 .pb8 {
     padding-bottom: 8px;
+}
+
+.pr20 {
+    padding-right: 20px;
 }
 
 .minw1024 {
@@ -171,4 +183,12 @@
 
 .bx {
     box-sizing: border-box;
+}
+
+.bg-gray {
+    background-color: gray;
+}
+
+.bg-lightgray {
+    background-color: lightgray;
 }

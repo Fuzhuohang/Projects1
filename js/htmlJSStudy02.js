@@ -321,4 +321,8 @@ window.onload = function() {
     for (let i = 0; i < x.length; i++) {
         console.log(x[i]);
     }
+
+    const x = {};
+    // x.a = [];
+    console.log(x.a === undefined);
 }

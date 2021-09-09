@@ -110,10 +110,9 @@ article {
 
 .container {
     position: fixed;
-    display: none;
     top: 0;
     right: 0;
-    left: 0;
+    left: 100%;
     bottom: 0;
     background-color: rgba(0, 0, 0, .5);
     text-align: right;
@@ -128,7 +127,6 @@ article {
     min-width: 600px;
     max-width: 600px;
     vertical-align: middle;
-    /* border-radius: 6px; */
     height: 100%;
     background-color: white;
     text-align: left;
@@ -168,12 +166,7 @@ button:hover {
     text-align: center;
 }
 
-.attr {
-    border: 1px dashed deepskyblue;
-}
-
 .attr-item {
-    border: 1px dotted darkblue;
     margin: 5px;
     padding-right: 20px;
     text-align: right;
@@ -184,10 +177,49 @@ button:hover {
 }
 
 .attr-item-value {
-    font-size: 18px;
+    font-size: 14px;
     height: 30px;
     width: 400px;
     margin-left: 5px;
+    box-sizing: border-box;
+}
+
+.attr-option-title {
+    text-align: right;
+    padding-right: 20px;
+}
+
+.attr-option-box {
+    margin: 5px;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    box-sizing: border-box;
+    background-color: lightgray;
+}
+
+.attr-option-add {
+    width: 300px;
+    color: #17bc94;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: transparent;
+    border-color: transparent;
+    height: 50px;
+}
+
+.attr-option-del {
+    width: 24px;
+    height: 24px;
+    box-sizing: border-box;
+    padding: 2px;
+    border-color: transparent;
+    background-color: transparent;
+    vertical-align: -2px;
+}
+
+.attr-option-del::after {
+    content: url(../imgs/delete.png);
 }
 
 .logic {
@@ -241,4 +273,22 @@ button:hover {
 .logic:disabled+.logic-i {
     opacity: .4;
     cursor: default;
+}
+
+@keyframes attrfadeOut {
+    from {
+        left: 0;
+    }
+    to {
+        left: 100%;
+    }
+}
+
+@keyframes attrfadeIn {
+    from {
+        left: 100%;
+    }
+    to {
+        left: 0;
+    }
 }
