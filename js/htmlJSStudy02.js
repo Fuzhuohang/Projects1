@@ -322,7 +322,28 @@ window.onload = function() {
         console.log(x[i]);
     }
 
-    const x = {};
-    // x.a = [];
-    console.log(x.a === undefined);
+    let x = [{
+            value: "aaa"
+        },
+        {
+            value: ""
+        },
+        {
+            value: "ccc"
+        },
+        {
+            value: ""
+        },
+        {
+            value: "eee"
+        }
+    ];
+    for (let i = 0; i < x.length; ++i) {
+        x[i].value = "x";
+        if (x[i].value == "") {
+            x.splice(i, 0);
+        }
+    }
+    console.log(x);
+
 }

@@ -125,6 +125,10 @@
     padding-right: 20px;
 }
 
+.pl5 {
+    padding-left: 5px;
+}
+
 .minw1024 {
     min-width: 1024px;
 }
@@ -191,4 +195,12 @@
 
 .bg-lightgray {
     background-color: lightgray;
+}
+
+.fs18 {
+    font-size: 18px;
+}
+
+.fs20 {
+    font-size: 20px;
 }
