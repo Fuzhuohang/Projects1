@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>具有基本校验和拖拽效果的表单</title>
+    <link rel="stylesheet" href="../css/00_HTML_CSS_JS_task_01.css">
+    <link rel="stylesheet" href="../css/00_HTML_CSS_JS_task_02.css">
+    <link rel="stylesheet" href="../css/AttributeCSS.css">
+    <script src="../js/00_HTML_CSS_JS_task_02.js"></script>
+    <script src="../js/jquery.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <div>
+            <h1 class="tc minw1024">具有基本校验和拖拽效果的表单</h1>
+        </div>
+    </header>
+    <article id="form_design" class="db">
+        <div class="itg-group">
+            <div class="mt10 ml8 mb8">
+                <div id="form_item_01" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">单行文本</div>
+                </div>
+                <div id="form_item_02" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">密码</div>
+                </div>
+                <div id="form_item_03" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">多行文本</div>
+                </div>
+                <div id="form_item_04" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">下拉单选</div>
+                </div>
+                <div id="form_item_05" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">下拉复选</div>
+                </div>
+                <div id="form_item_06" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">单选框</div>
+                </div>
+                <div id="form_item_07" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">复选框</div>
+                </div>
+                <div id="form_item_08" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">日期</div>
+                </div>
+                <div id="form_item_09" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">数值</div>
+                </div>
+                <div id="form_item_10" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">邮箱</div>
+                </div>
+                <div id="form_item_11" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">电话</div>
+                </div>
+                <div id="form_item_12" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">URL</div>
+                </div>
+                <div id="form_item_13" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">附件</div>
+                </div>
+                <!-- <div id="form_item_14" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">颜色</div>
+                </div> -->
+                <!-- <div id="form_item_15" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">分组</div>
+                </div> -->
+            </div>
+        </div>
+        <div class="form-design">
+            <div class="form-tab">
+                <div class="d-title">
+                    <h2>表单设计</h2>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn f-fill" onclick="fillForm()">填写表单</button>
+                    <button type="button" class="btn f-clear" onclick="clearDesign()">清空设计</button>
+                </div>
+            </div>
+            <div class="form-canvas" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <div id="form_canvas" class="mt10 mb8 ml8 mr2">
+                    <!-- <div class="i">
+                        <input type="radio" name="item" id="ShortText" hidden>
+                        <label for="ShortText" class="db pr">
+                            <div class="item">
+                                <div class="i-title wm-ht">单行文本：</div>
+                                <div class="i-body-text"></div>
+                            </div>
+                            <button type="button" class="i-icon" onclick="edit('ShortText')">
+                            </button>
+                        </label>
+                    </div>
+
+                    <div class="i">
+                        <input type="radio" name="item" id="LongText" hidden>
+                        <label for="LongText" class="db pr">
+                            <div class="item">
+                                <div class="i-title">长文本:</div>
+                                <div class="i-body-textarea">
+                                    
+                                </div>
+                            </div>
+                            <button type="button" class="i-icon">
+                            </button>
+                        </label>
+                    </div>
+
+                    <div class="i">
+                        <input type="radio" name="item" id="Radio" hidden>
+                        <label for="Radio" class="db pr">
+                            <div class="item">
+                                <div class="i-title">单选框:</div>
+                                <div class="i-body-check">
+                                    <div class="i-check-item">
+                                        <div class="i-check-box-r"></div>
+                                        <div class="i-check-text">选项1</div>
+                                    </div>
+                                    <div class="i-check-item">
+                                        <div class="i-check-box-r"></div>
+                                        <div class="i-check-text">选项2</div>
+                                    </div>
+                                    <div class="i-check-item">
+                                        <div class="i-check-box-r"></div>
+                                        <div class="i-check-text">选项3</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="i-icon">
+                            </button>
+                        </label>
+                    </div>
+
+                    <div class="i">
+                        <input type="radio" name="item" id="Checkbox" hidden>
+                        <label for="Checkbox" class="db pr">
+                            <div class="item">
+                                <div class="i-title">多选框:</div>
+                                <div class="i-body-check">
+                                    <div class="i-check-item">
+                                        <div class="i-check-box-c"></div>
+                                        <div class="i-check-text">选项1</div>
+                                    </div>
+                                    <div class="i-check-item">
+                                        <div class="i-check-box-c"></div>
+                                        <div class="i-check-text">选项2</div>
+                                    </div>
+                                    <div class="i-check-item">
+                                        <div class="i-check-box-c"></div>
+                                        <div class="i-check-text">选项3</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="i-icon">
+                            </button>
+                        </label>
+                    </div>
+
+                    <div class="i">
+                        <input type="radio" name="item" id="File" hidden>
+                        <label for="File" class="db pr">
+                            <div class="item">
+                                <div class="i-title">附件:</div>
+                                <div class="i-body-file">
+                                    <div class="i-file-button"></div>
+                                </div>
+                            </div>
+                            <button type="button" class="i-icon">
+                            </button>
+                        </label>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </article>
+    <article id="form-fill" class="dn">
+        <div class="form-tab minw1024">
+            <div class="btn-group">
+                <button type="submit" class="btn f-fill">提交</button>
+                <button type="reset" class="btn f-clear">重置</button>
+                <button type="button" class="btn" onclick="designForm()">修改设计</button>
+            </div>
+        </div>
+        <div class="form-canvas tc">
+            <div class="w1024 dib pt8 pb8">
+                <form id="new-form" action="http://192.168.114.128:8080/form" method="POST" target="_blank">
+                    <div id="form-body">
+                        <!-- <div class="f-item">
+                            <div class="f-title">单行文本:</div>
+                            <input type="text" class="f-body-text">
+                        </div>
+                        <div class="f-item">
+                            <div class="f-title">长文本:</div>
+                            <textarea cols="30" rows="2" class="f-body-textarea"></textarea>
+                        </div>
+                        <div class="f-item">
+                            <div class="f-title">单选框:</div>
+                            <div class="f-body-check">
+                                <div class="i-check-item">
+                                    <input type="radio" name="radio" id="radio_item_1">
+                                    <label for="radio_item_1">选项1</label>
+                                </div>
+                                <div class="i-check-item">
+                                    <input type="radio" name="radio" id="radio_item_2">
+                                    <label for="radio_item_2">选项2</label>
+                                </div>
+                                <div class="i-check-item">
+                                    <input type="radio" name="radio" id="radio_item_3">
+                                    <label for="radio_item_3">选项3</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="f-item">
+                            <div class="f-title">多选框:</div>
+                            <div class="f-body-check">
+                                <div class="i-check-item">
+                                    <input type="checkbox" name="checkbox" id="checkbox_item_1">
+                                    <label for="checkbox_item_1">选项1</label>
+                                </div>
+                                <div class="i-check-item">
+                                    <input type="checkbox" name="checkbox" id="checkbox_item_2">
+                                    <label for="checkbox_item_2">选项2</label>
+                                </div>
+                                <div class="i-check-item">
+                                    <input type="checkbox" name="checkbox" id="checkbox_item_3">
+                                    <label for="checkbox_item_3">选项3</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="f-item">
+                            <div class="f-title">密码:</div>
+                            <input type="password" class="f-body-text">
+                        </div>
+                        <div class="f-item">
+                            <div class="f-title">日期:</div>
+                            <input type="date" class="f-body-text">
+                        </div>
+                        <div class="f-item">
+                            <div class="f-title">数值:</div>
+                            <input type="number" class="f-body-text">
+                        </div>
+                        <div class="f-item">
+                            <div class="f-title">邮箱:</div>
+                            <input type="email" class="f-body-text">
+                        </div>
+                        <div class="f-item">
+                            <div class="f-title">电话:</div>
+                            <input type="tel" class="f-body-text">
+                        </div>
+                        <div class="f-item">
+                            <div class="f-title">URL:</div>
+                            <input type="url" class="f-body-text">
+                        </div>
+                        <div class="f-item">
+                            <div class="f-title">附件:</div>
+                            <input type="file" class="f-body-file">
+                        </div>
+                        <div class="f-item">
+                            <div class="f-title">下拉单选:</div>
+                            <select name="dropdown" id="dropdown" class="f-body-text">
+                                <option value="" selected disabled class="dn"></option>
+                                <option value="选项1">选项1</option>
+                                <option value="选项2">选项2</option>
+                                <option value="选项3">选项3</option>
+                            </select>
+                        </div>
+                        <div class="f-item">
+                            <div class="f-title">下拉复选:</div>
+                            <select name="dropdownmulti" id="dropdownmulti" class="f-body-text">
+                                <option value="" selected disabled class="dn"></option>
+                                <option value="选项1">选项1</option>
+                                <option value="选项2">选项2</option>
+                                <option value="选项3">选项3</option>
+                            </select>
+                        </div>
+                        <script>
+                            let values = [];
+                            let opts = [];
+                            let select = document.getElementById("dropdownmulti");
+                            for (let i = 0; i < select.length; i++) {
+                                opts.push(select.item(i));
+                            }
+
+                            let optionHide = document.createElement("option");
+                            optionHide.hidden = true;
+                            select.appendChild(optionHide);
+                            select.addEventListener('input', function() {
+                                let value = this.options[this.selectedIndex].value;
+                                this.options[this.selectedIndex].style = "background: skyblue";
+                                let index = values.indexOf(value);
+                                if (index > -1) {
+                                    values.splice(index, 1);
+                                    opts.filter(function(opt) {
+                                        if (opt.value === value) {
+                                            opt.style = "";
+                                        }
+                                    });
+                                } else {
+                                    values.push(value);
+                                };
+                                this.options[this.length - 1].text = values.toString();
+
+                                if (values.length > 0) {
+                                    this.options[this.length - 1].selected = true;
+                                } else {
+                                    this.options[0].selected = true;
+                                }
+                                console.log(select.value);
+                            });
+                        </script> -->
+                    </div>
+                </form>
+            </div>
+        </div>
+    </article>
+    <div class="container">
+        <div id="editPanel" class="dialog">
+            <div class="content">
+                <div class="edit-item">
+                    <h1>基本属性</h1>
+                    <div class="attr">
+                        <div class="attr-item">
+                            <label for="item_id" class="attr-item-tag">数据项编码: </label>
+                            <input type="text" id="item_id" class="attr-item-value" readonly value="123456">
+                        </div>
+                        <div class="attr-item">
+                            <label for="item_name" class="attr-item-tag">数据项名称: </label>
+                            <input type="text" id="item_name" class="attr-item-value" maxlength="10" required>
+                        </div>
+                    </div>
+                    <h1>数据项属性</h1>
+                    <div id="attr" class="attr">
+                        <div class="attr-item dn" id="default">
+                            <label for="item_default" class="attr-item-tag">默认值: </label>
+                            <input type="text" id="item_default" class="attr-item-value" placeholder="请输入默认值">
+                        </div>
+                        <div class="attr-item dn" id="required">
+                            <label for="item_required" class="attr-item-tag va6">是否必填: </label>
+                            <div class="attr-item-value dib tl pt4 pb4 bx">
+                                <input type="checkbox" name="required" id="item_required" class="logic">
+                                <label for="item_required" class="logic-i"></label>
+                            </div>
+                        </div>
+                        <div class="attr-item dn" id="readonly">
+                            <label for="item_readonly" class="attr-item-tag va6">是否只读: </label>
+                            <div class="attr-item-value dib tl pt4 pb4 bx">
+                                <input type="checkbox" name="required" id="item_readonly" class="logic">
+                                <label for="item_readonly" class="logic-i"></label>
+                            </div>
+                        </div>
+                        <div class="ma5 dn" id="options">
+                            <div class="attr-option-title">
+                                <label for="item_options" class="attr-item-tag va6">选项设置: </label>
+                                <div class="attr-item-value dib"></div>
+                            </div>
+                            <div class="attr-option-box">
+                                <div class="attr-options" id="item_options_group">
+                                    <!-- <div class="ma5">
+                                        <input type="radio" name="option_tag">
+                                        <input type="text" name="option_value" class="attr-item-value" value="选项1" placeholder="请输入选项值">
+                                        <button class="attr-option-del" name="option_tag"></button>
+                                    </div>
+                                    <div class="ma5">
+                                        <input type="radio" name="option_tag">
+                                        <input type="text" name="option_value" class="attr-item-value" value="选项2" placeholder="请输入选项值">
+                                        <button class="attr-option-del" name="option_tag"></button>
+                                    </div>
+                                    <div class="ma5">
+                                        <input type="radio" name="option_tag">
+                                        <input type="text" name="option_value" class="attr-item-value" value="选项3" placeholder="请输入选项值">
+                                        <button class="attr-option-del" name="option_tag"></button>
+                                    </div> -->
+                                </div>
+                                <button class="attr-option-add" onclick="addOption()">
+                                    添加选项
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div></div>
+                </div>
+                <div class="edit-btn-group">
+                    <button type="button" class="btn f-fill mr20" onclick="exitEdit()">退出编辑</button>
+                    <button type="button" class="btn f-clear ml20" onclick="delItem()">删除控件</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

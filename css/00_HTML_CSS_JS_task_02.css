@@ -1,58 +1,228 @@
 /* 拖入表单元素样式 */
 
-.item {
-    position: relative;
-    height: 60px;
-    border-bottom: 1px dashed gray;
+.line {
+    display: grid;
 }
 
-.item_name {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 100px;
-    height: auto;
+.line>div+.line>div {
+    border-left: 1px dashed gray;
 }
 
-.item_name>label {
-    display: block;
+.item,
+.f-item {
+    display: grid;
+    min-height: 40px;
     padding: 5px;
-    height: auto;
-}
-
-.item_body {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 100px;
-    right: 30px;
-    height: auto;
-    padding: 5px;
-}
-
-.item_value {
+    grid-template-columns: 110px auto;
     box-sizing: border-box;
-    width: 274px;
-    min-width: 244px;
-    max-width: 1180px;
-    height: 50px;
 }
 
-.item_options {
+:checked+label>.item {
+    background-color: rgba(23, 188, 148, .1);
+    outline: 1px dashed rgb(23, 188, 148);
+}
+
+.i-title,
+.f-title {
+    width: 100px;
+    vertical-align: 50%;
+    /* height: 40px; */
+    vertical-align: bottom;
+}
+
+.i-body-text,
+.i-body-textarea,
+.f-body-text,
+.f-body-textarea {
+    min-height: 40px;
+    border: 1px solid gray;
+    background-color: #fff;
+    border-radius: 5px;
+    box-sizing: border-box;
+    padding: 5px;
+}
+
+.i-body-textarea {
+    min-height: 60px;
+}
+
+.i-body-text::after,
+.i-body-textarea::after {
+    content: "请输入";
+    color: rgb(156, 156, 156);
+}
+
+.i {
+    box-sizing: border-box;
+}
+
+.i+.i {
+    border-top: 1px dashed gray;
+}
+
+.i-icon {
     position: absolute;
-    width: 30px;
-    height: 60px;
-    top: 0;
-    bottom: 0;
-    right: 0;
+    border: 1px solid rgb(23, 188, 148);
+    background-color: white;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    text-align: center;
+    bottom: -12px;
+    right: 30px;
+    z-index: 1;
+    padding: 1px;
+    box-sizing: border-box;
+    display: none;
 }
 
-.item_options>div {
-    width: 16px;
-    height: 16px;
-    padding: 3px;
-    border: 1px solid black;
-    margin: 3px 6px 3px 0;
+.i-icon::after {
+    content: url(../imgs/edit.png);
+}
+
+:checked+label>.i-icon {
+    display: block;
+}
+
+.i-body-check,
+.i-body-file,
+.f-body-file,
+.f-body-check {
+    min-height: 40px;
+    box-sizing: border-box;
+    padding: 5px 0;
+}
+
+.i-check-item {
+    display: inline-block;
+    margin: 0 5px;
+}
+
+.i-check-box-r {
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+    box-sizing: border-box;
+    border: 1px solid gray;
     border-radius: 50%;
+    background-color: #fff;
+    vertical-align: middle;
+}
+
+.i-check-text {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.i-check-box-c {
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+    box-sizing: border-box;
+    border: 1px solid gray;
+    border-radius: 3px;
+    background-color: #fff;
+    vertical-align: middle;
+}
+
+.i-file-button {
+    display: inline-block;
+    height: 30px;
+    box-sizing: border-box;
+    border: 1px solid gray;
+    background-color: lightgray;
+    border-radius: 5px;
+    vertical-align: middle;
+    padding: 1px 10px;
+    line-height: 20px;
+}
+
+.i-file-button::before {
+    content: url(../imgs/upload.png);
+    vertical-align: middle;
+}
+
+.i-file-button::after {
+    margin-left: 5px;
+    content: "点击上传文件";
+    vertical-align: middle;
+    color: rgb(116, 116, 116);
+}
+
+.f-item {
+    text-align: left;
+    padding: 0
+}
+
+.f-body-text,
+.f-body-textarea {
+    font-size: 18px;
+}
+
+.f-body-text,
+.f-body-textarea,
+.f-body-file,
+.f-body-check {
+    margin: 5px;
+}
+
+.dropdownmulti_body {
+    position: relative;
+}
+
+#dropdownmulti_tag:checked+label>.dropdownmulti_items {
+    display: block;
+}
+
+#dropdownmulti_tag:not(:checked)+label>.dropdownmulti_items {
+    display: none;
+}
+
+.dropdownmulti_items {
+    position: absolute;
+    width: 904px;
+    border: 1px solid black;
+    background-color: white;
+    box-sizing: border-box;
+    /* overflow: hidden; */
+    /* max-height: 0px; */
+}
+
+.dropdownmulti_items ul {
+    margin: 0;
+    padding: 0;
+}
+
+.dropdownmulti_items li {
+    font-style: 18px;
+    margin: 5px 0;
+}
+
+.dropdownmulti_items li::marker {
+    color: transparent;
+}
+
+.dropdownmulti_items li>input:checked+label>div {
+    background-color: lightgray;
+}
+
+.f-title {
+    padding: 5px;
+    background-color: whitesmoke;
+    border-right: 1px solid gray;
+}
+
+.f-item:not(.f-item+.f-item) {
+    border: 1px solid gray;
+}
+
+.f-item+.f-item {
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+    border-bottom: 1px solid gray;
+}
+
+div[class*="required"]::before {
+    content: "*";
+    color: red;
 }
