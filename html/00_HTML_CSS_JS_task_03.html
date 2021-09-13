@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../css/00_HTML_CSS_JS_task_01.css">
     <link rel="stylesheet" href="../css/00_HTML_CSS_JS_task_02.css">
     <link rel="stylesheet" href="../css/AttributeCSS.css">
-    <script src="../js/00_HTML_CSS_JS_task_02.js"></script>
+    <script src="../js/00_HTML_CSS_JS_task_03.js"></script>
     <script src="../js/jquery.min.js"></script>
 </head>
 
@@ -191,7 +191,7 @@
         <div class="form-canvas tc">
             <div class="w1024 dib pt8 pb8">
                 <form id="new-form" action="http://192.168.114.128:8080/form" method="POST" target="_blank">
-                    <button type="submit" id="submit" class="abs-clip">提交表单</button>
+                    <button type="submit" id="submit" class="abs-clip" onclick="return submitForm()">提交表单</button>
                     <button type="reset" id="reset" class="abs-clip">清除数据</button>
                     <div id="form-body">
                         <!-- <div class="f-item">
@@ -330,7 +330,7 @@
                     <div class="attr">
                         <div class="attr-item">
                             <label for="item_id" class="attr-item-tag">数据项编码: </label>
-                            <input type="text" id="item_id" class="attr-item-value" readonly value="123456">
+                            <input type="text" id="item_id" class="attr-item-value" disabled value="123456">
                         </div>
                         <div class="attr-item">
                             <label for="item_name" class="attr-item-tag">数据项名称: </label>
@@ -385,6 +385,10 @@
                                 </button>
                             </div>
                         </div>
+                        <div class="attr-item dn" id="maxlength">
+                            <label for="item_maxlength" class="attr-item-tag">输入最大长度: </label>
+                            <input type="number" id="item_maxlength" class="attr-item-value" placeholder="请输入最大字符长度">
+                        </div>
                     </div>
                     <div></div>
                 </div>
@@ -395,6 +399,107 @@
             </div>
         </div>
     </div>
+
+    <!-- 表单设计——单行文本，多行文本，密码，下拉单选，下拉多选，日期，数值，邮箱，电话，URL -->
+    <template>
+        <div class="i">
+            <input type="radio" name="item" id="ShortText" hidden>
+            <label for="ShortText" class="db pr">
+                <div class="item">
+                    <div class="i-title wm-ht">单行文本：</div>
+                    <div class="i-body-text"></div>
+                </div>
+                <button type="button" class="i-icon" onclick="edit('ShortText')">
+                </button>
+            </label>
+        </div>
+    </template>
+    <!-- 表单设计——单选，复选 -->
+    <template>
+        <div class="i">
+            <input type="radio" name="item" id="Radio" hidden>
+            <label for="Radio" class="db pr">
+                <div class="item">
+                    <div class="i-title">单选框:</div>
+                    <div class="i-body-check">
+                        
+                    </div>
+                </div>
+                <button type="button" class="i-icon">
+                </button>
+            </label>
+        </div>
+    </template>
+    <!-- 表单设计——单选/复选选项 -->
+    <template>
+        <div class="i-check-item">
+            <div class="i-check-box-r"></div>
+            <div class="i-check-text">选项1</div>
+        </div>
+    </template>
+    <!-- 表单设计——附件 -->
+    <template>
+        <div class="i">
+            <input type="radio" name="item" id="File" hidden>
+            <label for="File" class="db pr">
+                <div class="item">
+                    <div class="i-title">附件:</div>
+                    <div class="i-body-file">
+                        <div class="i-file-button"></div>
+                    </div>
+                </div>
+                <button type="button" class="i-icon">
+                </button>
+            </label>
+        </div>
+    </template>
+    <!-- 表单项编辑——选项设置 -->
+    <template>
+        <div class="ma5">
+            <input type="radio" name="option_tag">
+            <input type="text" name="option_value" class="attr-item-value" value="选项2" placeholder="请输入选项值">
+            <button class="attr-option-del" name="option_del"></button>
+        </div>
+    </template>
+    <!-- 表单填写——单行文本，密码，日期，数值，邮箱，电话，URL，附件 -->
+    <template>
+        <div class="f-item">
+            <div class="f-title">单行文本:</div>
+            <input type="text" class="f-body-text">
+        </div>
+    </template>
+    <!-- 表单填写——多行文本 -->
+    <template>
+        <div class="f-item">
+            <div class="f-title">长文本:</div>
+            <textarea cols="30" rows="2" class="f-body-textarea"></textarea>
+        </div>
+    </template>
+    <!-- 表单填写——单选，复选 -->
+    <template>
+        <div class="f-item">
+            <div class="f-title">单选框:</div>
+            <div class="f-body-check">
+                
+            </div>
+        </div>
+    </template>
+    <!-- 表单填写——单选/复选选项 -->
+    <template>
+        <div class="i-check-item">
+            <input type="radio" name="radio" id="radio_item_1">
+            <label for="radio_item_1">选项1</label>
+        </div>
+    </template>
+    <!-- 表单填写——下拉单选，下拉多选 -->
+    <template>
+        <div class="f-item">
+            <div class="f-title">下拉单选:</div>
+            <select name="dropdown" id="dropdown" class="f-body-text">
+                <option value="" selected disabled class="dn"></option>
+            </select>
+        </div>
+    </template>
 </body>
 
 </html>

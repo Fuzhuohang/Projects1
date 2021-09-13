@@ -9,8 +9,24 @@ let optionTags;
 let optionValues;
 let optionDels;
 
+let temps;
+
 window.onload = function() {
+    // const url = "../json/00_HTML_CSS_JS_task_01.json";
+    // const request = new XMLHttpRequest();
+    // request.open("get", url);
+    // request.send(null);
+    // request.onload = function() {
+    //     if (request.status == 200) {
+    //         itemsData = JSON.parse(request.responseText);
+    //         for (const itemData of itemsData) {
+    //             formDesign(itemData);
+    //         }
+    //     }
+    // }
+
     formCanvas = document.getElementById("form_canvas");
+    temps = document.getElementsByTagName("template");
 
     const itemName = document.getElementById("item_name");
     itemName.onchange = function() {
@@ -42,6 +58,12 @@ window.onload = function() {
             editItem.attr.required = false;
         }
     }
+
+    const itemMaxlength = document.getElementById("item_maxlength");
+    itemMaxlength.onchange = function() {
+        console.log(itemMaxlength.value);
+        editItem.attr.maxLength = itemMaxlength.value;
+    }
 }
 
 // 允许拖拽操作
@@ -56,6 +78,17 @@ function drag(ev) {
 function drop(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("Text");
+
+    const itemData = addItem(data);
+    console.log(itemData);
+    formdesign(itemData);
+    itemsData.push(itemData);
+    console.log(itemsData);
+
+    // console.log(itemsData);
+}
+// 拖入操作，生成表单数据项数据
+function addItem(data) {
     const itemData = {};
     switch (data) {
         case "form_item_01":
@@ -205,39 +238,13 @@ function drop(ev) {
 
             //     break;
     }
-    formdesign(itemData);
-    itemsData.push(itemData);
-
-    // console.log(itemsData);
+    console.log(itemData);
+    return itemData;
 }
 // 表单设计拖入数据项,设计展示操作
 function formdesign(obj) {
+    let item, aItem, input, label, title, body, button;
 
-    const itemBox = document.createElement("div");
-    itemBox.className = "i";
-
-    const itemTag = document.createElement("input");
-    itemTag.type = "radio";
-    itemTag.name = "item";
-    itemTag.id = obj.id;
-    itemTag.hidden = "true";
-    itemTag.checked = "true";
-    itemBox.appendChild(itemTag);
-
-    const itemLabel = document.createElement("label");
-    itemLabel.htmlFor = obj.id;
-    itemLabel.className = "db pr";
-
-    const item = document.createElement("div");
-    item.className = "item";
-
-    const itemName = document.createElement("div");
-    itemName.className = "i-title wm-ht";
-    itemName.id = obj.id + "_title";
-    itemName.innerHTML = obj.name + ": ";
-    item.appendChild(itemName);
-
-    const itemBody = document.createElement("div");
     switch (obj.type) {
         case "shorttext":
         case "password":
@@ -248,60 +255,60 @@ function formdesign(obj) {
         case "email":
         case "tel":
         case "url":
-            itemBody.className = "i-body-text";
-            break;
         case "textarea":
-            itemBody.className = "i-body-textarea";
+            item = temps[0].content.querySelector("div");
+            aItem = document.importNode(item, true);
+            body = aItem.getElementsByClassName("i-body-text")[0];
+            if (obj.type == "textarea") {
+                body.className = "i-body-textarea";
+            }
             break;
         case "radio":
         case "checkbox":
-            itemBody.className = "i-body-check";
-            itemBody.id = obj.id + "_options";
+            item = temps[1].content.querySelector("div");
+            aItem = document.importNode(item, true);
+            body = aItem.getElementsByClassName("i-body-check")[0];
+            body.id = obj.id + "_options";
             for (let i = 0; i < obj.attr.options.length; ++i) {
-                itemBody.appendChild(createFormOptionsItem(obj.type, obj.attr.options[i].value))
+                body.appendChild(createFormOptionsItem(obj.type, obj.attr.options[i].value))
             }
             break;
         case "file":
-            itemBody.className = "i-body-file";
-            const fileBtn = document.createElement("div");
-            fileBtn.className = "i-file-button";
-            itemBody.appendChild(fileBtn);
+            item = temps[3].content.querySelector("div");
+            aItem = document.importNode(item, true);
             break;
     }
-    item.appendChild(itemBody);
 
-    itemLabel.appendChild(item);
-
-    const editBtn = document.createElement("Button");
-    editBtn.type = "button";
-    editBtn.className = "i-icon";
-    editBtn.setAttribute("onclick", "edit(\'" + obj.id + "\')");
-    itemLabel.appendChild(editBtn);
-
-    itemBox.appendChild(itemLabel);
-
-    formCanvas.appendChild(itemBox);
+    input = aItem.getElementsByTagName("input")[0];
+    input.id = obj.id;
+    input.checked = "true";
+    label = aItem.getElementsByTagName("label")[0];
+    label.htmlFor = obj.id;
+    title = aItem.getElementsByClassName("i-title")[0];
+    title.id = obj.id + "_title";
+    title.innerHTML = obj.name + ": ";
+    button = aItem.getElementsByTagName("button")[0];
+    button.setAttribute("onclick", "edit(\'" + obj.id + "\')");
+    formCanvas.appendChild(aItem);
 }
 // 表单设计页面创建表单项的选项组选项
 function createFormOptionsItem(type, value) {
-    const checkItem = document.createElement("div");
-    checkItem.className = "i-check-item";
-    const checkItemBox = document.createElement("div");
+    const item = temps[2].content.querySelector("div");
+    const aItem = document.importNode(item, true);
+    const box = aItem.getElementsByTagName("div")[0];
     if (type == "radio") {
-        checkItemBox.className = "i-check-box-r";
+        box.className = "i-check-box-r";
     } else if (type == "checkbox") {
-        checkItemBox.className = "i-check-box-c";
+        box.className = "i-check-box-c";
     }
-    const checkItemTag = document.createElement("div");
-    checkItemTag.className = "i-check-text";
-    checkItemTag.innerHTML = value;
-    checkItem.appendChild(checkItemBox);
-    checkItem.appendChild(checkItemTag);
-    return checkItem;
+    const text = aItem.getElementsByTagName("div")[1];
+    text.innerHTML = value;
+    return aItem;
 }
 // 打开表单项属性值设置面板
 function edit(id) {
-    // console.log(id.valueOf());
+    console.log(id.valueOf());
+    console.log(itemsData);
     const editPanel = document.getElementById("editPanel");
     editPanel.parentNode.style.backgroundColor = "rgba(0, 0, 0, .5)";
     editPanel.parentNode.style.left = "0";
@@ -316,7 +323,7 @@ function edit(id) {
             editItem = item;
         }
     }
-
+    console.log(editItem);
     const itemId = document.getElementById("item_id");
     itemId.value = editItem.id;
     const itemName = document.getElementById("item_name");
@@ -353,6 +360,13 @@ function edit(id) {
         }
     }
 
+    if (editItem.attr.maxLength != undefined) {
+        const maxLength = document.getElementById("maxlength");
+        maxLength.style.display = "block";
+        const itemMaxlength = document.getElementById("item_maxlength");
+        itemMaxlength.value = editItem.attr.maxLength;
+    }
+
     optionTags = document.getElementsByName("option_tag");
     optionValues = document.getElementsByName("option_value");
     optionDels = document.getElementsByName("option_del");
@@ -362,10 +376,9 @@ function edit(id) {
 }
 // 表单项属性值设置面板创建表单项"选项组"属性数据项
 function createEditOptionsItem(type, value, check) {
-    const option = document.createElement("div");
-    option.className = "ma5";
-
-    const optionTag = document.createElement("input");
+    const item = temps[4].content.querySelector("div");
+    const aItem = document.importNode(item, true);
+    const optionTag = aItem.getElementsByTagName("input")[0];
     switch (type) {
         case "dropdown":
         case "radio":
@@ -384,21 +397,10 @@ function createEditOptionsItem(type, value, check) {
             }
             break;
     }
-    option.appendChild(optionTag);
-
-    const optionValue = document.createElement("input");
-    optionValue.type = "text";
-    optionValue.name = "option_value";
-    optionValue.className = "attr-item-value";
-    optionValue.placeholder = "请输入选项值";
+    const optionValue = aItem.getElementsByTagName("input")[1];
     optionValue.value = value;
-    option.appendChild(optionValue);
 
-    const optionDel = document.createElement("button");
-    optionDel.className = "attr-option-del";
-    optionDel.name = "option_del";
-    option.appendChild(optionDel);
-    return option;
+    return aItem;
 }
 // 表单项"选项组"属性数据项添加操作
 function addOption() {
@@ -539,17 +541,7 @@ function fillForm() {
 function formCreate(obj) {
     const formBody = document.getElementById("form-body");
 
-    const fItem = document.createElement("div");
-    fItem.id = obj.id;
-    fItem.className = "f-item";
-
-    const fTitle = document.createElement("div");
-    fTitle.id = obj.id + "_title";
-    fTitle.className = "f-title";
-    fTitle.innerHTML = obj.name + ": ";
-    fItem.appendChild(fTitle);
-
-    let fBody = null;
+    let item, aItem, fBody;
 
     switch (obj.type) {
         case "shorttext":
@@ -562,9 +554,13 @@ function formCreate(obj) {
         case "file":
         case "textarea":
             if (obj.type == "textarea") {
-                fBody = document.createElement("textarea");
+                item = temps[6].content.querySelector("div");
+                aItem = document.importNode(item, true);
+                fBody = aItem.getElementsByTagName("textarea")[0];
             } else {
-                fBody = document.createElement("input");
+                item = temps[5].content.querySelector("div");
+                aItem = document.importNode(item, true);
+                fBody = aItem.getElementsByTagName("input")[0];
             }
             fBody.id = obj.id + "_body";
             fBody.type = obj.type;
@@ -576,32 +572,29 @@ function formCreate(obj) {
                 fBody.className = "f-body-file";
             } else if (obj.type == "textarea") {
                 fBody.className = "f-body-textarea";
-            } else {
-                fBody.className = "f-body-text";
             }
             if (obj.attr.readonly) {
                 fBody.disabled = true;
             }
             if (obj.attr.required) {
                 fBody.required = true;
-                fTitle.className += " required";
             }
-
-            fItem.appendChild(fBody);
-
-            formBody.appendChild(fItem);
+            if (obj.attr.maxLength != undefined) {
+                fBody.maxLength = obj.attr.maxLength;
+            }
+            formBody.appendChild(aItem);
             break;
         case "radio":
         case "checkbox":
-            fBody = document.createElement("div");
+            item = temps[7].content.querySelector("div");
+            aItem = document.importNode(item, true);
+            fBody = aItem.getElementsByTagName("div")[1];
             fBody.id = obj.id + "_body";
-            fBody.className = "f-body-check";
-
             for (let i = 0; i < obj.attr.options.length; ++i) {
-                const fCheckItem = document.createElement("div");
-                fCheckItem.className = "i-check-item";
+                const fCheckItem = temps[8].content.querySelector("div");
+                const afCheckItem = document.importNode(fCheckItem, true);
 
-                const fCheckItemTag = document.createElement("input");
+                const fCheckItemTag = afCheckItem.getElementsByTagName("input")[0];
                 fCheckItemTag.type = obj.type;
                 fCheckItemTag.name = obj.name + "(" + obj.id + ")";
                 fCheckItemTag.id = obj.id + "_option_" + i;
@@ -612,38 +605,22 @@ function formCreate(obj) {
                 if (obj.attr.readonly) {
                     fCheckItemTag.disabled = true;
                 }
-                if (obj.attr.required) {
-                    fCheckItemTag.required = true;
-                    fTitle.className += " required";
-                }
-                fCheckItem.appendChild(fCheckItemTag);
 
-                const fCheckItemValue = document.createElement("label");
+                const fCheckItemValue = afCheckItem.getElementsByTagName("label")[0];
                 fCheckItemValue.htmlFor = obj.id + "_option_" + i;
                 fCheckItemValue.innerHTML = obj.attr.options[i].value;
-                fCheckItem.appendChild(fCheckItemValue);
 
-                fBody.appendChild(fCheckItem);
-
-                fItem.appendChild(fBody);
-
+                fBody.appendChild(afCheckItem);
             }
-
-            formBody.appendChild(fItem);
+            formBody.appendChild(aItem);
             break;
         case "dropdown":
         case "dropdownmulti":
-            fBody = document.createElement("select");
+            item = temps[9].content.querySelector("div");
+            aItem = document.importNode(item, true);
+            fBody = aItem.getElementsByTagName("select")[0];
             fBody.name = obj.name + "(" + obj.id + ")";
             fBody.id = obj.id + "_body";
-            fBody.className = "f-body-text";
-
-            const fDropdownmultiNull = document.createElement("option");
-            fDropdownmultiNull.value = "";
-            fDropdownmultiNull.selected = true;
-            fDropdownmultiNull.disabled = true;
-            fDropdownmultiNull.className = "dn";
-            fBody.appendChild(fDropdownmultiNull);
 
             for (let i = 0; i < obj.attr.options.length; ++i) {
                 const fDropdownmulti = document.createElement("option");
@@ -657,23 +634,32 @@ function formCreate(obj) {
             }
             if (obj.attr.required) {
                 fBody.required = true;
-                fTitle.className += " required";
             }
 
-            fItem.appendChild(fBody);
-
-            formBody.appendChild(fItem);
+            formBody.appendChild(aItem);
 
             if (obj.type == "dropdownmulti") {
                 dropDownMulti(fBody.id);
             }
             break;
     }
+
+    const fTitle = aItem.getElementsByClassName("f-title")[0];
+    fTitle.id = obj.id + "_title";
+    fTitle.innerHTML = obj.name + ": ";
+    if (obj.attr.required) {
+        fTitle.className += " required";
+    }
 }
 
 // 表单设计界面,"清空设计"按钮
 function clearDesign() {
     // console.log("clear");
+    let jsonText = JSON.stringify(itemsData);
+    console.log(jsonText);
+    console.log(itemsData);
+    let jsObject = JSON.parse(jsonText);
+    console.log(jsObject);
     itemsData = [];
     while (formCanvas.hasChildNodes()) {
         formCanvas.removeChild(formCanvas.firstChild);
@@ -690,6 +676,7 @@ function designForm() {
 function dropDownMulti(objId) {
     let values = [];
     let opts = [];
+    // console.log(objId);
     let select = document.getElementById(objId);
     // console.log(select)
     // console.log(select.length);
@@ -723,6 +710,35 @@ function dropDownMulti(objId) {
         }
         // console.log(select.value);
     });
+}
+
+function submitForm() {
+    for (const item of itemsData) {
+        if (item.attr.required) {
+            if (item.type == "checkbox" || item.type == "radio") {
+                if (!requiredVeri(item.name + "(" + item.id + ")")) {
+                    alert("数据项 “" + item.name + "(" + item.id + ")” 必填校验不通过");
+                    return false;
+                }
+            } else if (document.getElementsByName(item.name + "(" + item.id + ")")[0].value.length == 0) {
+                alert("数据项 “" + item.name + "(" + item.id + ")” 必填校验不通过");
+                return false;
+            }
+        } else {
+            continue;
+        }
+    }
+    return true;
+}
+
+function requiredVeri(name) {
+    const options = document.getElementsByName(name);
+    for (const option of options) {
+        if (option.checked) {
+            return true;
+        }
+    }
+    return false;
 }
 /* 表单设计组件
 // 表单项主体
