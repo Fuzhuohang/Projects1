@@ -565,6 +565,9 @@ function exitEdit() {
         itemOptionGroup.removeChild(itemOptionGroup.firstChild);
     }
 
+    const maxLength = document.getElementById("maxlength");
+    maxLength.style.display = "none";
+
     editItem = null;
     optionTags = null;
     optionValues = null;
@@ -687,10 +690,27 @@ function formCreate(obj) {
             fBody.name = obj.name + "(" + obj.id + ")";
             fBody.id = obj.id + "_body";
 
+            if (obj.type == "dropdownmulti") {
+                var optionHide = document.createElement("option");
+                var values = [];
+                optionHide.hidden = true;
+                fBody.appendChild(optionHide);
+            }
             for (let i = 0; i < obj.attr.options.length; ++i) {
                 const fDropdownmulti = document.createElement("option");
                 fDropdownmulti.value = obj.attr.options[i].value;
                 fDropdownmulti.innerHTML = obj.attr.options[i].value;
+                if (obj.attr.options[i].check) {
+                    if (obj.type == "dropdownmulti") {
+                        fDropdownmulti.style = "background: skyblue";
+                        values.push(obj.attr.options[i].value);
+                        optionHide.text = values.toString();
+                        optionHide.selected = true;
+                    } else {
+                        fDropdownmulti.selected = true;
+                    }
+                }
+
                 fBody.appendChild(fDropdownmulti);
             }
 
@@ -704,7 +724,7 @@ function formCreate(obj) {
             formBody.appendChild(aItem);
 
             if (obj.type == "dropdownmulti") {
-                dropDownMulti(fBody.id);
+                dropDownMulti(fBody.id, values);
             }
             break;
     }
@@ -738,8 +758,8 @@ function designForm() {
     formDesign.style.display = "block";
 }
 // 下拉多选框控件功能设计
-function dropDownMulti(objId) {
-    let values = [];
+function dropDownMulti(objId, v) {
+    let values = v;
     let opts = [];
     // console.log(objId);
     let select = document.getElementById(objId);
@@ -749,9 +769,6 @@ function dropDownMulti(objId) {
         opts.push(select.item(i));
     }
 
-    let optionHide = document.createElement("option");
-    optionHide.hidden = true;
-    select.appendChild(optionHide);
     select.addEventListener('input', function() {
         let value = this.options[this.selectedIndex].value;
         this.options[this.selectedIndex].style = "background: skyblue";
@@ -766,10 +783,10 @@ function dropDownMulti(objId) {
         } else {
             values.push(value);
         };
-        this.options[this.length - 1].text = values.toString();
+        this.options[1].text = values.toString();
 
         if (values.length > 0) {
-            this.options[this.length - 1].selected = true;
+            this.options[1].selected = true;
         } else {
             this.options[0].selected = true;
         }

@@ -345,4 +345,62 @@ window.onload = function() {
         }
     }
     console.log(x);
+
+    function* generatorFn() {}
+
+    let generatorFn = function*() {}
+
+    let foo = {
+        * generatorFn() {}
+    }
+
+    class Foo { *
+        generatorFn() {}
+    }
+
+    class Bar {
+        static * generatorFn() {}
+    }
+
+    function* generatorFn() {}
+    const g = generatorFn();
+    console.log(g);
+    console.log(g.next);
+
+    function* generatorFn() {}
+    const g = generatorFn();
+    console.log(g);
+    console.log(g.next());
+
+    function* generatorFn() {
+        return 'foo';
+    }
+    const g = generatorFn();
+    console.log(g);
+    console.log(g.next());
+
+    let person = new Object();
+    person.name = "Nicholas";
+    person.age = 29;
+    person.job = "Software Engineer";
+    person.sayName = function() {
+        console.log(this.name);
+    }
+    console.log(person);
+
+    let person = {
+        name: "Nicholas",
+        age: 29,
+        job: "Software Engineer",
+        sayName() {
+            console.log(this.name);
+        }
+    }
+    console.log(person);
+
+    let name = "fuhuoh";
+    let person = {
+        name
+    };
+    console.log(person);
 }
