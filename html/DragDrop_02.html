@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>组件拖拽</title>
+    <style>
+        .dropblock {
+            /* display: inline-block; */
+            width: 200px;
+            height: 40px;
+            margin: 5px;
+            border: 3px double darkblue;
+            box-sizing: border-box;
+            font-weight: bold;
+            padding: 5px
+        }
+        
+        .drop {
+            display: inline-block;
+            height: 500px;
+            width: 400px;
+            border: 3px dashed black;
+            margin: 5px;
+            box-sizing: border-box;
+            vertical-align: top;
+        }
+    </style>
+    <script>
+        function allowDrop(ev) {
+            console.log("OnDrop...");
+            console.log("In " + ev.target.id);
+            ev.preventDefault();
+        }
+
+        function drag(ev) {
+            console.log("DropStart...");
+            ev.dataTransfer.setData("Text", ev.target.id);
+        }
+
+        function drop(ev) {
+            console.log("DropOver...");
+            console.log("In " + ev.target.id);
+            ev.preventDefault();
+            var data = ev.dataTransfer.getData("Text");
+            ev.target.appendChild(document.getElementById(data));
+
+            document.getElementById(data);
+
+        }
+    </script>
+</head>
+
+<body>
+    <div>
+        <div id="dropblock_01" class="dropblock" style="background-color: lightskyblue;" draggable="true" ondragstart="drag(event)">拖拽块01</div>
+        <div id="dropblock_02" class="dropblock" style="background-color: lightgreen;" draggable="true" ondragstart="drag(event)">拖拽块02</div>
+        <div id="dropblock_03" class="dropblock" style="background-color: plum;" draggable="true" ondragstart="drag(event)">拖拽块03</div>
+        <div id="dropblock_04" class="dropblock" style="background-color: orange;" draggable="true" ondragstart="drag(event)">拖拽块04</div>
+        <div id="dropblock_05" class="dropblock" style="background-color: lightgray;" draggable="true" ondragstart="drag(event)">拖拽块05</div>
+    </div>
+    <div id="drop_01" class="drop" style="background-color: blueviolet;" ondrop="drop(event)" ondragover="allowDrop(event)">
+
+    </div>
+    <div id="drop_02" class="drop" style="background-color: orchid;" ondrop="drop(event)" ondragover="allowDrop(event)">
+
+    </div>
+</body>
+
+</html>

@@ -69,6 +69,10 @@ window.onload = function() {
 // 允许拖拽操作
 function allowDrop(ev) {
     ev.preventDefault();
+    // console.log(ev.target);
+    // console.log(ev.target.parentElement);
+    // console.log(ev.target.parentElement.parentElement);
+    // console.log(ev.target.parentElement.parentElement.parentElement);
 }
 // 拖拽选中响应
 function drag(ev) {
@@ -78,15 +82,76 @@ function drag(ev) {
 function drop(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("Text");
+    formCanvas = document.getElementById("form_canvas");
+    console.log(ev.target);
+    let itemData;
+    let newItem;
 
-    const itemData = addItem(data);
-    console.log(itemData);
-    formdesign(itemData);
-    itemsData.push(itemData);
-    console.log(itemsData);
+    if (ev.target.className != "form-canvas") {
+        let y = ev.clientY;
+        let top = ev.target.getBoundingClientRect().top;
+        let height = ev.target.getBoundingClientRect().height;
+        console.log(y);
+        console.log(top);
+        console.log(height);
+        if (y <= (top + height / 2)) {
+            itemData = addItem(data);
+            console.log(itemData);
+            newItem = formdesign(itemData);
+            let index;
+            if (ev.target.className == "item") {
+                console.log(ev.target.parentElement.parentElement.firstChild.nextSibling.id);
+                index = getItemIndex(ev.target.parentElement.parentElement.firstChild.nextSibling.id);
+                formCanvas.insertBefore(newItem, ev.target.parentElement.parentElement);
+            } else {
+                console.log(ev.target.parentElement.parentElement.parentElement.firstChild.nextSibling.id);
+                index = getItemIndex(ev.target.parentElement.parentElement.parentElement.firstChild.nextSibling.id);
+                formCanvas.insertBefore(newItem, ev.target.parentElement.parentElement.parentElement);
+            }
+            itemsData.splice(index, 0, itemData);
+            console.log(itemsData);
+        } else {
+            itemData = addItem(data);
+            console.log(itemData);
+            newItem = formdesign(itemData);
+            if (ev.target.className == "item") {
+                console.log(ev.target.parentElement.parentElement.firstChild.nextSibling.id);
+                index = getItemIndex(ev.target.parentElement.parentElement.firstChild.nextSibling.id);
+                formCanvas.insertBefore(newItem, ev.target.parentElement.parentElement.nextSibling);
+            } else {
+                console.log(ev.target.parentElement.parentElement.parentElement.firstChild.nextSibling.id);
+                index = getItemIndex(ev.target.parentElement.parentElement.parentElement.firstChild.nextSibling.id);
+                formCanvas.insertBefore(newItem, ev.target.parentElement.parentElement.parentElement.nextSibling);
+            }
+            itemsData.splice(index + 1, 0, itemData);
+            console.log(itemsData);
+        }
+    } else {
+        itemData = addItem(data);
+        console.log(itemData);
+        newItem = formdesign(itemData);
+        formCanvas.appendChild(newItem);
+        itemsData.push(itemData);
+        console.log(itemsData);
+    }
 
+    // itemData = addItem(data);
+    // console.log(itemData);
+    // newItem = formdesign(itemData);
+    // formCanvas.appendChild(newItem);
+    // itemsData.push(itemData);
     // console.log(itemsData);
 }
+// 获取数据项下标
+function getItemIndex(id) {
+    for (let i = 0; i < itemsData.length; ++i) {
+        if (itemsData[i].id == id) {
+            return i;
+        }
+    }
+    return itemsData.length - 1;
+}
+
 // 拖入操作，生成表单数据项数据
 function addItem(data) {
     const itemData = {};
@@ -289,7 +354,7 @@ function formdesign(obj) {
     title.innerHTML = obj.name + ": ";
     button = aItem.getElementsByTagName("button")[0];
     button.setAttribute("onclick", "edit(\'" + obj.id + "\')");
-    formCanvas.appendChild(aItem);
+    return aItem;
 }
 // 表单设计页面创建表单项的选项组选项
 function createFormOptionsItem(type, value) {
