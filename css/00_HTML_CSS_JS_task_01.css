@@ -275,7 +275,9 @@ button:hover {
     content: url(../imgs/delete.png);
 }
 
-.logic {
+.logic,
+.i-logic,
+.f-logic {
     width: 44px;
     height: 26px;
     position: absolute;
@@ -283,7 +285,8 @@ button:hover {
     pointer-events: none;
 }
 
-.logic-i {
+.logic-i,
+.logic-item {
     display: inline-block;
     width: 44px;
     height: 26px;
@@ -296,7 +299,8 @@ button:hover {
     cursor: pointer;
 }
 
-.logic-i::before {
+.logic-i::before,
+.logic-item::before {
     content: "";
     display: block;
     width: 22px;
@@ -306,7 +310,8 @@ button:hover {
     transition: margin-left .2s;
 }
 
-.logic:active:not(:disabled)+.logic-i::before {
+.logic:active:not(:disabled)+.logic-i::before,
+.f-logic:active:not(:disabled)+.l {
     box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.1);
 }
 
@@ -314,16 +319,23 @@ button:hover {
     color: #17bc94;
 }
 
-.logic:checked+.logic-i::before {
+.f-logic:checked+.l {
+    color: rgb(0, 162, 255);
+}
+
+.logic:checked+.logic-i::before,
+.f-logic:checked+.l::before {
     margin-left: 18px;
 }
 
-.logic:focus-visible+.logic-i {
+.logic:focus-visible+.logic-i,
+.f-logic:focus-visible+.l {
     outline: 1px dotted Hightlight;
     outline: 5px auto -webkit-focus-ring-color;
 }
 
-.logic:disabled+.logic-i {
+.logic:disabled+.logic-i,
+.f-logic:disabled+.l {
     opacity: .4;
     cursor: default;
 }
@@ -344,4 +356,45 @@ button:hover {
     to {
         left: 0;
     }
+}
+
+.requVeriProm {
+    display: none;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 95px;
+    text-align: center;
+}
+
+.requVeriProm>div {
+    display: inline-block;
+    text-align: center;
+    border: 1px solid white;
+    border-radius: 5px;
+    background-color: white;
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, .3);
+    min-width: 200px;
+    max-width: 500px;
+    font-size: 14px;
+    padding: 5px 20px;
+}
+
+.requVeriProm_img {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    text-align: center;
+    padding: 4px;
+    box-sizing: border-box;
+    vertical-align: middle;
+}
+
+.requVeriProm_text {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.requVeriProm_img::after {
+    content: url(../imgs/error.png);
 }

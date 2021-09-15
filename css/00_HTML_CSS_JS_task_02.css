@@ -226,3 +226,16 @@ div[class*="required"]::before {
     content: "*";
     color: red;
 }
+
+.add {
+    height: 50px;
+    border: 1px dashed rgb(23, 188, 148);
+    color: #17bc94;
+    background-color: rgba(23, 188, 148, .1);
+    text-align: center;
+}
+
+.add::after {
+    content: "+";
+    font-size: 35px;
+}

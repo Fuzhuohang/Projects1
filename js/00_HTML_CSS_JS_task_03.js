@@ -11,6 +11,12 @@ let optionDels;
 
 let temps;
 
+let nullNode;
+
+let index = -1;
+
+let Prompt;
+
 window.onload = function() {
     // const url = "../json/00_HTML_CSS_JS_task_01.json";
     // const request = new XMLHttpRequest();
@@ -64,15 +70,104 @@ window.onload = function() {
         console.log(itemMaxlength.value);
         editItem.attr.maxLength = itemMaxlength.value;
     }
+
+    nullNode = document.createElement("div");
+    nullNode.className = "add";
+    nullNode.ondrop = function(ev) {
+        ev.preventDefault();
+    };
+
+    document.ondragend = function() {
+        if (nullNode.parentElement != null) {
+            formCanvas.removeChild(nullNode);
+        }
+    };
+
+    Prompt = document.getElementsByClassName("requVeriProm")[0];
 }
 
 // 允许拖拽操作
 function allowDrop(ev) {
     ev.preventDefault();
-    // console.log(ev.target);
-    // console.log(ev.target.parentElement);
-    // console.log(ev.target.parentElement.parentElement);
-    // console.log(ev.target.parentElement.parentElement.parentElement);
+    if (ev.target != nullNode) {
+        if (ev.target.className != "form-canvas") {
+            let y = ev.clientY;
+            let top = ev.target.getBoundingClientRect().top;
+            let height = ev.target.getBoundingClientRect().height;
+            // console.log(y);
+            // console.log(top);
+            // console.log(height);
+            if (y <= (top + height / 2)) {
+                switch (ev.target.className) {
+                    case "item":
+                        formCanvas.insertBefore(nullNode, ev.target.parentElement.parentElement);
+                        // console.log(ev.target.className);
+                        index = getItemIndex(ev.target.parentElement.parentElement.firstChild.nextSibling.id);
+                        break;
+                    case "i-title":
+                    case "i-body-text":
+                    case "i-body-textarea":
+                    case "i-body-check":
+                    case "i-body-file":
+                        formCanvas.insertBefore(nullNode, ev.target.parentElement.parentElement.parentElement);
+                        // console.log(ev.target.className);
+                        index = getItemIndex(ev.target.parentElement.parentElement.parentElement.firstChild.nextSibling.id);
+                        break;
+                    case "i-check-item":
+                    case "i-file-button":
+                    case "i-logic":
+                    case "logic-item":
+                        formCanvas.insertBefore(nullNode, ev.target.parentElement.parentElement.parentElement.parentElement);
+                        // console.log(ev.target.className);
+                        index = getItemIndex(ev.target.parentElement.parentElement.parentElement.parentElement.firstChild.nextSibling.id);
+                        break;
+                    case "i-check-box-c":
+                    case "i-check-box-r":
+                    case "i-check-text":
+                        formCanvas.insertBefore(nullNode, ev.target.parentElement.parentElement.parentElement.parentElement.parentElement);
+                        // console.log(ev.target.className);
+                        index = getItemIndex(ev.target.parentElement.parentElement.parentElement.parentElement.parentElement.firstChild.nextSibling.id);
+                        break;
+                }
+            } else {
+                switch (ev.target.className) {
+                    case "item":
+                        formCanvas.insertBefore(nullNode, ev.target.parentElement.parentElement);
+                        // console.log(ev.target.className);
+                        index = getItemIndex(ev.target.parentElement.parentElement.firstChild.nextSibling.id);
+                        break;
+                    case "i-title":
+                    case "i-body-text":
+                    case "i-body-textarea":
+                    case "i-body-check":
+                    case "i-body-file":
+                        formCanvas.insertBefore(nullNode, ev.target.parentElement.parentElement.parentElement);
+                        // console.log(ev.target.className);
+                        index = getItemIndex(ev.target.parentElement.parentElement.parentElement.firstChild.nextSibling.id);
+                        break;
+                    case "i-check-item":
+                    case "i-file-button":
+                    case "i-logic":
+                    case "logic-item":
+                        formCanvas.insertBefore(nullNode, ev.target.parentElement.parentElement.parentElement.parentElement);
+                        // console.log(ev.target.className);
+                        index = getItemIndex(ev.target.parentElement.parentElement.parentElement.parentElement.firstChild.nextSibling.id);
+                        break;
+                    case "i-check-box-c":
+                    case "i-check-box-r":
+                    case "i-check-text":
+                        formCanvas.insertBefore(nullNode, ev.target.parentElement.parentElement.parentElement.parentElement.parentElement);
+                        // console.log(ev.target.className);
+                        index = getItemIndex(ev.target.parentElement.parentElement.parentElement.parentElement.parentElement.firstChild.nextSibling.id);
+                        break;
+                }
+            }
+        } else {
+            formCanvas.appendChild(nullNode);
+            index = -1;
+        }
+    }
+
 }
 // 拖拽选中响应
 function drag(ev) {
@@ -83,64 +178,25 @@ function drop(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("Text");
     formCanvas = document.getElementById("form_canvas");
-    console.log(ev.target);
+    // console.log(ev.target);
     let itemData;
     let newItem;
 
-    if (ev.target.className != "form-canvas") {
-        let y = ev.clientY;
-        let top = ev.target.getBoundingClientRect().top;
-        let height = ev.target.getBoundingClientRect().height;
-        console.log(y);
-        console.log(top);
-        console.log(height);
-        if (y <= (top + height / 2)) {
-            itemData = addItem(data);
-            console.log(itemData);
-            newItem = formdesign(itemData);
-            let index;
-            if (ev.target.className == "item") {
-                console.log(ev.target.parentElement.parentElement.firstChild.nextSibling.id);
-                index = getItemIndex(ev.target.parentElement.parentElement.firstChild.nextSibling.id);
-                formCanvas.insertBefore(newItem, ev.target.parentElement.parentElement);
-            } else {
-                console.log(ev.target.parentElement.parentElement.parentElement.firstChild.nextSibling.id);
-                index = getItemIndex(ev.target.parentElement.parentElement.parentElement.firstChild.nextSibling.id);
-                formCanvas.insertBefore(newItem, ev.target.parentElement.parentElement.parentElement);
-            }
-            itemsData.splice(index, 0, itemData);
-            console.log(itemsData);
-        } else {
-            itemData = addItem(data);
-            console.log(itemData);
-            newItem = formdesign(itemData);
-            if (ev.target.className == "item") {
-                console.log(ev.target.parentElement.parentElement.firstChild.nextSibling.id);
-                index = getItemIndex(ev.target.parentElement.parentElement.firstChild.nextSibling.id);
-                formCanvas.insertBefore(newItem, ev.target.parentElement.parentElement.nextSibling);
-            } else {
-                console.log(ev.target.parentElement.parentElement.parentElement.firstChild.nextSibling.id);
-                index = getItemIndex(ev.target.parentElement.parentElement.parentElement.firstChild.nextSibling.id);
-                formCanvas.insertBefore(newItem, ev.target.parentElement.parentElement.parentElement.nextSibling);
-            }
-            itemsData.splice(index + 1, 0, itemData);
-            console.log(itemsData);
-        }
+    itemData = addItem(data);
+    // console.log(itemData);
+    newItem = formdesign(itemData);
+
+    formCanvas.insertBefore(newItem, nullNode);
+
+    formCanvas.removeChild(nullNode);
+
+    if (index != -1) {
+        itemsData.splice(index, 0, itemData);
+        console.log(itemsData);
     } else {
-        itemData = addItem(data);
-        console.log(itemData);
-        newItem = formdesign(itemData);
-        formCanvas.appendChild(newItem);
         itemsData.push(itemData);
         console.log(itemsData);
     }
-
-    // itemData = addItem(data);
-    // console.log(itemData);
-    // newItem = formdesign(itemData);
-    // formCanvas.appendChild(newItem);
-    // itemsData.push(itemData);
-    // console.log(itemsData);
 }
 // 获取数据项下标
 function getItemIndex(id) {
@@ -296,14 +352,20 @@ function addItem(data) {
             itemData.attr = {};
             itemData.attr.required = false;
             break;
-            // case "form_item_14":
-
-            //     break;
+        case "form_item_14":
+            itemData.id = "Logic_" + Date.now().valueOf();
+            itemData.name = "逻辑";
+            itemData.type = "logic";
+            itemData.attr = {};
+            itemData.attr.default = true;
+            itemData.attr.readonly = false;
+            itemData.attr.required = false;
+            break;
             // case "form_item_15":
 
             //     break;
     }
-    console.log(itemData);
+    // console.log(itemData);
     return itemData;
 }
 // 表单设计拖入数据项,设计展示操作
@@ -341,6 +403,14 @@ function formdesign(obj) {
         case "file":
             item = temps[3].content.querySelector("div");
             aItem = document.importNode(item, true);
+            break;
+        case "logic":
+            item = temps[10].content.querySelector("div");
+            aItem = document.importNode(item, true);
+            body = aItem.getElementsByClassName("i-body-check")[0];
+            body.getElementsByTagName("input")[0].name = obj.id + "_logic";
+            body.getElementsByTagName("input")[0].id = obj.id + "_logic";
+            body.getElementsByTagName("label")[0].htmlFor = obj.id + "_logic";
             break;
     }
 
@@ -630,7 +700,7 @@ function formCreate(obj) {
                 aItem = document.importNode(item, true);
                 fBody = aItem.getElementsByTagName("input")[0];
             }
-            fBody.id = obj.id + "_body";
+            fBody.id = obj.id + "_fBody";
             fBody.type = obj.type;
             fBody.name = obj.name + "(" + obj.id + ")";
             if (obj.attr.default != undefined) {
@@ -657,7 +727,7 @@ function formCreate(obj) {
             item = temps[7].content.querySelector("div");
             aItem = document.importNode(item, true);
             fBody = aItem.getElementsByTagName("div")[1];
-            fBody.id = obj.id + "_body";
+            fBody.id = obj.id + "_fBody";
             for (let i = 0; i < obj.attr.options.length; ++i) {
                 const fCheckItem = temps[8].content.querySelector("div");
                 const afCheckItem = document.importNode(fCheckItem, true);
@@ -688,7 +758,7 @@ function formCreate(obj) {
             aItem = document.importNode(item, true);
             fBody = aItem.getElementsByTagName("select")[0];
             fBody.name = obj.name + "(" + obj.id + ")";
-            fBody.id = obj.id + "_body";
+            fBody.id = obj.id + "_fBody";
 
             if (obj.type == "dropdownmulti") {
                 var optionHide = document.createElement("option");
@@ -727,10 +797,36 @@ function formCreate(obj) {
                 dropDownMulti(fBody.id, values);
             }
             break;
+        case "logic":
+            item = temps[11].content.querySelector("div");
+            aItem = document.importNode(item, true);
+            fBody = aItem.getElementsByTagName("div")[1];
+            fBody.id = obj.id + "_fBody";
+            let logic = fBody.getElementsByTagName("input")[0];
+            logic.name = obj.name + "(" + obj.id + ")";
+            logic.id = obj.id + "_l";
+            logic.checked = obj.attr.default;
+            logic.value = obj.attr.default;
+            fBody.getElementsByTagName("label")[0].htmlFor = obj.id + "_l";
+            formBody.appendChild(aItem);
+            logic.onclick = function() {
+                if (logic.value == "true") {
+                    logic.value = "false";
+                    logic.checked = true;
+                    fBody.getElementsByTagName("label")[0].className = "logic-item";
+                } else {
+                    logic.value = "true";
+                    logic.checked = true;
+                    fBody.getElementsByTagName("label")[0].className = "logic-item l";
+                }
+            }
+
+            break;
     }
 
+    aItem.id = obj.id + "_form";
     const fTitle = aItem.getElementsByClassName("f-title")[0];
-    fTitle.id = obj.id + "_title";
+    fTitle.id = obj.id + "_fTitle";
     fTitle.innerHTML = obj.name + ": ";
     if (obj.attr.required) {
         fTitle.className += " required";
@@ -795,15 +891,38 @@ function dropDownMulti(objId, v) {
 }
 
 function submitForm() {
+    let timer = null;
     for (const item of itemsData) {
         if (item.attr.required) {
             if (item.type == "checkbox" || item.type == "radio") {
                 if (!requiredVeri(item.name + "(" + item.id + ")")) {
-                    alert("数据项 “" + item.name + "(" + item.id + ")” 必填校验不通过");
+                    document.getElementById(item.id + "_form").style.backgroundColor = "rgba(255,0,0,.1)";
+                    for (const option of document.getElementsByName(item.name + "(" + item.id + ")")) {
+                        option.onclick = function() {
+                            document.getElementById(item.id + "_form").style.backgroundColor = "";
+                        };
+                    }
+                    clearTimeout(timer);
+                    Prompt.style.display = "block";
+                    document.getElementsByClassName("requVeriProm_text")[0].innerHTML = "数据项 “" + item.name + "(" + item.id + ")” 必填校验不通过";
+                    timer = setTimeout(function() {
+                        Prompt.style.display = "none";
+                    }, 2500);
+                    // alert("数据项 “" + item.name + "(" + item.id + ")” 必填校验不通过");
                     return false;
                 }
             } else if (document.getElementsByName(item.name + "(" + item.id + ")")[0].value.length == 0) {
-                alert("数据项 “" + item.name + "(" + item.id + ")” 必填校验不通过");
+                document.getElementById(item.id + "_form").style.backgroundColor = "rgba(255,0,0,.1)";
+                document.getElementById(item.id + "_fBody").onfocus = function() {
+                    document.getElementById(item.id + "_form").style.backgroundColor = "";
+                };
+                clearTimeout(timer);
+                Prompt.style.display = "block";
+                document.getElementsByClassName("requVeriProm_text")[0].innerHTML = "数据项 “" + item.name + "(" + item.id + ")” 必填校验不通过";
+                timer = setTimeout(function() {
+                    Prompt.style.display = "none";
+                }, 2500);
+                // alert("数据项 “" + item.name + "(" + item.id + ")” 必填校验不通过");
                 return false;
             }
         } else {
@@ -822,54 +941,3 @@ function requiredVeri(name) {
     }
     return false;
 }
-/* 表单设计组件
-// 表单项主体
-const itemBox = document.createElement("div");
-itemBox.className = "i";
-// 表单项选中效果
-const itemTag = document.createElement("input");
-itemTag.type = "radio";
-itemTag.name = "item";
-itemTag.id = obj.id;
-itemTag.hidden = "true";
-const itemLabel = document.createElement("label");
-itemLabel.for = obj.id;
-itemLabel.className = "db pr";
-// 表单项内容
-const item = document.createElement("div");
-item.className = "item";
-// 表单项名称
-const itemName = document.createElement("div");
-itemName.className = "i-title wm-ht";
-itemName.id = obj.id + "_title";
-// 表单项设计展示主体
-// 单行文本 密码 下拉单选 下拉多选 日期 数值 邮箱 电话 URL
-const itemBodyText = document.createElement("div");
-itemBodyText.className = "i-body-text";
-// 多行文本
-const itemBodyTextarea = document.createElement("div");
-itemBodyTextarea.className = "i-body-textarea";
-// 单选框 复选框
-const itemBodyCheck = document.createElement("div");
-itemBodyCheck.className = "i-body-check";
-// 附件
-const itemBodyFile = document.createElement("div");
-itemBodyFile.className = "i-body-file";
-// 单/复选框选项
-const checkItem = document.createElement("div");
-checkItem.className = "i-check-item";
-// 单/复选框选项图标
-// 复选框
-const checkItemBoxC = document.createElement("div");
-checkItemBoxC.className = "i-check-box-c";
-// 单选框
-const checkItemBoxR = document.createElement("div");
-checkItemBoxR.className = "i-check-box-r";
-// 单/复选框选项名称
-const checkItemTag = document.createElement("div");
-checkItemTag.className = "i-check-text";
-// 编辑按钮
-const editBtn = document.createElement("Button");
-editBtn.type = "button";
-editBtn.className = "i-icon";
-*/

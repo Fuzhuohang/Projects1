@@ -59,6 +59,9 @@
                 <div id="form_item_13" class="itg" draggable="true" ondragstart="drag(event)">
                     <div class="pt8 pb8">附件</div>
                 </div>
+                <div id="form_item_14" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">逻辑</div>
+                </div>
                 <!-- <div id="form_item_14" class="itg" draggable="true" ondragstart="drag(event)">
                     <div class="pt8 pb8">颜色</div>
                 </div> -->
@@ -79,95 +82,7 @@
             </div>
             <div class="form-canvas" ondrop="drop(event)" ondragover="allowDrop(event)">
                 <div id="form_canvas" class="mt10 mb8 ml8 mr2">
-                    <!-- <div class="i">
-                        <input type="radio" name="item" id="ShortText" hidden>
-                        <label for="ShortText" class="db pr">
-                            <div class="item">
-                                <div class="i-title wm-ht">单行文本：</div>
-                                <div class="i-body-text"></div>
-                            </div>
-                            <button type="button" class="i-icon" onclick="edit('ShortText')">
-                            </button>
-                        </label>
-                    </div>
 
-                    <div class="i">
-                        <input type="radio" name="item" id="LongText" hidden>
-                        <label for="LongText" class="db pr">
-                            <div class="item">
-                                <div class="i-title">长文本:</div>
-                                <div class="i-body-textarea">
-                                    
-                                </div>
-                            </div>
-                            <button type="button" class="i-icon">
-                            </button>
-                        </label>
-                    </div>
-
-                    <div class="i">
-                        <input type="radio" name="item" id="Radio" hidden>
-                        <label for="Radio" class="db pr">
-                            <div class="item">
-                                <div class="i-title">单选框:</div>
-                                <div class="i-body-check">
-                                    <div class="i-check-item">
-                                        <div class="i-check-box-r"></div>
-                                        <div class="i-check-text">选项1</div>
-                                    </div>
-                                    <div class="i-check-item">
-                                        <div class="i-check-box-r"></div>
-                                        <div class="i-check-text">选项2</div>
-                                    </div>
-                                    <div class="i-check-item">
-                                        <div class="i-check-box-r"></div>
-                                        <div class="i-check-text">选项3</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <button type="button" class="i-icon">
-                            </button>
-                        </label>
-                    </div>
-
-                    <div class="i">
-                        <input type="radio" name="item" id="Checkbox" hidden>
-                        <label for="Checkbox" class="db pr">
-                            <div class="item">
-                                <div class="i-title">多选框:</div>
-                                <div class="i-body-check">
-                                    <div class="i-check-item">
-                                        <div class="i-check-box-c"></div>
-                                        <div class="i-check-text">选项1</div>
-                                    </div>
-                                    <div class="i-check-item">
-                                        <div class="i-check-box-c"></div>
-                                        <div class="i-check-text">选项2</div>
-                                    </div>
-                                    <div class="i-check-item">
-                                        <div class="i-check-box-c"></div>
-                                        <div class="i-check-text">选项3</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <button type="button" class="i-icon">
-                            </button>
-                        </label>
-                    </div>
-
-                    <div class="i">
-                        <input type="radio" name="item" id="File" hidden>
-                        <label for="File" class="db pr">
-                            <div class="item">
-                                <div class="i-title">附件:</div>
-                                <div class="i-body-file">
-                                    <div class="i-file-button"></div>
-                                </div>
-                            </div>
-                            <button type="button" class="i-icon">
-                            </button>
-                        </label>
-                    </div> -->
                 </div>
             </div>
         </div>
@@ -321,6 +236,12 @@
                 </form>
             </div>
         </div>
+        <div class="requVeriProm">
+            <div>
+                <div class="requVeriProm_img"></div>
+                <div class="requVeriProm_text"></div>
+            </div>
+        </div>
     </article>
     <div class="container">
         <div id="editPanel" class="dialog">
@@ -409,7 +330,7 @@
                     <div class="i-title wm-ht">单行文本：</div>
                     <div class="i-body-text"></div>
                 </div>
-                <button type="button" class="i-icon" onclick="edit('ShortText')">
+                <button type="button" class="i-icon">
                 </button>
             </label>
         </div>
@@ -498,6 +419,33 @@
             <select name="dropdown" id="dropdown" class="f-body-text">
                 <option value="" selected disabled class="dn"></option>
             </select>
+        </div>
+    </template>
+    <!-- 表单设计——逻辑 -->
+    <template>
+        <div class="i">
+            <input type="radio" name="item" id="Radio" hidden>
+            <label for="Radio" class="db pr">
+                <div class="item">
+                    <div class="i-title">逻辑:</div>
+                    <div class="i-body-check">
+                        <input type="checkbox" name="required" id="item_required" class="i-logic" hidden>
+                        <label for="item_required" class="logic-item"></label>
+                    </div>
+                </div>
+                <button type="button" class="i-icon">
+                </button>
+            </label>
+        </div>
+    </template>
+    <!-- 表单填写——逻辑 -->
+    <template>
+        <div class="f-item">
+            <div class="f-title">逻辑:</div>
+            <div class="f-body-check">
+                <input type="checkbox" name="required" id="item_required" class="f-logic" hidden>
+                <label for="item_required" class="logic-item l"></label>
+            </div>
         </div>
     </template>
 </body>
