@@ -6,7 +6,7 @@
     <title>javascript_study_01</title>
     <!-- <script src="../js/htmlJSStudy01.js"></script> -->
 
-    <script>
+    <!-- <script>
         const itemBox = document.createElement("div");
         console.log(itemBox);
         let itemBox2 = new Object();
@@ -15,11 +15,47 @@
         itemBox.className = "i";
         console.log(itemBox);
         console.log(itemBox2);
-    </script>
+    </script> -->
 </head>
 
 <body>
 
+    <div>
+        <div class="a">
+            <div style="border: 3px double darkblue; height: 100%; border-radius: 5px; box-sizing: border-box;"></div>
+        </div>
+        <div class="b">
+            <div style="border: 3px double darkblue; height: 100%; border-radius: 5px; box-sizing: border-box;"></div>
+        </div>
+        <div class="c">
+            <div style="border: 3px double darkblue; height: 100%; border-radius: 5px; box-sizing: border-box;"></div>
+        </div>
+    </div>
+
+    <style>
+        .a,
+        .b,
+        .c {
+            height: 200px;
+            border: 5px dashed skyblue;
+        }
+        
+        .a {
+            margin-bottom: -50px;
+            padding-bottom: 50px;
+        }
+        
+        .c {
+            margin-top: -50px;
+            padding-top: 50px;
+            height: 0;
+        }
+        
+        .a:hover,
+        .c:hover {
+            height: 200px;
+        }
+    </style>
 </body>
 
 </html>

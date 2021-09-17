@@ -5,7 +5,7 @@
 }
 
 .line>div+.line>div {
-    border-left: 1px dashed gray;
+    border-left: 1px dashed lightgray;
 }
 
 .item,
@@ -17,9 +17,13 @@
     box-sizing: border-box;
 }
 
+.item {
+    border-left: 5px solid transparent;
+}
+
 :checked+label>.item {
     background-color: rgba(23, 188, 148, .1);
-    outline: 1px dashed rgb(23, 188, 148);
+    border-left: 5px solid #17bc94;
 }
 
 .i-title,
@@ -32,6 +36,7 @@
 
 .i-body-text,
 .i-body-textarea,
+.i-body-select,
 .f-body-text,
 .f-body-textarea {
     min-height: 40px;
@@ -52,12 +57,17 @@
     color: rgb(156, 156, 156);
 }
 
+.i-body-select::after {
+    content: "请选择";
+    color: rgb(156, 156, 156);
+}
+
 .i {
     box-sizing: border-box;
 }
 
 .i+.i {
-    border-top: 1px dashed gray;
+    border-top: 1px dashed lightgray;
 }
 
 .i-icon {
@@ -225,4 +235,12 @@
 div[class*="required"]::before {
     content: "*";
     color: red;
+}
+
+.add {
+    height: 50px;
+    border: 1px dashed rgb(23, 188, 148);
+    color: #17bc94;
+    background-color: rgba(23, 188, 148, .1);
+    text-align: center;
 }

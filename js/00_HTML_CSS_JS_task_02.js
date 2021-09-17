@@ -481,7 +481,7 @@ function exitEdit() {
         while (formOptions != null && formOptions.hasChildNodes()) {
             formOptions.removeChild(formOptions.firstChild);
         }
-        for (let i = 0; i < optionValues.length; ++i) {
+        for (let i = 0; formOptions != null && i < optionValues.length; ++i) {
             if (optionValues[i].value.length == 0) {
                 editItem.attr.options.splice(i, 1);
                 optionDels[i].parentNode.parentNode.removeChild(optionDels[i].parentNode);
@@ -559,31 +559,25 @@ function formCreate(obj) {
         case "email":
         case "tel":
         case "url":
-            fBody = document.createElement("input");
-            fBody.id = obj.id + "_body";
-            fBody.type = obj.type;
-            if (obj.attr.default != undefined) {
-                fBody.value = obj.attr.default;
-            }
-            fBody.className = "f-body-text";
-            if (obj.attr.readonly) {
-                fBody.disabled = true;
-            }
-            if (obj.attr.required) {
-                fBody.required = true;
-                fTitle.className += " required";
-            }
-
-            fItem.appendChild(fBody);
-
-            formBody.appendChild(fItem);
-            break;
+        case "file":
         case "textarea":
-            fBody = document.createElement("textarea");
+            if (obj.type == "textarea") {
+                fBody = document.createElement("textarea");
+            } else {
+                fBody = document.createElement("input");
+            }
             fBody.id = obj.id + "_body";
             fBody.type = obj.type;
+            fBody.name = obj.name + "(" + obj.id + ")";
             if (obj.attr.default != undefined) {
                 fBody.value = obj.attr.default;
+            }
+            if (obj.type == "file") {
+                fBody.className = "f-body-file";
+            } else if (obj.type == "textarea") {
+                fBody.className = "f-body-textarea";
+            } else {
+                fBody.className = "f-body-text";
             }
             if (obj.attr.readonly) {
                 fBody.disabled = true;
@@ -592,8 +586,6 @@ function formCreate(obj) {
                 fBody.required = true;
                 fTitle.className += " required";
             }
-
-            fBody.className = "f-body-textarea";
 
             fItem.appendChild(fBody);
 
@@ -611,7 +603,7 @@ function formCreate(obj) {
 
                 const fCheckItemTag = document.createElement("input");
                 fCheckItemTag.type = obj.type;
-                fCheckItemTag.name = obj.id;
+                fCheckItemTag.name = obj.name + "(" + obj.id + ")";
                 fCheckItemTag.id = obj.id + "_option_" + i;
                 fCheckItemTag.value = obj.attr.options[i].value;
                 if (obj.attr.options[i].check) {
@@ -635,46 +627,14 @@ function formCreate(obj) {
 
                 fItem.appendChild(fBody);
 
-                formBody.appendChild(fItem);
             }
-            break;
-        case "dropdown":
-            fBody = document.createElement("select");
-            fBody.name = obj.id;
-            fBody.id = obj.id + "_body";
-            fBody.className = "f-body-text";
-
-            const fDropdownNull = document.createElement("option");
-            fDropdownNull.value = "";
-            fDropdownNull.selected = true;
-            fDropdownNull.disabled = true;
-            fDropdownNull.className = "dn";
-            fBody.appendChild(fDropdownNull);
-
-
-            for (let i = 0; i < obj.attr.options.length; ++i) {
-                const fDropdown = document.createElement("option");
-                fDropdown.value = obj.attr.options[i].value;
-                fDropdown.innerHTML = obj.attr.options[i].value;
-                fBody.appendChild(fDropdown);
-            }
-
-            if (obj.attr.readonly) {
-                fBody.disabled = true;
-            }
-            if (obj.attr.required) {
-                fBody.required = true;
-                fTitle.className += " required";
-            }
-
-            fItem.appendChild(fBody);
 
             formBody.appendChild(fItem);
-
             break;
+        case "dropdown":
         case "dropdownmulti":
             fBody = document.createElement("select");
-            fBody.name = obj.id;
+            fBody.name = obj.name + "(" + obj.id + ")";
             fBody.id = obj.id + "_body";
             fBody.className = "f-body-text";
 
@@ -704,28 +664,9 @@ function formCreate(obj) {
 
             formBody.appendChild(fItem);
 
-            dropDownMulti(fBody.id);
-            break;
-        case "file":
-            fBody = document.createElement("input");
-            fBody.id = obj.id + "_body";
-            fBody.type = obj.type;
-            if (obj.attr.default != undefined) {
-                fBody.value = obj.attr.default;
+            if (obj.type == "dropdownmulti") {
+                dropDownMulti(fBody.id);
             }
-            if (obj.attr.readonly) {
-                fBody.disabled = true;
-            }
-            if (obj.attr.required) {
-                fBody.required = true;
-                fTitle.className += " required";
-            }
-
-            fBody.className = "f-body-file";
-
-            fItem.appendChild(fBody);
-
-            formBody.appendChild(fItem);
             break;
     }
 }
@@ -745,7 +686,7 @@ function designForm() {
     formFill.style.display = "none";
     formDesign.style.display = "block";
 }
-
+// 下拉多选框控件功能设计
 function dropDownMulti(objId) {
     let values = [];
     let opts = [];
@@ -780,7 +721,7 @@ function dropDownMulti(objId) {
         } else {
             this.options[0].selected = true;
         }
-        console.log(select.value);
+        // console.log(select.value);
     });
 }
 /* 表单设计组件

@@ -175,14 +175,24 @@
     <article id="form-fill" class="dn">
         <div class="form-tab minw1024">
             <div class="btn-group">
-                <button type="submit" class="btn f-fill">提交</button>
-                <button type="reset" class="btn f-clear">重置</button>
+                <!-- <button type="submit" class="btn f-fill">提交</button>
+                <button type="reset" class="btn f-clear">重置</button> -->
+                <div class="dib">
+                    <input class="abs-clip">
+                    <label id="sub" for="submit" class="sub"></label>
+                </div>
+                <div class="dib">
+                    <input class="abs-clip">
+                    <label id="res" for="reset" class="res"></label>
+                </div>
                 <button type="button" class="btn" onclick="designForm()">修改设计</button>
             </div>
         </div>
         <div class="form-canvas tc">
             <div class="w1024 dib pt8 pb8">
                 <form id="new-form" action="http://192.168.114.128:8080/form" method="POST" target="_blank">
+                    <button type="submit" id="submit" class="abs-clip">提交表单</button>
+                    <button type="reset" id="reset" class="abs-clip">清除数据</button>
                     <div id="form-body">
                         <!-- <div class="f-item">
                             <div class="f-title">单行文本:</div>
