@@ -97,7 +97,6 @@ window.onload = function() {
     console.log(now.toString());
     console.log(now.valueOf());
 
-
     let someDate = new Date(Date.parse("May 23, 2019"));
     console.log(someDate);
 

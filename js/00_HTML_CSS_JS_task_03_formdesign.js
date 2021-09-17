@@ -9,14 +9,16 @@ let optionTags;
 let optionValues;
 let optionDels;
 
+// HTML模板组
 let temps;
 
+// 表单项拖拽添加时，占位空节点控件
 let nullNode;
 
+// 表单数据项下标
 let index = -1;
 
-let Prompt;
-
+// 页面加载
 window.onload = function() {
     // const url = "../json/00_HTML_CSS_JS_task_01.json";
     // const request = new XMLHttpRequest();
@@ -47,6 +49,51 @@ window.onload = function() {
         editItem.attr.default = itemDefault.value;
     }
 
+    const itemDatatype = document.getElementById("item_datatime");
+    itemDatatype.onchange = function() {
+        if (editItem.type == "date") {
+            let value = null;
+            if (itemDefault.value) {
+                value = new Date(itemDefault.value)
+            }
+            console.log(value);
+            switch (itemDatatype.value) {
+                case "1900/01":
+                    itemDefault.type = "month";
+                    editItem.attr.datatype = "1900/01";
+                    if (value) {
+                        itemDefault.value = dataToString(value.getFullYear(), 4) + "-" + dataToString(value.getMonth() + 1, 2);
+                        editItem.attr.default = itemDefault.value;
+                    }
+                    break;
+                case "1900/01/01":
+                    itemDefault.type = "date";
+                    editItem.attr.datatype = "1900/01/01";
+                    if (value) {
+                        itemDefault.value = dataToString(value.getFullYear(), 4) + "-" + dataToString(value.getMonth() + 1, 2) + "-" + dataToString(value.getDate(), 2);
+                        editItem.attr.default = itemDefault.value;
+                    }
+                    break;
+                case "1900/01/01 00:00":
+                    itemDefault.type = "datetime-local";
+                    editItem.attr.datatype = "1900/01/01 00:00";
+                    if (value) {
+                        itemDefault.value = dataToString(value.getFullYear(), 4) + "-" + dataToString(value.getMonth() + 1, 2) + "-" + dataToString(value.getDate(), 2) + "T" + dataToString(value.getHours(), 2) + ":" + dataToString(value.getMinutes(), 2);
+                        editItem.attr.default = itemDefault.value;
+                    }
+                    break;
+                case "1900年第1周":
+                    itemDefault.type = "week";
+                    editItem.attr.datatype = "1900年第1周";
+                    if (value) {
+                        itemDefault.value = dataToString(value.getFullYear(), 4) + "-W" + dataToString(getYearWeek(value, value.getFullYear()), 2);
+                        editItem.attr.default = itemDefault.value;
+                    }
+                    break;
+            }
+        }
+    }
+
     const itemRequired = document.getElementById("item_required");
     itemRequired.onchange = function() {
         editItem.attr.required = !editItem.attr.required;
@@ -71,6 +118,12 @@ window.onload = function() {
         editItem.attr.maxLength = itemMaxlength.value;
     }
 
+    const itemPlaceholder = document.getElementById("item_placeholder");
+    itemPlaceholder.onchange = function() {
+        console.log(itemPlaceholder.value);
+        editItem.attr.placeholder = itemPlaceholder.value;
+    }
+
     nullNode = document.createElement("div");
     nullNode.className = "add";
     nullNode.ondrop = function(ev) {
@@ -86,7 +139,7 @@ window.onload = function() {
     Prompt = document.getElementsByClassName("requVeriProm")[0];
 }
 
-// 允许拖拽操作
+// 拖拽过程响应事件
 function allowDrop(ev) {
     ev.preventDefault();
     if (ev.target != nullNode) {
@@ -100,11 +153,13 @@ function allowDrop(ev) {
             if (y <= (top + height / 2)) {
                 switch (ev.target.className) {
                     case "item":
+                    case "i-icon":
                         formCanvas.insertBefore(nullNode, ev.target.parentElement.parentElement);
                         // console.log(ev.target.className);
                         index = getItemIndex(ev.target.parentElement.parentElement.firstChild.nextSibling.id);
                         break;
                     case "i-title":
+                    case "i-title wm-ht":
                     case "i-body-text":
                     case "i-body-textarea":
                     case "i-body-check":
@@ -132,11 +187,13 @@ function allowDrop(ev) {
             } else {
                 switch (ev.target.className) {
                     case "item":
+                    case "i-icon":
                         formCanvas.insertBefore(nullNode, ev.target.parentElement.parentElement);
                         // console.log(ev.target.className);
                         index = getItemIndex(ev.target.parentElement.parentElement.firstChild.nextSibling.id);
                         break;
                     case "i-title":
+                    case "i-title wm-ht":
                     case "i-body-text":
                     case "i-body-textarea":
                     case "i-body-check":
@@ -173,29 +230,69 @@ function allowDrop(ev) {
 function drag(ev) {
     ev.dataTransfer.setData("Text", ev.target.id);
 }
+// 拖拽设置表单项布局
+function dragItem(ev) {
+    ev.dataTransfer.setData("Item", ev.target.firstChild.nextSibling.id);
+    ev.target.firstChild.nextSibling.checked = true;
+
+}
 // 拖入操作,表单设计组件添加
 function drop(ev) {
     ev.preventDefault();
-    var data = ev.dataTransfer.getData("Text");
+    let data = ev.dataTransfer.getData("Text");
+    let Item = ev.dataTransfer.getData("Item");
+    // console.log(data);
+    // console.log(Item);
+    // console.log(data.length);
+    // console.log(Item.length);
     formCanvas = document.getElementById("form_canvas");
     // console.log(ev.target);
-    let itemData;
-    let newItem;
+    if (data.length != 0) {
+        let itemData;
+        let newItem;
 
-    itemData = addItem(data);
-    // console.log(itemData);
-    newItem = formdesign(itemData);
+        itemData = addItem(data);
+        // console.log(itemData);
+        newItem = formdesign(itemData);
 
-    formCanvas.insertBefore(newItem, nullNode);
+        formCanvas.insertBefore(newItem, nullNode);
 
-    formCanvas.removeChild(nullNode);
+        formCanvas.removeChild(nullNode);
 
-    if (index != -1) {
-        itemsData.splice(index, 0, itemData);
-        console.log(itemsData);
-    } else {
-        itemsData.push(itemData);
-        console.log(itemsData);
+        if (index != -1) {
+            itemsData.splice(index, 0, itemData);
+            console.log(itemsData);
+        } else {
+            itemsData.push(itemData);
+            console.log(itemsData);
+        }
+    }
+    if (Item.length != 0) {
+        let itemIndex = getItemIndex(Item);
+        let itemData = itemsData[itemIndex];
+
+        let dragItem = document.getElementById(Item).parentElement;
+
+        formCanvas.removeChild(dragItem);
+
+        formCanvas.insertBefore(dragItem, nullNode);
+        formCanvas.removeChild(nullNode);
+
+        if (index != -1) {
+            // console.log("index: " + index);
+            // console.log("itemIndex: " + itemIndex);
+            itemsData.splice(index, 0, itemData);
+            if (index >= itemIndex) {
+                itemsData.splice(itemIndex, 1);
+            } else {
+                itemsData.splice(itemIndex + 1, 1);
+            }
+            console.log(itemsData);
+        } else {
+            itemsData.push(itemData);
+            itemsData.splice(itemIndex, 1);
+            console.log(itemsData);
+        }
     }
 }
 // 获取数据项下标
@@ -207,7 +304,6 @@ function getItemIndex(id) {
     }
     return itemsData.length - 1;
 }
-
 // 拖入操作，生成表单数据项数据
 function addItem(data) {
     const itemData = {};
@@ -220,6 +316,7 @@ function addItem(data) {
             itemData.attr.default = "";
             itemData.attr.readonly = false;
             itemData.attr.required = false;
+            itemData.attr.placeholder = "请输入";
             itemData.attr.maxLength = 200;
             break;
         case "form_item_02":
@@ -228,6 +325,7 @@ function addItem(data) {
             itemData.type = "password";
             itemData.attr = {};
             itemData.attr.required = true;
+            itemData.attr.placeholder = "请输入";
             itemData.attr.maxLength = 18;
             break;
         case "form_item_03":
@@ -238,6 +336,7 @@ function addItem(data) {
             itemData.attr.default = "";
             itemData.attr.readonly = false;
             itemData.attr.required = false;
+            itemData.attr.placeholder = "请输入";
             itemData.attr.maxLength = 2000;
             break;
         case "form_item_04":
@@ -306,7 +405,7 @@ function addItem(data) {
             itemData.attr.default = "";
             itemData.attr.readonly = false;
             itemData.attr.required = false;
-            itemData.attr.datetype = "1900/01/01";
+            itemData.attr.datatype = "1900/01/01";
             break;
         case "form_item_09":
             itemData.id = "Number_" + Date.now().valueOf();
@@ -316,6 +415,7 @@ function addItem(data) {
             itemData.attr.default = "";
             itemData.attr.readonly = false;
             itemData.attr.required = false;
+            itemData.attr.placeholder = "请输入";
             itemData.attr.datetype = "1000";
             break;
         case "form_item_10":
@@ -326,6 +426,7 @@ function addItem(data) {
             itemData.attr.default = "";
             itemData.attr.readonly = false;
             itemData.attr.required = false;
+            itemData.attr.placeholder = "请输入";
             break;
         case "form_item_11":
             itemData.id = "Telphone_" + Date.now().valueOf();
@@ -335,6 +436,7 @@ function addItem(data) {
             itemData.attr.default = "";
             itemData.attr.readonly = false;
             itemData.attr.required = false;
+            itemData.attr.placeholder = "请输入";
             break;
         case "form_item_12":
             itemData.id = "URL_" + Date.now().valueOf();
@@ -344,6 +446,7 @@ function addItem(data) {
             itemData.attr.default = "";
             itemData.attr.readonly = false;
             itemData.attr.required = false;
+            itemData.attr.placeholder = "请输入";
             break;
         case "form_item_13":
             itemData.id = "File_" + Date.now().valueOf();
@@ -388,6 +491,8 @@ function formdesign(obj) {
             body = aItem.getElementsByClassName("i-body-text")[0];
             if (obj.type == "textarea") {
                 body.className = "i-body-textarea";
+            } else if (obj.type == "dropdown" || obj.type == "dropdownmulti") {
+                body.className = "i-body-select";
             }
             break;
         case "radio":
@@ -469,7 +574,34 @@ function edit(id) {
         Default.style.display = "block";
         const itemDefault = document.getElementById("item_default");
         itemDefault.type = editItem.type;
+        if (editItem.type == "date") {
+            switch (editItem.attr.datatype) {
+                case "1900/01":
+                    itemDefault.type = "month";
+                    break;
+                case "1900/01/01":
+                    itemDefault.type = "date";
+                    break;
+                case "1900/01/01 00:00":
+                    itemDefault.type = "datetime-local";
+                    break;
+                case "1900年第1周":
+                    itemDefault.type = "week";
+                    break;
+            }
+        } else {
+            itemDefault.type = editItem.type;
+        }
         itemDefault.value = editItem.attr.default;
+    }
+
+    if (editItem.attr.datatype != undefined) {
+        const Datatype = document.getElementById("datatype");
+        Datatype.style.display = "block";
+        const Options = document.getElementById(editItem.type);
+        Options.style.display = "block";
+        const Option = document.getElementById(editItem.attr.datatype);
+        Option.selected = true;
     }
 
     if (editItem.attr.required != undefined) {
@@ -484,6 +616,13 @@ function edit(id) {
         Readonly.style.display = "block";
         const itemReadonly = document.getElementById("item_readonly");
         itemReadonly.checked = editItem.attr.readonly;
+    }
+
+    if (editItem.attr.placeholder != undefined) {
+        const Placeholder = document.getElementById("placeholder");
+        Placeholder.style.display = "block";
+        const itemPlaceholder = document.getElementById("item_placeholder");
+        itemPlaceholder.value = editItem.attr.placeholder;
     }
 
     if (editItem.attr.options != undefined) {
@@ -607,10 +746,18 @@ function exitEdit() {
 
     const Default = document.getElementById("default");
     Default.style.display = "none";
+    const Datatype = document.getElementById("datatype");
+    Datatype.style.display = "none";
+    const options = document.getElementById(editItem.type);
+    if (options) {
+        options.style.display = "none";
+    }
     const Required = document.getElementById("required");
     Required.style.display = "none";
     const Readonly = document.getElementById("readonly");
     Readonly.style.display = "none";
+    const Placeholder = document.getElementById("placeholder");
+    Placeholder.style.display = "none";
     const Options = document.getElementById("options");
     if (Options.style.display != "none") {
         const formOptions = document.getElementById(editItem.id + "_options");
@@ -645,21 +792,22 @@ function exitEdit() {
 }
 // 删除表单项
 function delItem() {
-    const item = document.getElementById(editItem.id);
-    formCanvas.removeChild(item.parentNode);
-    let i = 0;
-    for (; i < itemsData.length; ++i) {
-        console.log(itemsData[i] == editItem);
-        if (itemsData[i] == editItem) {
-            // console.log(i);
-            break;
+    if (confirm("确定要删除数据项 “" + editItem.name + "” 吗？")) {
+        const item = document.getElementById(editItem.id);
+        formCanvas.removeChild(item.parentNode);
+        let i = 0;
+        for (; i < itemsData.length; ++i) {
+            if (itemsData[i] == editItem) {
+                // console.log(i);
+                break;
+            }
         }
-    }
-    // console.log(i);
-    itemsData.splice(i, 1);
-    // console.log(itemsData);
+        // console.log(i);
+        itemsData.splice(i, 1);
+        // console.log(itemsData);
 
-    exitEdit();
+        exitEdit();
+    }
 }
 // 表单设计界面,"填写表单"按钮
 function fillForm() {
@@ -701,7 +849,24 @@ function formCreate(obj) {
                 fBody = aItem.getElementsByTagName("input")[0];
             }
             fBody.id = obj.id + "_fBody";
-            fBody.type = obj.type;
+            if (obj.type == "date") {
+                switch (obj.attr.datatype) {
+                    case "1900/01":
+                        fBody.type = "month";
+                        break;
+                    case "1900/01/01":
+                        fBody.type = "date";
+                        break;
+                    case "1900/01/01 00:00":
+                        fBody.type = "datetime-local";
+                        break;
+                    case "1900年第1周":
+                        fBody.type = "week";
+                        break;
+                }
+            } else {
+                fBody.type = obj.type;
+            }
             fBody.name = obj.name + "(" + obj.id + ")";
             if (obj.attr.default != undefined) {
                 fBody.value = obj.attr.default;
@@ -716,6 +881,9 @@ function formCreate(obj) {
             }
             if (obj.attr.required) {
                 fBody.required = true;
+            }
+            if (obj.attr.placeholder != undefined) {
+                fBody.placeholder = obj.attr.placeholder;
             }
             if (obj.attr.maxLength != undefined) {
                 fBody.maxLength = obj.attr.maxLength;
@@ -832,18 +1000,19 @@ function formCreate(obj) {
         fTitle.className += " required";
     }
 }
-
 // 表单设计界面,"清空设计"按钮
 function clearDesign() {
     // console.log("clear");
-    let jsonText = JSON.stringify(itemsData);
-    console.log(jsonText);
-    console.log(itemsData);
-    let jsObject = JSON.parse(jsonText);
-    console.log(jsObject);
-    itemsData = [];
-    while (formCanvas.hasChildNodes()) {
-        formCanvas.removeChild(formCanvas.firstChild);
+    if (confirm("确定要清除当前表单的全部设计吗？")) {
+        let jsonText = JSON.stringify(itemsData);
+        console.log(jsonText);
+        console.log(itemsData);
+        let jsObject = JSON.parse(jsonText);
+        console.log(jsObject);
+        itemsData = [];
+        while (formCanvas.hasChildNodes()) {
+            formCanvas.removeChild(formCanvas.firstChild);
+        }
     }
 }
 // 表单填写界面,"修改设计"按钮
@@ -889,55 +1058,13 @@ function dropDownMulti(objId, v) {
         // console.log(select.value);
     });
 }
-
-function submitForm() {
-    let timer = null;
-    for (const item of itemsData) {
-        if (item.attr.required) {
-            if (item.type == "checkbox" || item.type == "radio") {
-                if (!requiredVeri(item.name + "(" + item.id + ")")) {
-                    document.getElementById(item.id + "_form").style.backgroundColor = "rgba(255,0,0,.1)";
-                    for (const option of document.getElementsByName(item.name + "(" + item.id + ")")) {
-                        option.onclick = function() {
-                            document.getElementById(item.id + "_form").style.backgroundColor = "";
-                        };
-                    }
-                    clearTimeout(timer);
-                    Prompt.style.display = "block";
-                    document.getElementsByClassName("requVeriProm_text")[0].innerHTML = "数据项 “" + item.name + "(" + item.id + ")” 必填校验不通过";
-                    timer = setTimeout(function() {
-                        Prompt.style.display = "none";
-                    }, 2500);
-                    // alert("数据项 “" + item.name + "(" + item.id + ")” 必填校验不通过");
-                    return false;
-                }
-            } else if (document.getElementsByName(item.name + "(" + item.id + ")")[0].value.length == 0) {
-                document.getElementById(item.id + "_form").style.backgroundColor = "rgba(255,0,0,.1)";
-                document.getElementById(item.id + "_fBody").onfocus = function() {
-                    document.getElementById(item.id + "_form").style.backgroundColor = "";
-                };
-                clearTimeout(timer);
-                Prompt.style.display = "block";
-                document.getElementsByClassName("requVeriProm_text")[0].innerHTML = "数据项 “" + item.name + "(" + item.id + ")” 必填校验不通过";
-                timer = setTimeout(function() {
-                    Prompt.style.display = "none";
-                }, 2500);
-                // alert("数据项 “" + item.name + "(" + item.id + ")” 必填校验不通过");
-                return false;
-            }
-        } else {
-            continue;
-        }
-    }
-    return true;
+// 日期格式数值转换
+function dataToString(num, len) {
+    return (Array(len).join('0') + num.toString()).slice(-len);
 }
-
-function requiredVeri(name) {
-    const options = document.getElementsByName(name);
-    for (const option of options) {
-        if (option.checked) {
-            return true;
-        }
-    }
-    return false;
+// 获取当前周
+function getYearWeek(date, yyyy) {
+    const year = new Date(yyyy, 0, 1);
+    const d = Math.round((date.valueOf() - year.valueOf()) / 86400000);
+    return Math.ceil((d + year.getDay()) / 7);
 }
