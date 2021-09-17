@@ -37,8 +37,10 @@
 .i-body-text,
 .i-body-textarea,
 .i-body-select,
+.i-body-location,
 .f-body-text,
-.f-body-textarea {
+.f-body-textarea,
+.f-body-location {
     min-height: 40px;
     border: 1px solid gray;
     background-color: #fff;
@@ -55,6 +57,36 @@
 .i-body-textarea::after {
     content: "请输入";
     color: rgb(156, 156, 156);
+}
+
+.i-body-location {
+    align-items: center;
+    position: relative;
+}
+
+.addressIcon,
+.clearIcon {
+    display: inline-block;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    padding: 7px;
+    box-sizing: border-box;
+}
+
+.clearIcon {
+    display: none;
+    border: 0px;
+    background-color: transparent;
+}
+
+.f-body-location:focus~.addressIcon {
+    display: none;
+}
+
+.notNull:hover~.clearIcon,
+.clearIcon:hover {
+    display: inline-block;
 }
 
 .i-body-select::after {

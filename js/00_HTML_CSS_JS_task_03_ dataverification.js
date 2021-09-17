@@ -53,3 +53,8 @@ function requiredVeri(name) {
     }
     return false;
 }
+
+function getLocation() {
+    let address = "广东省深圳市南山区";
+    return address;
+}

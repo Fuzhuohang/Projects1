@@ -63,6 +63,9 @@
                 <div id="form_item_14" class="itg" draggable="true" ondragstart="drag(event)">
                     <div class="pt8 pb8">逻辑</div>
                 </div>
+                <!-- <div id="form_item_15" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">地址</div>
+                </div> -->
                 <!-- <div id="form_item_14" class="itg" draggable="true" ondragstart="drag(event)">
                     <div class="pt8 pb8">颜色</div>
                 </div> -->
@@ -150,6 +153,20 @@
                                     <option id="1900/01/01 00:00" value="1900/01/01 00:00">1900/01/01 00:00</option>
                                     <option id="1900年第1周" value="1900年第1周">1900年第1周</option>
                                 </optgroup>
+                                <optgroup id="number" class="dn">
+                                    <option id="null" value="'null'">空</option>
+                                    <option id="1000" value="1000">1000</option>
+                                    <option id="1000.1" value="1000.1">1000.1</option>
+                                    <option id="1000.01" value="1000.01">1000.01</option>
+                                    <option id="1000.001" value="1000.001">1000.001</option>
+                                    <option id="1000.0001" value="1000.0001">1000.0001</option>
+                                    <option id="1000.00001" value="1000.00001">1000.00001</option>
+                                    <option id="1000.000001" value="1000.000001">1000.000001</option>
+                                </optgroup>
+                                <optgroup id="address" class="dn">
+                                    <option id="Location" value="Location">地图定位</option>
+                                    <option id="Address" value="Address">地址</option>
+                                </optgroup>
                             </select>
                         </div>
                         <div class="attr-item dn" id="readonly">
@@ -213,7 +230,7 @@
         </div>
     </div>
 
-    <!-- 表单设计——单行文本，多行文本，密码，下拉单选，下拉多选，日期，数值，邮箱，电话，URL -->
+    <!-- 表单设计——单行文本，多行文本，密码，下拉单选，下拉多选，日期，数值，邮箱，电话，URL，地图定位 -->
     <template>
         <div class="i" draggable="true" ondragstart="dragItem(event)">
             <input type="radio" name="item" id="ShortText" hidden>
@@ -274,7 +291,7 @@
             <button class="attr-option-del" name="option_del"></button>
         </div>
     </template>
-    <!-- 表单填写——单行文本，密码，日期，数值，邮箱，电话，URL，附件 -->
+    <!-- 表单填写——单行文本，密码，日期，数值，邮箱，电话，URL，附件，地图定位 -->
     <template>
         <div class="f-item">
             <div class="f-title">单行文本:</div>
@@ -339,6 +356,12 @@
                 <label for="item_required" class="logic-item l"></label>
             </div>
         </div>
+    </template>
+
+    <template></template>
+    <!-- 表单填写——地址 -->
+    <template>
+
     </template>
 </body>
 
