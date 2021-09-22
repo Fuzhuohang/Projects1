@@ -111,7 +111,7 @@ function requiredVeri(name) {
     }
     return false;
 }
-
+// 延时错误提示框
 function delayPrompt(text) {
     let timer = null;
     const Prompt = document.getElementById("requVeriProm");

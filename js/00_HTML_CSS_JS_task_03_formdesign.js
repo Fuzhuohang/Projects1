@@ -22,21 +22,23 @@ let index = -1;
 
 // 页面加载
 window.onload = function() {
+    formCanvas = document.getElementById("form_canvas");
+    temps = document.getElementsByTagName("template");
+
     // const url = "../json/00_HTML_CSS_JS_task_01.json";
     // const request = new XMLHttpRequest();
     // request.open("get", url);
     // request.send(null);
     // request.onload = function() {
     //     if (request.status == 200) {
-    //         itemsData = JSON.parse(request.responseText);
+    //         itemsData = JSON.parse(request.responseText).itemsData;
+    //         console.log(itemsData);
     //         for (const itemData of itemsData) {
-    //             formDesign(itemData);
+    //             console.log(itemData);
+    //             formCanvas.appendChild(formdesign(itemData));
     //         }
     //     }
     // }
-
-    formCanvas = document.getElementById("form_canvas");
-    temps = document.getElementsByTagName("template");
 
     const itemName = document.getElementById("item_name");
     itemName.onchange = function() {
@@ -129,8 +131,7 @@ window.onload = function() {
             formCanvas.removeChild(nullNode);
         }
     };
-}
-
+};
 // 拖拽过程响应事件
 function allowDrop(ev) {
     ev.preventDefault();
@@ -1127,11 +1128,14 @@ function formCreate(obj) {
 function clearDesign() {
     // console.log("clear");
     if (confirm("确定要清除当前表单的全部设计吗？")) {
-        let jsonText = JSON.stringify(itemsData);
-        console.log(jsonText);
-        console.log(itemsData);
-        let jsObject = JSON.parse(jsonText);
-        console.log(jsObject);
+        // const json = {
+        //     itemsData,
+        //     checkRules
+        // }
+        // let jsonText = JSON.stringify(json);
+        // console.log(jsonText);
+        // let blob = new Blob([jsonText], { type: "text/plain;charset=utf-8" });
+        // saveAs(blob, "00_HTML_CSS_JS_task_01.json");
         itemsData = [];
         checkRules = [{}, {}];
         console.log(itemsData);
