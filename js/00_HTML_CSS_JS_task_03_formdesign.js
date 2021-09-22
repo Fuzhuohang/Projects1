@@ -2,6 +2,8 @@
 let formCanvas;
 // 表单项数据集
 let itemsData = [];
+// 表单项校验规则数据集
+let checkRules = [{}, {}];
 // 当前编辑表单数据项
 let editItem;
 // 表单数据项属性设置面板"选项组"相关组件(选项标签,选项值,选项删除按钮)
@@ -52,43 +54,35 @@ window.onload = function() {
     const itemDatatype = document.getElementById("item_datatime");
     itemDatatype.onchange = function() {
         if (editItem.type == "date") {
-            let value = null;
-            if (itemDefault.value) {
-                value = new Date(itemDefault.value)
-            }
-            console.log(value);
+            let value;
             switch (itemDatatype.value) {
                 case "1900/01":
+                    value = dateFormatConversion(itemDefault.value, "month");
                     itemDefault.type = "month";
                     editItem.attr.datatype = "1900/01";
-                    if (value) {
-                        itemDefault.value = dataToString(value.getFullYear(), 4) + "-" + dataToString(value.getMonth() + 1, 2);
-                        editItem.attr.default = itemDefault.value;
-                    }
+                    itemDefault.value = value;
+                    editItem.attr.default = itemDefault.value;
                     break;
                 case "1900/01/01":
+                    value = dateFormatConversion(itemDefault.value, "date");
                     itemDefault.type = "date";
                     editItem.attr.datatype = "1900/01/01";
-                    if (value) {
-                        itemDefault.value = dataToString(value.getFullYear(), 4) + "-" + dataToString(value.getMonth() + 1, 2) + "-" + dataToString(value.getDate(), 2);
-                        editItem.attr.default = itemDefault.value;
-                    }
+                    itemDefault.value = value;
+                    editItem.attr.default = itemDefault.value;
                     break;
                 case "1900/01/01 00:00":
+                    value = dateFormatConversion(itemDefault.value, "datetime-local");
                     itemDefault.type = "datetime-local";
                     editItem.attr.datatype = "1900/01/01 00:00";
-                    if (value) {
-                        itemDefault.value = dataToString(value.getFullYear(), 4) + "-" + dataToString(value.getMonth() + 1, 2) + "-" + dataToString(value.getDate(), 2) + "T" + dataToString(value.getHours(), 2) + ":" + dataToString(value.getMinutes(), 2);
-                        editItem.attr.default = itemDefault.value;
-                    }
+                    itemDefault.value = value;
+                    editItem.attr.default = itemDefault.value;
                     break;
                 case "1900年第1周":
+                    value = dateFormatConversion(itemDefault.value, "week");
                     itemDefault.type = "week";
                     editItem.attr.datatype = "1900年第1周";
-                    if (value) {
-                        itemDefault.value = dataToString(value.getFullYear(), 4) + "-W" + dataToString(getYearWeek(value, value.getFullYear()), 2);
-                        editItem.attr.default = itemDefault.value;
-                    }
+                    itemDefault.value = value;
+                    editItem.attr.default = itemDefault.value;
                     break;
             }
         }
@@ -135,8 +129,6 @@ window.onload = function() {
             formCanvas.removeChild(nullNode);
         }
     };
-
-    Prompt = document.getElementsByClassName("requVeriProm")[0];
 }
 
 // 拖拽过程响应事件
@@ -262,9 +254,11 @@ function drop(ev) {
         if (index != -1) {
             itemsData.splice(index, 0, itemData);
             console.log(itemsData);
+            console.log(checkRules);
         } else {
             itemsData.push(itemData);
             console.log(itemsData);
+            console.log(checkRules);
         }
     }
     if (Item.length != 0) {
@@ -288,10 +282,12 @@ function drop(ev) {
                 itemsData.splice(itemIndex + 1, 1);
             }
             console.log(itemsData);
+            console.log(checkRules);
         } else {
             itemsData.push(itemData);
             itemsData.splice(itemIndex, 1);
             console.log(itemsData);
+            console.log(checkRules);
         }
     }
 }
@@ -318,6 +314,8 @@ function addItem(data) {
             itemData.attr.required = false;
             itemData.attr.placeholder = "请输入";
             itemData.attr.maxLength = 200;
+            itemData.attr.regularCheck = false;
+            checkRules[0][itemData.id] = createCheckRules(1);
             break;
         case "form_item_02":
             itemData.id = "Password_" + Date.now().valueOf();
@@ -338,6 +336,8 @@ function addItem(data) {
             itemData.attr.required = false;
             itemData.attr.placeholder = "请输入";
             itemData.attr.maxLength = 2000;
+            itemData.attr.regularCheck = false;
+            checkRules[0][itemData.id] = createCheckRules(1);
             break;
         case "form_item_04":
             itemData.id = "Dropdown_" + Date.now().valueOf();
@@ -406,6 +406,8 @@ function addItem(data) {
             itemData.attr.readonly = false;
             itemData.attr.required = false;
             itemData.attr.datatype = "1900/01/01";
+            itemData.attr.submitVeri = false;
+            checkRules[1][itemData.id] = createCheckRules(2);
             break;
         case "form_item_09":
             itemData.id = "Number_" + Date.now().valueOf();
@@ -416,7 +418,9 @@ function addItem(data) {
             itemData.attr.readonly = false;
             itemData.attr.required = false;
             itemData.attr.placeholder = "请输入";
-            itemData.attr.datatype = "1000";
+            // itemData.attr.datatype = "1000";
+            itemData.attr.submitVeri = false;
+            checkRules[1][itemData.id] = createCheckRules(2);
             break;
         case "form_item_10":
             itemData.id = "Email_" + Date.now().valueOf();
@@ -665,6 +669,28 @@ function edit(id) {
         itemMaxlength.value = editItem.attr.maxLength;
     }
 
+    if (editItem.attr.regularCheck != undefined) {
+        const regularCheck = document.getElementById("regularCheck");
+        regularCheck.style.display = "block";
+        const itemRegularCheck = document.getElementById("item_regularCheck");
+        if (editItem.attr.regularCheck) {
+            itemRegularCheck.value = "已设置";
+        } else {
+            itemRegularCheck.value = "未设置";
+        }
+    }
+
+    if (editItem.attr.submitVeri != undefined) {
+        const submitVeri = document.getElementById("submitVeri");
+        submitVeri.style.display = "block";
+        const itemSubmitVeri = document.getElementById("item_submitVeri");
+        if (editItem.attr.submitVeri) {
+            itemSubmitVeri.value = "已设置";
+        } else {
+            itemSubmitVeri.value = "未设置";
+        }
+    }
+
     optionTags = document.getElementsByName("option_tag");
     optionValues = document.getElementsByName("option_value");
     optionDels = document.getElementsByName("option_del");
@@ -808,6 +834,10 @@ function exitEdit() {
 
     const maxLength = document.getElementById("maxlength");
     maxLength.style.display = "none";
+    const regularCheck = document.getElementById("regularCheck");
+    regularCheck.style.display = "none";
+    const submitVeri = document.getElementById("submitVeri");
+    submitVeri.style.display = "none";
 
     editItem = null;
     optionTags = null;
@@ -818,7 +848,6 @@ function exitEdit() {
 function delItem() {
     if (confirm("确定要删除数据项 “" + editItem.name + "” 吗？")) {
         const item = document.getElementById(editItem.id);
-        formCanvas.removeChild(item.parentNode);
         let i = 0;
         for (; i < itemsData.length; ++i) {
             if (itemsData[i] == editItem) {
@@ -826,9 +855,24 @@ function delItem() {
                 break;
             }
         }
+        if (editItem.attr.regularCheck != undefined) {
+            delete checkRules[0][editItem.id];
+        }
+        if (editItem.attr.submitVeri != undefined) {
+            for (const submitVeri in checkRules[1]) {
+                if (checkRules[1][submitVeri].beginValue == (editItem.id + "_fBody") || checkRules[1][submitVeri].endValue == (editItem.id + "_fBody")) {
+                    // alert("当前数据项在其他数据项的校验规则中被使用，不可删除");
+                    delayPrompt("当前数据项在其他数据项的校验规则中被使用，不可删除。");
+                    return;
+                }
+            }
+            delete checkRules[1][editItem.id];
+        }
         // console.log(i);
+        formCanvas.removeChild(item.parentNode);
         itemsData.splice(i, 1);
-        // console.log(itemsData);
+        console.log(itemsData);
+        console.log(checkRules);
 
         exitEdit();
     }
@@ -844,6 +888,7 @@ function fillForm() {
     for (const itemData of itemsData) {
         formCreate(itemData);
     }
+    addSubmitVeri();
     formDesign.style.display = "none";
     formFill.style.display = "block";
 }
@@ -1088,6 +1133,9 @@ function clearDesign() {
         let jsObject = JSON.parse(jsonText);
         console.log(jsObject);
         itemsData = [];
+        checkRules = [{}, {}];
+        console.log(itemsData);
+        console.log(checkRules);
         while (formCanvas.hasChildNodes()) {
             formCanvas.removeChild(formCanvas.firstChild);
         }
@@ -1136,6 +1184,21 @@ function dropDownMulti(objId, v) {
         // console.log(select.value);
     });
 }
+// 日期格式转换
+function dateFormatConversion(date, toFormat) {
+    const datevalue = new Date(date);
+    console.log(datevalue);
+    switch (toFormat) {
+        case "month":
+            return dataToString(datevalue.getFullYear(), 4) + "-" + dataToString(datevalue.getMonth() + 1, 2);
+        case "date":
+            return dataToString(datevalue.getFullYear(), 4) + "-" + dataToString(datevalue.getMonth() + 1, 2) + "-" + dataToString(datevalue.getDate(), 2);
+        case "datetime-local":
+            return dataToString(datevalue.getFullYear(), 4) + "-" + dataToString(datevalue.getMonth() + 1, 2) + "-" + dataToString(datevalue.getDate(), 2) + "T" + dataToString(datevalue.getUTCHours(), 2) + ":" + dataToString(datevalue.getMinutes(), 2);
+        case "week":
+            return dataToString(datevalue.getFullYear(), 4) + "-W" + dataToString(getYearWeek(datevalue, datevalue.getFullYear()), 2);
+    }
+}
 // 日期格式数值转换
 function dataToString(num, len) {
     return (Array(len).join('0') + num.toString()).slice(-len);
@@ -1145,4 +1208,532 @@ function getYearWeek(date, yyyy) {
     const year = new Date(yyyy, 0, 1);
     const d = Math.round((date.valueOf() - year.valueOf()) / 86400000);
     return Math.ceil((d + year.getDay()) / 7);
+}
+// 计算一定偏移量后的日期
+function dateOptions(date, offset) {
+    const datevalue = new Date(date);
+    console.log(datevalue);
+    datevalue.setDate(datevalue.getDate() + offset);
+    console.log(datevalue);
+    return datevalue;
+}
+// 打开校验规则弹窗
+function rulesContainer(type) {
+    const checkAttr = document.getElementById("checkAttr");
+    checkAttr.style.display = "block";
+    const checkTitle = checkAttr.getElementsByTagName("h2")[0];
+    const checkType = document.getElementById("check_type");
+    const checkItem = document.getElementById("check_item");
+    checkItem.value = editItem.name + "(" + editItem.id + ")";
+    const regularCheck = document.getElementById("regular_check");
+    const submitVeri = document.getElementById("submit_veri");
+    switch (type) {
+        case 1:
+            checkTitle.innerHTML = "正则校验规则"
+            checkType.value = "正则校验"
+            regularCheck.style.display = "block";
+            const regularTemplate = document.getElementById("regular_template");
+            const regularExpression = document.getElementById("regular_expression");
+            const regularTips = document.getElementById("regular_tips");
+            regularTemplate.options[checkRules[0][editItem.id].template].selected = true;
+            if (checkRules[0][editItem.id].template > 0 && checkRules[0][editItem.id].template < regularTemplate.options.length - 1) {
+                regularExpression.disabled = true;
+            }
+            regularExpression.value = checkRules[0][editItem.id].expression;
+            regularTips.value = checkRules[0][editItem.id].tips;
+            regularTemplate.onchange = function() {
+                const index = regularTemplate.selectedIndex;
+                regularExpression.value = regularTemplate.value;
+                if (index > 0 && index < regularTemplate.options.length - 1) {
+                    regularExpression.disabled = true;
+                    regularTips.value = regularTemplate.options[index].text;
+                } else {
+                    regularExpression.disabled = false;
+                    regularTips.value = "";
+                }
+            }
+            break;
+        case 2:
+            checkTitle.innerHTML = "提交校验规则"
+            checkType.value = "提交校验"
+            submitVeri.style.display = "block";
+            const veriTemplate = document.getElementById("veri_template");
+            const veriRelationship = document.getElementById("veri_relationship");
+            const veriRule = document.getElementById("veri_rule");
+            const veriBetween = document.getElementById("veri_between");
+            const veriBegin = document.getElementById("veri_begin");
+            const veriEnd = document.getElementById("veri_end");
+            const itemRule = document.getElementById("item_rule");
+            itemRule.innerHTML = "<option value=\"\" selected disabled class=\"dn\"></option>";
+            const itemBetween = document.getElementById("item_between");
+            const itemBegin = document.getElementById("item_begin");
+            itemBegin.innerHTML = "<option value=\"\" selected disabled class=\"dn\"></option>";
+            const itemEnd = document.getElementById("item_end");
+            itemEnd.innerHTML = "<option value=\"\" selected disabled class=\"dn\"></option>";
+            const itemOffset = document.getElementById("item_offset");
+            const veriTips = document.getElementById("veri_tips");
+
+            veriTemplate.value = checkRules[1][editItem.id].template;
+            veriRelationship.value = checkRules[1][editItem.id].relationship;
+            veriTips.value = checkRules[1][editItem.id].tips;
+            switch (veriTemplate.value) {
+                case "1":
+                    if (veriRelationship.value != 6) {
+                        veriRule.style.display = "inline-block";
+                        veriBetween.style.display = "none";
+                        itemRule.style.display = "none";
+                        itemBetween.style.display = "none";
+                        veriRule.value = checkRules[1][editItem.id].beginValue;
+                        veriRule.type = editItem.type;
+                    } else {
+                        veriRule.style.display = "none";
+                        veriBetween.style.display = "inline-block";
+                        itemRule.style.display = "none";
+                        itemBetween.style.display = "none";
+                        veriBegin.value = checkRules[1][editItem.id].beginValue;
+                        veriEnd.value = checkRules[1][editItem.id].endValue;
+                        veriBegin.type = editItem.type;
+                        veriEnd.type = editItem.type;
+                    }
+                    break;
+                case "2":
+                    if (veriRelationship.value != 6) {
+                        veriRule.style.display = "none";
+                        veriBetween.style.display = "none";
+                        itemRule.style.display = "inline-block";
+                        itemBetween.style.display = "none";
+                        itemRule.value = checkRules[1][editItem.id].beginValue;
+                        if (itemRule.options.length == 0) {
+                            itemRule.innerHTML = "<option value=\"\" selected disabled class=\"dn\"></option>";
+                            getItemObjects(itemRule);
+                        } else if (itemRule.options.length == 1) {
+                            getItemObjects(itemRule);
+                        }
+                    } else {
+                        veriRule.style.display = "none";
+                        veriBetween.style.display = "none";
+                        itemRule.style.display = "none";
+                        itemBetween.style.display = "inline-block";
+                        itemBegin.value = checkRules[1][editItem.id].beginValue;
+                        if (itemBegin.options.length == 0) {
+                            itemBegin.innerHTML = "<option value=\"\" selected disabled class=\"dn\"></option>";
+                            getItemObjects(itemBegin);
+                        } else if (itemBegin.options.length == 1) {
+                            getItemObjects(itemBegin);
+                        }
+                        itemEnd.value = checkRules[1][editItem.id].endValue;
+                        if (itemEnd.options.length == 0) {
+                            itemEnd.innerHTML = "<option value=\"\" selected disabled class=\"dn\"></option>";
+                            getItemObjects(itemEnd);
+                        } else if (itemEnd.options.length == 1) {
+                            getItemObjects(itemEnd);
+                        }
+                    }
+                    break;
+            }
+            veriTemplate.onchange = function() {
+                veriTemplateChange(veriTemplate.value);
+            }
+            veriRelationship.onchange = function() {
+                veriRelationshipChange(veriRelationship.value);
+            }
+            break;
+    }
+    const deterBtn = document.getElementById("deter_btn");
+    deterBtn.setAttribute("onclick", "checkDeter(" + type + ")");
+}
+// 校验规则弹窗“保存”按钮事件
+function checkDeter(type) {
+    const veriRule = document.getElementById("veri_rule");
+    const veriBetween = document.getElementById("veri_between");
+    const itemRule = document.getElementById("item_rule");
+    const itemBetween = document.getElementById("item_between");
+    const itemBegin = document.getElementById("item_begin");
+    const itemEnd = document.getElementById("item_end");
+    switch (type) {
+        case 1:
+            const regularTemplate = document.getElementById("regular_template");
+            const index = regularTemplate.selectedIndex;
+            const regularExpression = document.getElementById("regular_expression");
+            const regularTips = document.getElementById("regular_tips");
+            if (regularExpression.value.length == 0) {
+                checkRules[0][editItem.id].template = "0";
+                checkRules[0][editItem.id].expression = "";
+                checkRules[0][editItem.id].tips = "";
+                editItem.attr.regularCheck = false;
+                document.getElementById("item_regularCheck").value = "未设置";
+            } else {
+                checkRules[0][editItem.id].template = index;
+                checkRules[0][editItem.id].expression = regularExpression.value;
+                checkRules[0][editItem.id].tips = regularTips.value;
+                editItem.attr.regularCheck = true;
+                document.getElementById("item_regularCheck").value = "已设置";
+            }
+            regularExpression.disabled = false;
+            break;
+        case 2:
+            const veriTemplate = document.getElementById("veri_template");
+            const veriRelationship = document.getElementById("veri_relationship");
+            const veriBegin = document.getElementById("veri_begin");
+            const veriEnd = document.getElementById("veri_end");
+            const veriTips = document.getElementById("veri_tips");
+
+            if (veriRule.value.length == 0 &&
+                veriBegin.value.length == 0 &&
+                veriEnd.value.length == 0 &&
+                itemRule.value.length == 0 &&
+                itemBegin.value.length == 0 &&
+                itemEnd.value.length == 0) {
+                checkRules[1][editItem.id].template = "1";
+                checkRules[1][editItem.id].relationship = "1";
+                checkRules[1][editItem.id].beginValue = "";
+                checkRules[1][editItem.id].endValue = "";
+                checkRules[1][editItem.id].tips = "";
+                editItem.attr.submitVeri = false;
+                document.getElementById("item_submitVeri").value = "未设置";
+            } else {
+                switch (veriTemplate.value) {
+                    case "1":
+                        if (veriRelationship.value != 6) {
+                            checkRules[1][editItem.id].template = veriTemplate.value;
+                            checkRules[1][editItem.id].relationship = veriRelationship.value;
+                            checkRules[1][editItem.id].beginValue = veriRule.value;
+                            checkRules[1][editItem.id].endValue = veriRule.value;
+                            checkRules[1][editItem.id].tips = veriTips.value;
+                        } else {
+                            checkRules[1][editItem.id].template = veriTemplate.value;
+                            checkRules[1][editItem.id].relationship = veriRelationship.value;
+                            checkRules[1][editItem.id].beginValue = veriBegin.value;
+                            checkRules[1][editItem.id].endValue = veriEnd.value;
+                            checkRules[1][editItem.id].tips = veriTips.value;
+                        }
+                        break;
+                    case "2":
+                        if (veriRelationship.value != 6) {
+                            checkRules[1][editItem.id].template = veriTemplate.value;
+                            checkRules[1][editItem.id].relationship = veriRelationship.value;
+                            checkRules[1][editItem.id].beginValue = itemRule.value;
+                            checkRules[1][editItem.id].endValue = itemRule.value;
+                            checkRules[1][editItem.id].tips = veriTips.value;
+                        } else {
+                            checkRules[1][editItem.id].template = veriTemplate.value;
+                            checkRules[1][editItem.id].relationship = veriRelationship.value;
+                            checkRules[1][editItem.id].beginValue = itemBegin.value;
+                            checkRules[1][editItem.id].endValue = itemEnd.value;
+                            checkRules[1][editItem.id].tips = veriTips.value;
+                        }
+                        break;
+                }
+                editItem.attr.submitVeri = true;
+                document.getElementById("item_submitVeri").value = "已设置";
+            }
+            break;
+    }
+    const checkAttr = document.getElementById("checkAttr");
+    checkAttr.style.display = "none";
+    const regularCheck = document.getElementById("regular_check");
+    regularCheck.style.display = "none";
+    const submitVeri = document.getElementById("submit_veri");
+    submitVeri.style.display = "none";
+    veriRule.style.display = "none";
+    veriBetween.style.display = "none";
+    itemRule.style.display = "none";
+    itemBetween.style.display = "none";
+    while (itemRule.hasChildNodes()) {
+        itemRule.removeChild(itemRule.firstChild);
+    }
+    while (itemBegin.hasChildNodes()) {
+        itemBegin.removeChild(itemBegin.firstChild);
+    }
+    while (itemEnd.hasChildNodes()) {
+        itemEnd.removeChild(itemEnd.firstChild);
+    }
+}
+// 校验规则弹窗“取消”按钮事件
+function checkCancel() {
+    const checkAttr = document.getElementById("checkAttr");
+    checkAttr.style.display = "none";
+    const regularCheck = document.getElementById("regular_check");
+    regularCheck.style.display = "none";
+    const submitVeri = document.getElementById("submit_veri");
+    submitVeri.style.display = "none";
+    const veriRule = document.getElementById("veri_rule");
+    veriRule.style.display = "none";
+    const veriBetween = document.getElementById("veri_between");
+    veriBetween.style.display = "none";
+    const itemRule = document.getElementById("item_rule");
+    itemRule.style.display = "none";
+    const itemBetween = document.getElementById("item_between");
+    itemBetween.style.display = "none";
+
+    const regularExpression = document.getElementById("regular_expression");
+    regularExpression.disabled = false;
+
+    while (itemRule.hasChildNodes()) {
+        itemRule.removeChild(itemRule.firstChild);
+    }
+    const itemBegin = document.getElementById("item_begin");
+    while (itemBegin.hasChildNodes()) {
+        itemBegin.removeChild(itemBegin.firstChild);
+    }
+    const itemEnd = document.getElementById("item_end");
+    while (itemEnd.hasChildNodes()) {
+        itemEnd.removeChild(itemEnd.firstChild);
+    }
+}
+// 校验规则弹窗“删除”按钮事件
+function checkDelete() {
+    if (editItem.attr.regularCheck != undefined) {
+        checkRules[0][editItem.id].template = 0;
+        checkRules[0][editItem.id].expression = "";
+        checkRules[0][editItem.id].tips = "";
+        editItem.attr.regularCheck = false;
+        const itemRegularCheck = document.getElementById("item_regularCheck");
+        itemRegularCheck.value = "未设置";
+    }
+
+    if (editItem.attr.submitVeri != undefined) {
+        checkRules[1][editItem.id].template = 1;
+        checkRules[1][editItem.id].relationship = 1;
+        checkRules[1][editItem.id].beginValue = "";
+        checkRules[1][editItem.id].endValue = "";
+        checkRules[1][editItem.id].tips = "";
+        editItem.attr.submitVeri = false;
+        const itemSubmitVeri = document.getElementById("item_submitVeri");
+        itemSubmitVeri.value = "未设置";
+    }
+
+    checkCancel();
+}
+// 提交校验规则弹窗内部细节调整1
+function veriTemplateChange(value) {
+    const veriRelationship = document.getElementById("veri_relationship");
+    const veriRule = document.getElementById("veri_rule");
+    const veriBetween = document.getElementById("veri_between");
+    const veriBegin = document.getElementById("veri_begin");
+    const veriEnd = document.getElementById("veri_end");
+    const itemRule = document.getElementById("item_rule");
+    const itemBetween = document.getElementById("item_between");
+    const itemBegin = document.getElementById("item_begin");
+    const itemEnd = document.getElementById("item_end");
+
+    switch (value) {
+        case "1":
+            if (veriRelationship.value != 6) {
+                veriRule.style.display = "inline-block";
+                veriBetween.style.display = "none";
+                itemRule.style.display = "none";
+                itemBetween.style.display = "none";
+                veriRule.type = editItem.type;
+            } else {
+                veriRule.style.display = "none";
+                veriBetween.style.display = "inline-block";
+                itemRule.style.display = "none";
+                itemBetween.style.display = "none";
+                veriBegin.type = editItem.type;
+                veriEnd.type = editItem.type;
+            }
+            break;
+        case "2":
+            if (veriRelationship.value != 6) {
+                veriRule.style.display = "none";
+                veriBetween.style.display = "none";
+                itemRule.style.display = "inline-block";
+                itemBetween.style.display = "none";
+                if (itemRule.options.length == 0) {
+                    itemRule.innerHTML = "<option value=\"\" selected disabled class=\"dn\"></option>";
+                    getItemObjects(itemRule);
+                } else if (itemRule.options.length == 1) {
+                    getItemObjects(itemRule);
+                }
+            } else {
+                veriRule.style.display = "none";
+                veriBetween.style.display = "none";
+                itemRule.style.display = "none";
+                itemBetween.style.display = "inline-block";
+                if (itemBegin.options.length == 0) {
+                    itemBegin.innerHTML = "<option value=\"\" selected disabled class=\"dn\"></option>";
+                    getItemObjects(itemBegin);
+                } else if (itemBegin.options.length == 1) {
+                    getItemObjects(itemBegin);
+                }
+                if (itemEnd.options.length == 0) {
+                    itemEnd.innerHTML = "<option value=\"\" selected disabled class=\"dn\"></option>";
+                    getItemObjects(itemEnd);
+                } else if (itemEnd.options.length == 1) {
+                    getItemObjects(itemEnd);
+                }
+            }
+            break;
+    }
+}
+// 提交校验规则弹窗内部细节调整2
+function veriRelationshipChange(value) {
+    const veriTemplate = document.getElementById("veri_template");
+    const veriRule = document.getElementById("veri_rule");
+    const veriBetween = document.getElementById("veri_between");
+    const veriBegin = document.getElementById("veri_begin");
+    const veriEnd = document.getElementById("veri_end");
+    const itemRule = document.getElementById("item_rule");
+    const itemBetween = document.getElementById("item_between");
+    const itemBegin = document.getElementById("item_begin");
+    const itemEnd = document.getElementById("item_end");
+    switch (value) {
+        case "1":
+        case "2":
+        case "3":
+        case "4":
+        case "5":
+            if (veriTemplate.value == 1) {
+                veriRule.style.display = "inline-block";
+                veriBetween.style.display = "none";
+                itemRule.style.display = "none";
+                itemBetween.style.display = "none";
+                veriRule.type = editItem.type;
+            } else if (veriTemplate.value == 2) {
+                veriRule.style.display = "none";
+                veriBetween.style.display = "none";
+                itemRule.style.display = "inline-block";
+                itemBetween.style.display = "none";
+                if (itemRule.options.length == 0) {
+                    itemRule.innerHTML = "<option value=\"\" selected disabled class=\"dn\"></option>";
+                    getItemObjects(itemRule);
+                } else if (itemRule.options.length == 1) {
+                    getItemObjects(itemRule);
+                }
+            }
+            break;
+        case "6":
+            if (veriTemplate.value == 1) {
+                veriRule.style.display = "none";
+                veriBetween.style.display = "inline-block";
+                itemRule.style.display = "none";
+                itemBetween.style.display = "none";
+                veriBegin.type = editItem.type;
+                veriEnd.type = editItem.type;
+            } else if (veriTemplate.value == 2) {
+                veriRule.style.display = "none";
+                veriBetween.style.display = "none";
+                itemRule.style.display = "none";
+                itemBetween.style.display = "inline-block";
+                if (itemBegin.options.length == 0) {
+                    itemBegin.innerHTML = "<option value=\"\" selected disabled class=\"dn\"></option>";
+                    getItemObjects(itemBegin);
+                } else if (itemBegin.options.length == 1) {
+                    getItemObjects(itemBegin);
+                }
+                if (itemEnd.options.length == 0) {
+                    itemEnd.innerHTML = "<option value=\"\" selected disabled class=\"dn\"></option>";
+                    getItemObjects(itemEnd);
+                } else if (itemEnd.options.length == 1) {
+                    getItemObjects(itemEnd);
+                }
+            }
+            break;
+    }
+}
+// 获取相同类型的校验项
+function getItemObjects(obj) {
+    console.log(obj);
+    for (const item of itemsData) {
+        if (item.type != editItem.type || item.id == editItem.id) {
+            continue;
+        }
+        const opt = document.createElement("option");
+        opt.innerHTML = item.name + "(" + item.id + ")";
+        opt.value = item.id + "_fBody";
+        console.log(opt);
+        obj.appendChild(opt);
+    }
+}
+// 创建校验规则对象
+function createCheckRules(type) {
+    const checkRule = new Object();
+    switch (type) {
+        case 1:
+            checkRule.template = "0";
+            checkRule.expression = "";
+            checkRule.tips = "";
+            break;
+        case 2:
+            checkRule.template = "1";
+            checkRule.relationship = "1";
+            checkRule.beginValue = "";
+            checkRule.endValue = "";
+            checkRule.tips = "";
+            break;
+    }
+    return checkRule;
+}
+// 可填写表单生成时，给表单项添加提交校验属性
+function addSubmitVeri() {
+    for (const submitVeri in checkRules[1]) {
+        console.log(submitVeri);
+        const item = document.getElementById(submitVeri + "_fBody");
+        if (checkRules[1][submitVeri].template == 1) {
+            switch (checkRules[1][submitVeri].relationship) {
+                case "1":
+                    item.setAttribute("min", dateFormatConversion(checkRules[1][submitVeri].beginValue, item.type));
+                    item.setAttribute("max", dateFormatConversion(checkRules[1][submitVeri].endValue, item.type));
+                    break;
+                case "2":
+                    item.setAttribute("min", dateFormatConversion(dateOptions(checkRules[1][submitVeri].beginValue, 1), item.type));
+                    break;
+                case "3":
+                    item.setAttribute("max", dateFormatConversion(dateOptions(checkRules[1][submitVeri].beginValue, -1), item.type));
+                    break;
+                case "4":
+                    item.setAttribute("min", dateFormatConversion(checkRules[1][submitVeri].beginValue, item.type));
+                    break;
+                case "5":
+                    item.setAttribute("max", dateFormatConversion(checkRules[1][submitVeri].endValue, item.type));
+                    break;
+                case "6":
+                    item.setAttribute("min", dateFormatConversion(checkRules[1][submitVeri].beginValue, item.type));
+                    item.setAttribute("max", dateFormatConversion(checkRules[1][submitVeri].endValue, item.type));
+                    break;
+            }
+        } else {
+            const beginItem = document.getElementById(checkRules[1][submitVeri].beginValue);
+            const endItem = document.getElementById(checkRules[1][submitVeri].endValue);
+
+            endItem.onchange = function() {
+                switch (checkRules[1][submitVeri].relationship) {
+                    case "1":
+                    case "2":
+                    case "3":
+                    case "4":
+                    case "5":
+                        break;
+                    case "6":
+                        item.setAttribute("max", dateFormatConversion(endItem.value, item.type));
+                        break;
+                }
+            }
+
+            beginItem.onchange = function() {
+                switch (checkRules[1][submitVeri].relationship) {
+                    case "1":
+                        item.setAttribute("min", dateFormatConversion(beginItem.value, item.type));
+                        item.setAttribute("max", dateFormatConversion(beginItem.value, item.type));
+                        break;
+                    case "2":
+                        item.setAttribute("min", dateFormatConversion(dateOptions(beginItem.value, 1), item.type));
+                        break;
+                    case "3":
+                        item.setAttribute("max", dateFormatConversion(dateOptions(beginItem.value, -1), item.type));
+                        break;
+                    case "4":
+                        item.setAttribute("min", dateFormatConversion(beginItem.value, item.type));
+                        break;
+                    case "5":
+                        item.setAttribute("max", dateFormatConversion(beginItem.value, item.type));
+                        break;
+                    case "6":
+                        item.setAttribute("min", dateFormatConversion(beginItem.value, item.type));
+                        break;
+                }
+            }
+        }
+    }
 }

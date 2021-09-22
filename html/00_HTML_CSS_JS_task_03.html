@@ -24,17 +24,14 @@
                 <div id="form_item_01" class="itg" draggable="true" ondragstart="drag(event)">
                     <div class="pt8 pb8">单行文本</div>
                 </div>
-                <div id="form_item_02" class="itg" draggable="true" ondragstart="drag(event)">
-                    <div class="pt8 pb8">密码</div>
-                </div>
                 <div id="form_item_03" class="itg" draggable="true" ondragstart="drag(event)">
                     <div class="pt8 pb8">多行文本</div>
                 </div>
-                <div id="form_item_04" class="itg" draggable="true" ondragstart="drag(event)">
-                    <div class="pt8 pb8">下拉单选</div>
+                <div id="form_item_08" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">日期</div>
                 </div>
-                <div id="form_item_05" class="itg" draggable="true" ondragstart="drag(event)">
-                    <div class="pt8 pb8">下拉复选</div>
+                <div id="form_item_09" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">数值</div>
                 </div>
                 <div id="form_item_06" class="itg" draggable="true" ondragstart="drag(event)">
                     <div class="pt8 pb8">单选框</div>
@@ -42,11 +39,20 @@
                 <div id="form_item_07" class="itg" draggable="true" ondragstart="drag(event)">
                     <div class="pt8 pb8">复选框</div>
                 </div>
-                <div id="form_item_08" class="itg" draggable="true" ondragstart="drag(event)">
-                    <div class="pt8 pb8">日期</div>
+                <div id="form_item_04" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">下拉单选</div>
                 </div>
-                <div id="form_item_09" class="itg" draggable="true" ondragstart="drag(event)">
-                    <div class="pt8 pb8">数值</div>
+                <div id="form_item_05" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">下拉复选</div>
+                </div>
+                <div id="form_item_14" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">逻辑</div>
+                </div>
+                <div id="form_item_13" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">附件</div>
+                </div>
+                <div id="form_item_02" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">密码</div>
                 </div>
                 <div id="form_item_10" class="itg" draggable="true" ondragstart="drag(event)">
                     <div class="pt8 pb8">邮箱</div>
@@ -56,12 +62,6 @@
                 </div>
                 <div id="form_item_12" class="itg" draggable="true" ondragstart="drag(event)">
                     <div class="pt8 pb8">URL</div>
-                </div>
-                <div id="form_item_13" class="itg" draggable="true" ondragstart="drag(event)">
-                    <div class="pt8 pb8">附件</div>
-                </div>
-                <div id="form_item_14" class="itg" draggable="true" ondragstart="drag(event)">
-                    <div class="pt8 pb8">逻辑</div>
                 </div>
                 <!-- <div id="form_item_15" class="itg" draggable="true" ondragstart="drag(event)">
                     <div class="pt8 pb8">地址</div>
@@ -114,12 +114,6 @@
 
                     </div>
                 </form>
-            </div>
-        </div>
-        <div class="requVeriProm">
-            <div>
-                <div class="requVeriProm_img"></div>
-                <div class="requVeriProm_text"></div>
             </div>
         </div>
     </article>
@@ -219,14 +213,111 @@
                             <label for="item_maxlength" class="attr-item-tag">输入最大长度: </label>
                             <input type="number" id="item_maxlength" class="attr-item-value" placeholder="请输入最大字符长度">
                         </div>
+                        <div class="attr-item dn" id="regularCheck">
+                            <label for="item_regularCheck" class="attr-item-tag">正则校验: </label>
+                            <input type="text" id="item_regularCheck" class="attr-item-value" value="未设置" readonly onclick="rulesContainer(1)">
+                        </div>
+                        <div class="attr-item dn" id="submitVeri">
+                            <label for="item_submitVeri" class="attr-item-tag">提交校验: </label>
+                            <input type="text" id="item_submitVeri" class="attr-item-value" value="未设置" readonly onclick="rulesContainer(2)">
+                        </div>
                     </div>
-                    <div></div>
                 </div>
                 <div class="edit-btn-group">
                     <button type="button" class="btn f-fill mr20" onclick="exitEdit()">退出编辑</button>
                     <button type="button" class="btn f-clear ml20" onclick="delItem()">删除控件</button>
                 </div>
             </div>
+        </div>
+        <div id="checkAttr" class="rulesContainer" style="display: none;">
+            <div class="rulesPanel">
+                <div class="rulesItems">
+                    <h2 style="margin: 0 20px 0 20px;">设置正则校验</h2>
+                    <hr style="margin: 10px 0;">
+                    <div>
+                        <div class="attr-item">
+                            <label for="check_type" class="attr-item-tag">校验类型: </label>
+                            <input type="text" id="check_type" class="attr-item-value" disabled value="正则校验" style="width: 509px;">
+                        </div>
+                        <div class="attr-item">
+                            <label for="check_item" class="attr-item-tag">校验数据项: </label>
+                            <input type="text" id="check_item" class="attr-item-value" disabled value="单行文本" style="width: 509px;">
+                        </div>
+                        <div id="regular_check" style="display: none;">
+                            <div class="attr-item">
+                                <div class="dib" style="width: 100px;"><label for="regular_template" class="attr-item-tag">选择正则表达式模板: </label></div>
+                                <select name="regular_template" id="regular_template" class="attr-item-value" style="vertical-align: .7em; width: 509px;">
+                                    <option value="" hidden></option>
+                                    <option value="^(-|\+)?(\d)*$">请输入一个整数</option>
+                                    <option value="^[\+\-]?\d*?\.?\d*?$">请输入一个数字</option>
+                                    <option value="^\w+([-+.]\w+)*@\w+([-.]\\w+)*\.\w+([-.]\w+)*$">请输入一个有效邮箱地址</option>
+                                    <option value="^1[3|4|5|6|7|8|9][0-9]{9}$">请输入一个有效手机号码</option>
+                                    <option value="^0\d{2,3}-?\d{7,8}$">请输入一个有效的电话号码</option>
+                                    <option value="^[1-9]\d{5}(?!\d)$">请输入一个有效的邮编</option>
+                                    <option value="^(\d{6})(\d{4})(\d{2})(\d{2})(\d{3})([0-9]|X)$">请输入一个有效的身份证</option>
+                                    <option value="^[\u4e00-\u9fa5]+$">请输入一个中文字符</option>
+                                    <option value="^http+[s]?://([\w-]+\.)+[\w-]+(/[\w-./?%&=]*)?$">请输入一个有效的URL地址</option>
+                                    <option value="">自定义</option>
+                                </select>
+                            </div>
+                            <div class="attr-item">
+                                <label for="regular_expression" class="attr-item-tag">正则表达式: </label>
+                                <input type="text" id="regular_expression" class="attr-item-value" style="width: 509px;" required>
+                            </div>
+                            <div class="attr-item">
+                                <label for="regular_tips" class="attr-item-tag">验证失败提示语: </label>
+                                <input type="text" id="regular_tips" class="attr-item-value" style="width: 509px;">
+                            </div>
+                        </div>
+                        <div id="submit_veri" style="display: none;">
+                            <div class="attr-item">
+                                <label for="veri_type" class="attr-item-tag">校验方式: </label>
+                                <select name="veri_template" id="veri_template" class="attr-item-value" style="width: 509px;">
+                                    <option value="1">常量</option>
+                                    <option value="2">动态值</option>
+                                </select>
+                            </div>
+                            <div class="attr-item">
+                                <label for="veri_rule" class="attr-item-tag">校验规则: </label>
+                                <select name="veri_relationship" id="veri_relationship" style="font-size: 14px; height: 30px; width: 100px; margin-left: 5px; box-sizing: border-box;">
+                                    <option value="1">等于</option>
+                                    <option value="2">大于</option>
+                                    <option value="3">小于</option>
+                                    <option value="4">大于等于</option>
+                                    <option value="5">小于等于</option>
+                                    <option value="6">介于</option>
+                                </select>
+                                <input type="text" id="veri_rule" class="attr-item-value" required value="123456" style="display: none;">
+                                <div id="veri_between" class="attr-item-value dib" style="font-size: 15px; margin-top: 5px; display: none;">
+                                    <input type="text" id="veri_begin" style="font-size: 14px; height: 30px; width: 185px; margin-right: 5px; box-sizing: border-box;"> ~
+                                    <input type="text" id="veri_end" style="font-size: 14px; height: 30px; width: 185px; margin-left: 5px; box-sizing: border-box;">
+                                </div>
+                                <select name="item_rule" id="item_rule" class="attr-item-value" style=" font-size: 15px; margin-top: 5px; display: none;">
+                                </select>
+                                <div id="item_between" class="attr-item-value dib" style="font-size: 15px; margin-top: 5px; display: none;">
+                                    <select name="item_begin" id="item_begin" style="font-size: 14px; height: 30px; width: 185px; margin-right: 5px; box-sizing: border-box;"></select> ~
+                                    <select name="item_end" id="item_end" style="font-size: 14px; height: 30px; width: 185px; margin-left: 5px; box-sizing: border-box;"></select>
+                                </div>
+                            </div>
+                            <div class="attr-item">
+                                <label for="veri_tips" class="attr-item-tag">校验失败提示语: </label>
+                                <input type="text" id="veri_tips" class="attr-item-value" style="width: 509px;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="edit-btn-group mt10 tr mr2">
+                        <button type="button" class="btn f-clear" style="width: 60px; height: 35px; font-size: 16px; margin-right: 10px;" onclick="checkDelete()">删除</button>
+                        <button type="button" class="btn f-clear" style="width: 60px; height: 35px; font-size: 16px; margin-right: 10px;" onclick="checkCancel()">取消</button>
+                        <button type="button" id="deter_btn" class="btn f-fill mr20" style="width: 60px; height: 35px; font-size: 16px;">确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="requVeriProm" class="requVeriProm">
+        <div>
+            <div id="requVeriProm_img" class="requVeriProm_img"></div>
+            <div id="requVeriProm_text" class="requVeriProm_text"></div>
         </div>
     </div>
 

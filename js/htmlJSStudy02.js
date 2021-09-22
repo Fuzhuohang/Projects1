@@ -419,4 +419,20 @@ window.onload = function() {
     console.log(instance.getSuperValue());
 
 
+
+    const x = {
+        x1: 5,
+        x2: 6,
+        x3: 7,
+        x4: 8
+    }
+
+    for (const m in x) {
+        console.log(m);
+        console.log(x[m]);
+    }
+
+    const date = new Date();
+    console.log(date.getHours());
+
 }
