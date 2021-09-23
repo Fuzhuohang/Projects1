@@ -124,8 +124,89 @@ function delayPrompt(text) {
     }, 2500);
 
 }
+// 地址控件弹窗
+function getLocation(obj) {
+    const addressMap = document.getElementById("address_map");
+    addressMap.style.display = "block";
+    const chosenAddress = document.getElementById("chosen_address");
+    let coordinate, market;
 
-// function getLocation() {
-//     let address = "广东省深圳市南山区";
-//     return address;
-// }
+    map = new AMap.Map('container', {
+        resizeEnable: true,
+        zoom: 12
+    });
+
+    map.on('complete', function() {
+        if (obj.value.length != 0) {
+            AMap.plugin('AMap.Geocoder', function() {
+                var geocoder = new AMap.Geocoder({
+
+                })
+
+                geocoder.getLocation(obj.value, function(status, result) {
+                    if (status === 'complete' && result.info === 'OK') {
+                        // result中对应详细地理坐标信息
+                        console.log(result);
+                        chosenAddress.value = result.geocodes[0].formattedAddress;
+                        market = new AMap.Marker({
+                            position: [result.geocodes[0].location.lng, result.geocodes[0].location.lat],
+                            title: result.geocodes.formattedAddress
+                        });
+                        map.add(market);
+                    }
+                })
+            })
+        } else {
+            AMap.plugin('AMap.CitySearch', function() {
+                var citySearch = new AMap.CitySearch()
+                citySearch.getLocalCity(function(status, result) {
+                    if (status === 'complete' && result.info === 'OK') {
+                        // 查询成功，result即为当前所在城市信息
+                        chosenAddress.value = result.province + result.city;
+                        coordinate = map.getCenter();
+                        market = new AMap.Marker({
+                            position: coordinate,
+                            title: '广东省深圳市'
+                        });
+                        map.add(market);
+                    }
+                })
+            })
+        }
+    });
+
+    map.on('click', function(ev) {
+        // 触发事件的地理坐标，AMap.LngLat 类型
+        var lnglat = ev.lnglat;
+        AMap.plugin('AMap.Geocoder', function() {
+            var geocoder = new AMap.Geocoder({
+
+            })
+
+            geocoder.getAddress(lnglat, function(status, result) {
+                if (status === 'complete' && result.info === 'OK') {
+                    // result为对应的地理位置详细信息
+                    chosenAddress.value = result.regeocode.formattedAddress;
+                    map.remove(market);
+                    market = new AMap.Marker({
+                        position: lnglat,
+                        title: result.regeocode.formattedAddress
+                    });
+                    map.add(market);
+                }
+            })
+        })
+    });
+    document.getElementById("addr_cancel_btn").onclick = function() {
+        addressMap.style.display = "none";
+        map.destroy();
+    }
+
+    document.getElementById("addr_deter_btn").onclick = function() {
+        obj.value = chosenAddress.value;
+        addressMap.style.display = "none";
+        obj.className += " notNull"
+        map.destroy();
+    }
+
+}

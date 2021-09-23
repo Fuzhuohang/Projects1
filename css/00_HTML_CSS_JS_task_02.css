@@ -80,7 +80,9 @@
     background-color: transparent;
 }
 
-.f-body-location:focus~.addressIcon {
+.f-body-location:focus~.addressIcon,
+.attr-item-value:focus~.addressIcon,
+.notNull~.addressIcon {
     display: none;
 }
 
@@ -197,14 +199,16 @@
 }
 
 .f-body-text,
-.f-body-textarea {
+.f-body-textarea,
+.f-body-location {
     font-size: 18px;
 }
 
 .f-body-text,
 .f-body-textarea,
 .f-body-file,
-.f-body-check {
+.f-body-check,
+.f-body-location {
     margin: 5px;
 }
 
@@ -275,4 +279,11 @@ div[class*="required"]::before {
     color: #17bc94;
     background-color: rgba(23, 188, 148, .1);
     text-align: center;
+}
+
+:disabled {
+    cursor: default;
+    background-color: rgba(211, 211, 211, 0.3);
+    color: gray;
+    border-color: rgba(118, 118, 118, 0.3);
 }

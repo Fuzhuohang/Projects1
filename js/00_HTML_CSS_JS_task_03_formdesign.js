@@ -19,6 +19,8 @@ let nullNode;
 
 // 表单数据项下标
 let index = -1;
+// 地图控件
+let map;
 
 // 页面加载
 window.onload = function() {
@@ -602,24 +604,51 @@ function edit(id) {
         const Default = document.getElementById("default");
         Default.style.display = "block";
         const itemDefault = document.getElementById("item_default");
-        itemDefault.type = editItem.type;
-        if (editItem.type == "date") {
-            switch (editItem.attr.datatype) {
-                case "1900/01":
-                    itemDefault.type = "month";
-                    break;
-                case "1900/01/01":
-                    itemDefault.type = "date";
-                    break;
-                case "1900/01/01 00:00":
-                    itemDefault.type = "datetime-local";
-                    break;
-                case "1900年第1周":
-                    itemDefault.type = "week";
-                    break;
+        if (editItem.type != "address") {
+            itemDefault.type = editItem.type;
+            if (editItem.type == "date") {
+                switch (editItem.attr.datatype) {
+                    case "1900/01":
+                        itemDefault.type = "month";
+                        break;
+                    case "1900/01/01":
+                        itemDefault.type = "date";
+                        break;
+                    case "1900/01/01 00:00":
+                        itemDefault.type = "datetime-local";
+                        break;
+                    case "1900年第1周":
+                        itemDefault.type = "week";
+                        break;
+                }
+            } else {
+                itemDefault.type = editItem.type;
             }
         } else {
-            itemDefault.type = editItem.type;
+            const addressIcon = document.createElement("div");
+            addressIcon.className = "addressIcon";
+            addressIcon.id = "addressIcon";
+            addressIcon.innerHTML = "<svg t=\"1631868132304\" class=\"icon\" viewBox=\"0 0 1024 1024\" version=\"1.1\" xmlns=\"http: //www.w3.org/2000/svg\" p-id=\"3284\" width=\"16\" height=\"16\"><path d=\"M808.6 403.2c0-178.8-129.8-308.5-308.5-308.5-170.1 0-308.5 138.4-308.5 308.5 0 125.6 170.6 338.3 262.3 452.6l6.8 8.4c9.6 12 24 18.9 39.5 18.9 15.4 0 29.8-6.9 39.5-18.9l6.8-8.4c91.5-114.3 262.1-327 262.1-452.6z m-310.1 89.4c-62.9 0-114-51.1-114-114s51.1-114 114-114 114 51.1 114 114-51.1 114-114 114z\" fill=\"#FFFFFF\" p-id=\"3285\"></path><path d=\"M500.1 67.8c-184.9 0-335.4 150.4-335.4 335.4 0 135 174.5 352.5 268.2 469.4l6.7 8.4c14.8 18.4 36.8 29 60.4 29s45.6-10.6 60.4-29l6.8-8.4C661 755.7 835.4 538.2 835.4 403.2c0-194.3-141-335.4-335.3-335.4z m0 815.3c-15.4 0-29.8-6.9-39.5-18.9l-6.8-8.4c-91.7-114.3-262.3-327-262.3-452.6 0-170.1 138.4-308.5 308.5-308.5 178.8 0 308.5 129.8 308.5 308.5 0 125.6-170.6 338.3-262.3 452.6l-6.8 8.4c-9.5 12-23.9 18.9-39.3 18.9z\" fill=\"\" p-id=\"3286\"></path><path d=\"M498.5 378.6m-87.2 0a87.2 87.2 0 1 0 174.4 0 87.2 87.2 0 1 0-174.4 0Z\" fill=\"#FFFFFF\" p-id=\"3287\"></path><path d=\"M612.5 378.6c0-62.9-51.1-114-114-114s-114 51.1-114 114 51.1 114 114 114 114-51.1 114-114z m-201.2 0c0-48.1 39.1-87.2 87.2-87.2s87.2 39.1 87.2 87.2-39.1 87.2-87.2 87.2-87.2-39.1-87.2-87.2z\" fill=\"\" p-id=\"3288\"></path></svg>"
+            addressIcon.style = "top:0px;bottom:0px;right:20px;";
+            Default.appendChild(addressIcon);
+            const clearIcon = document.createElement("button");
+            clearIcon.type = "button";
+            clearIcon.className = "clearIcon";
+            clearIcon.id = "clearIcon";
+            clearIcon.innerHTML = "<svg t=\"1631871378260\" class=\"icon\" viewBox=\"0 0 1024 1024\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" p-id=\"4257\" width=\"16\" height=\"16\"><path d=\"M828.910767 195.079c-175.017082-175.039595-458.779891-175.061085-633.866558 0-174.96694 174.9915-175.039595 458.827987 0 633.866558s458.925201 174.9915 633.866558 0C1003.997434 653.882428 1003.950362 370.096083 828.910767 195.079zM768.577656 679.393451l-89.222067 89.293699L514.530636 603.863221 349.753779 768.68715l-89.296769-89.293699 164.826999-164.80244L260.45701 349.814154l89.296769-89.222067L514.530636 425.319825l164.824953-164.727739 89.222067 89.222067-164.752298 164.776857L768.577656 679.393451z\" p-id=\"4258\"></path></svg>"
+            clearIcon.style = "top:0px;bottom:0px;right:20px;";
+            Default.appendChild(clearIcon);
+            Default.style = "display:block; position:relative;";
+            if (editItem.attr.default.length != 0) {
+                itemDefault.className += " notNull";
+            }
+            itemDefault.onclick = function() {
+                getLocation(itemDefault);
+            };
+            clearIcon.onclick = function() {
+                itemDefault.value = "";
+                itemDefault.className = "attr-item-value";
+            };
         }
         itemDefault.value = editItem.attr.default;
     }
@@ -797,6 +826,14 @@ function exitEdit() {
 
     const Default = document.getElementById("default");
     Default.style.display = "none";
+    if (editItem.type == "address") {
+        Default.removeChild(document.getElementById("addressIcon"));
+        Default.removeChild(document.getElementById("clearIcon"));
+        const itemDefault = document.getElementById("item_default");
+        editItem.attr.default = itemDefault.value;
+        itemDefault.className = "attr-item-value";
+        itemDefault.onclick = function() {};
+    }
     const Datatype = document.getElementById("datatype");
     Datatype.style.display = "none";
     const options = document.getElementById(editItem.type);
@@ -1040,13 +1077,19 @@ function formCreate(obj) {
             aItem = document.importNode(item, true);
             fBody = aItem.getElementsByTagName("div")[1];
             fBody.id = obj.id + "_fBody";
-            let logic = fBody.getElementsByTagName("input")[0];
+            const logic = fBody.getElementsByTagName("input")[0];
             logic.name = obj.name + "(" + obj.id + ")";
             logic.id = obj.id + "_l";
             logic.checked = obj.attr.default;
             logic.value = obj.attr.default;
             fBody.getElementsByTagName("label")[0].htmlFor = obj.id + "_l";
             formBody.appendChild(aItem);
+            if (obj.attr.readonly) {
+                logic.disabled = true;
+            }
+            if (obj.attr.required) {
+                logic.required = true;
+            }
             logic.onclick = function() {
                 if (logic.value == "true") {
                     logic.value = "false";
@@ -1068,6 +1111,7 @@ function formCreate(obj) {
                     fBody = aItem.getElementsByTagName("input")[0];
                     fBody.id = obj.id + "_fBody";
                     fBody.name = obj.name + "(" + obj.id + ")";
+                    fBody.className = "f-body-location";
                     if (obj.attr.default != undefined) {
                         fBody.value = obj.attr.default;
                     }
@@ -1089,24 +1133,15 @@ function formCreate(obj) {
                     clearIcon.style = "top:9px;bottom:9px;right:6px;";
                     aItem.appendChild(clearIcon);
                     aItem.style = "position:relative;";
-                    fBody.onclick = function() {
-                        fBody.value = getLocation();
-                        addressIcon.style.display = "none";
+                    if (fBody.value.length != 0) {
                         fBody.className += " notNull";
                     }
-                    fBody.onchange = function() {
-                        if (fBody.value.length != 0) {
-                            addressIcon.style.display = "none";
-                            fBody.className += " notNull";
-                        } else {
-                            addressIcon.style.display = "block";
-                            fBody.className = "f-body-text";
-                        }
+                    fBody.onclick = function() {
+                        getLocation(fBody);
                     }
                     clearIcon.onclick = function() {
                         fBody.value = "";
-                        addressIcon.style.display = "block";
-                        fBody.className = "f-body-text";
+                        fBody.className = "f-body-location";
                     }
                     formBody.appendChild(aItem);
                     break;

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>地图定位</title>
+    <script src="https://webapi.amap.com/maps?v=1.4.15&key=69e39611336dcadd621c3aae2cee42e4&plugin=AMap.Geolocation,AMap.CitySearch"></script>
+    <script>
+        window.onload = function() {
+            // 创建地图容器
+            const map = new AMap.Map('container', {
+                resizeEnable: true
+            });
+            map.on('complete', function() {
+                console.log("地图加载完成");
+            })
+
+            // 设置中心和缩放比例
+            // const position = new AMap.LngLat(116.405467, 39.907761);
+            // map.setCenter(position);
+            map.setZoom(13);
+
+            // // 路径轨迹折线
+            // var path = [
+            //     new AMap.LngLat("116.368904", "39.913423"),
+            //     new AMap.LngLat("116.382122", "39.901176"),
+            //     new AMap.LngLat("116.387271", "39.912501"),
+            //     new AMap.LngLat("116.398258", "39.904600")
+            // ];
+            // var polyline = new AMap.Polyline({
+            //     path: path,
+            //     borderWeight: 2, // 线条宽度，默认为 1
+            //     strokeColor: 'red', // 线条颜色
+            //     lineJoin: 'round' // 折线拐点连接处样式
+            // });
+            // map.add(polyline);
+
+            // // 点标记
+            // var marker1 = new AMap.Marker({
+            //     position: new AMap.LngLat(117.39, 39.9), // 经纬度对象，如 new AMap.LngLat(116.39, 39.9); 也可以是经纬度构成的一维数组[116.39, 39.9]
+            //     title: '北京'
+            // });
+            // var marker2 = new AMap.Marker({
+            //     position: new AMap.LngLat(118.39, 39.9), // 经纬度对象，如 new AMap.LngLat(116.39, 39.9); 也可以是经纬度构成的一维数组[116.39, 39.9]
+            //     title: '北京'
+            // });
+            // map.add(marker1);
+            // map.add(marker2);
+
+            // // 构造点标记
+            // var marker = new AMap.Marker({
+            //     icon: "https://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
+            //     position: [116.405467, 39.907761]
+            // });
+            // // 构造矢量圆形
+            // var circle = new AMap.Circle({
+            //     center: new AMap.LngLat("116.403322", "39.920255"), // 圆心位置
+            //     radius: 1000, //半径
+            //     strokeColor: "#F33", //线颜色
+            //     strokeOpacity: 1, //线透明度
+            //     strokeWeight: 3, //线粗细度
+            //     fillColor: "#ee2200", //填充颜色
+            //     fillOpacity: 0.35 //填充透明度
+            // });
+
+            // // 将以上覆盖物添加到地图上
+            // // 单独将点标记添加到地图上
+            // map.add(marker);
+            // // add方法可以传入一个覆盖物数组，将点标记和矢量圆同时添加到地图上
+            // map.add([marker, circle]);
+
+            map.on('click', function(ev) {
+                // 触发事件的对象
+                var target = ev.target;
+                // 触发事件的地理坐标，AMap.LngLat 类型
+                var lnglat = ev.lnglat;
+                // 触发事件的像素坐标，AMap.Pixel 类型
+                var pixel = ev.pixel;
+                // 触发事件类型
+                var type = ev.type;
+
+                console.log(target + ", " + lnglat + ", " + pixel + ", " + type);
+            });
+
+            // AMap.plugin('AMap.Geolocation', function() {
+            //     var geolocation = new AMap.Geolocation({
+            //         // 是否使用高精度定位，默认：true
+            //         enableHighAccuracy: true,
+            //         // 设置定位超时时间，默认：无穷大
+            //         timeout: 10000,
+            //         // 定位按钮的停靠位置的偏移量，默认：Pixel(10, 20)
+            //         buttonOffset: new AMap.Pixel(10, 20),
+            //         //  定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+            //         zoomToAccuracy: true,
+            //         //  定位按钮的排放位置,  RB表示右下
+            //         buttonPosition: 'RB'
+            //     })
+
+            //     geolocation.getCurrentPosition()
+            //     AMap.event.addListener(geolocation, 'complete', onComplete)
+            //     AMap.event.addListener(geolocation, 'error', onError)
+
+            //     function onComplete(data) {
+            //         // data是具体的定位信息
+            //         console.log("定位成功");
+            //         const c = map.getCenter();
+            //         const market = new AMap.Market({
+            //             position: c,
+            //             title: '广东省深圳市'
+            //         });
+            //         map.add(market);
+            //     }
+
+
+            //     function onError(data) {
+            //         // 定位出错
+            //         console.log("定位失败");
+            //     }
+            // })
+
+            AMap.plugin('AMap.CitySearch', function() {
+                var citySearch = new AMap.CitySearch()
+                citySearch.getLocalCity(function(status, result) {
+                    if (status === 'complete' && result.info === 'OK') {
+                        // 查询成功，result即为当前所在城市信息
+                        console.log(result);
+                        const c = map.getCenter();
+                        const market = new AMap.Marker({
+                            position: c,
+                            title: '广东省深圳市'
+                        });
+                        map.add(market);
+                    }
+                })
+            })
+        }
+    </script>
+</head>
+
+<body>
+    <div style="height: 700px;">
+        <div id="container" style="width: 1000px; height: 500px;"></div>
+    </div>
+</body>
+
+</html>

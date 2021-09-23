@@ -380,6 +380,11 @@ button:hover {
     cursor: default;
 }
 
+.f-logic:disabled+.logic-item {
+    opacity: .4;
+    cursor: default;
+}
+
 @keyframes attrfadeOut {
     from {
         left: 0;
