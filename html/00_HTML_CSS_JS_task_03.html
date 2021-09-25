@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="../css/AttributeCSS.css">
     <script src="../js/00_HTML_CSS_JS_task_03_formdesign.js"></script>
     <script src="../js/00_HTML_CSS_JS_task_03_ dataverification.js"></script>
+    <script src="https://cdn.bootcss.com/FileSaver.js/2014-11-29/FileSaver.js"></script>
+    <script src="https://webapi.amap.com/maps?v=1.4.15&key=69e39611336dcadd621c3aae2cee42e4&plugin=AMap.Geocoder,AMap.CitySearch"></script>
     <script src="../js/jquery.min.js"></script>
 </head>
 
@@ -18,23 +20,20 @@
             <h1 class="tc minw1024">具有基本校验和拖拽效果的表单</h1>
         </div>
     </header>
-    <article id="form_design" class="db">
+    <article id="form_design" style="display: block;">
         <div class="itg-group">
             <div class="mt10 ml8 mb8">
                 <div id="form_item_01" class="itg" draggable="true" ondragstart="drag(event)">
                     <div class="pt8 pb8">单行文本</div>
                 </div>
-                <div id="form_item_02" class="itg" draggable="true" ondragstart="drag(event)">
-                    <div class="pt8 pb8">密码</div>
-                </div>
                 <div id="form_item_03" class="itg" draggable="true" ondragstart="drag(event)">
                     <div class="pt8 pb8">多行文本</div>
                 </div>
-                <div id="form_item_04" class="itg" draggable="true" ondragstart="drag(event)">
-                    <div class="pt8 pb8">下拉单选</div>
+                <div id="form_item_08" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">日期</div>
                 </div>
-                <div id="form_item_05" class="itg" draggable="true" ondragstart="drag(event)">
-                    <div class="pt8 pb8">下拉复选</div>
+                <div id="form_item_09" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">数值</div>
                 </div>
                 <div id="form_item_06" class="itg" draggable="true" ondragstart="drag(event)">
                     <div class="pt8 pb8">单选框</div>
@@ -42,11 +41,23 @@
                 <div id="form_item_07" class="itg" draggable="true" ondragstart="drag(event)">
                     <div class="pt8 pb8">复选框</div>
                 </div>
-                <div id="form_item_08" class="itg" draggable="true" ondragstart="drag(event)">
-                    <div class="pt8 pb8">日期</div>
+                <div id="form_item_04" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">下拉单选</div>
                 </div>
-                <div id="form_item_09" class="itg" draggable="true" ondragstart="drag(event)">
-                    <div class="pt8 pb8">数值</div>
+                <div id="form_item_05" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">下拉复选</div>
+                </div>
+                <div id="form_item_14" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">逻辑</div>
+                </div>
+                <div id="form_item_13" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">附件</div>
+                </div>
+                <div id="form_item_15" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">地址</div>
+                </div>
+                <div id="form_item_02" class="itg" draggable="true" ondragstart="drag(event)">
+                    <div class="pt8 pb8">密码</div>
                 </div>
                 <div id="form_item_10" class="itg" draggable="true" ondragstart="drag(event)">
                     <div class="pt8 pb8">邮箱</div>
@@ -56,12 +67,6 @@
                 </div>
                 <div id="form_item_12" class="itg" draggable="true" ondragstart="drag(event)">
                     <div class="pt8 pb8">URL</div>
-                </div>
-                <div id="form_item_13" class="itg" draggable="true" ondragstart="drag(event)">
-                    <div class="pt8 pb8">附件</div>
-                </div>
-                <div id="form_item_14" class="itg" draggable="true" ondragstart="drag(event)">
-                    <div class="pt8 pb8">逻辑</div>
                 </div>
                 <!-- <div id="form_item_14" class="itg" draggable="true" ondragstart="drag(event)">
                     <div class="pt8 pb8">颜色</div>
@@ -89,7 +94,18 @@
         </div>
     </article>
     <article id="form-fill" class="dn">
-        <div class="form-tab minw1024">
+        <div class="form-canvas-fill tc">
+            <div class="w1024 dib pt8 pb8">
+                <form id="new-form" action="http://192.168.114.128:8080/form" method="POST" target="_blank">
+                    <button type="submit" id="submit" class="abs-clip" onclick="return submitForm()">提交表单</button>
+                    <button type="reset" id="reset" class="abs-clip">清除数据</button>
+                    <div id="form-body">
+
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="form-tab-fill minw1024">
             <div class="btn-group">
                 <div class="dib">
                     <input class="abs-clip">
@@ -102,25 +118,8 @@
                 <button type="button" class="btn" onclick="designForm()">修改设计</button>
             </div>
         </div>
-        <div class="form-canvas tc">
-            <div class="w1024 dib pt8 pb8">
-                <form id="new-form" action="http://192.168.114.128:8080/form" method="POST" target="_blank">
-                    <button type="submit" id="submit" class="abs-clip" onclick="return submitForm()">提交表单</button>
-                    <button type="reset" id="reset" class="abs-clip">清除数据</button>
-                    <div id="form-body">
-
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div class="requVeriProm">
-            <div>
-                <div class="requVeriProm_img"></div>
-                <div class="requVeriProm_text"></div>
-            </div>
-        </div>
     </article>
-    <div class="container">
+    <div class="container" style="display: none;">
         <div id="editPanel" class="dialog">
             <div class="content">
                 <div class="edit-item">
@@ -149,6 +148,20 @@
                                     <option id="1900/01/01" value="1900/01/01">1900/01/01</option>
                                     <option id="1900/01/01 00:00" value="1900/01/01 00:00">1900/01/01 00:00</option>
                                     <option id="1900年第1周" value="1900年第1周">1900年第1周</option>
+                                </optgroup>
+                                <optgroup id="number" class="dn">
+                                    <option id="null" value="'null'">空</option>
+                                    <option id="1000" value="1000">1000</option>
+                                    <option id="1000.1" value="1000.1">1000.1</option>
+                                    <option id="1000.01" value="1000.01">1000.01</option>
+                                    <option id="1000.001" value="1000.001">1000.001</option>
+                                    <option id="1000.0001" value="1000.0001">1000.0001</option>
+                                    <option id="1000.00001" value="1000.00001">1000.00001</option>
+                                    <option id="1000.000001" value="1000.000001">1000.000001</option>
+                                </optgroup>
+                                <optgroup id="address" class="dn">
+                                    <option id="Location" value="Location">地图定位</option>
+                                    <option id="Address" value="Address">地址</option>
                                 </optgroup>
                             </select>
                         </div>
@@ -202,8 +215,15 @@
                             <label for="item_maxlength" class="attr-item-tag">输入最大长度: </label>
                             <input type="number" id="item_maxlength" class="attr-item-value" placeholder="请输入最大字符长度">
                         </div>
+                        <div class="attr-item dn" id="regularCheck">
+                            <label for="item_regularCheck" class="attr-item-tag">正则校验: </label>
+                            <input type="text" id="item_regularCheck" class="attr-item-value" value="未设置" readonly onclick="rulesContainer(1)">
+                        </div>
+                        <div class="attr-item dn" id="submitVeri">
+                            <label for="item_submitVeri" class="attr-item-tag">提交校验: </label>
+                            <input type="text" id="item_submitVeri" class="attr-item-value" value="未设置" readonly onclick="rulesContainer(2)">
+                        </div>
                     </div>
-                    <div></div>
                 </div>
                 <div class="edit-btn-group">
                     <button type="button" class="btn f-fill mr20" onclick="exitEdit()">退出编辑</button>
@@ -211,9 +231,114 @@
                 </div>
             </div>
         </div>
+        <div id="checkAttr" class="rulesContainer" style="display: none;">
+            <div class="rulesPanel">
+                <div class="rulesItems">
+                    <h2 style="margin: 0 20px 0 20px;">设置正则校验</h2>
+                    <hr style="margin: 10px 0;">
+                    <div>
+                        <div class="attr-item">
+                            <label for="check_type" class="attr-item-tag">校验类型: </label>
+                            <input type="text" id="check_type" class="attr-item-value" disabled value="正则校验" style="width: 509px;">
+                        </div>
+                        <div class="attr-item">
+                            <label for="check_item" class="attr-item-tag">校验数据项: </label>
+                            <input type="text" id="check_item" class="attr-item-value" disabled value="单行文本" style="width: 509px;">
+                        </div>
+                        <div id="regular_check" style="display: none;">
+                            <div class="attr-item">
+                                <div class="dib" style="width: 100px;"><label for="regular_template" class="attr-item-tag">选择正则表达式模板: </label></div>
+                                <select name="regular_template" id="regular_template" class="attr-item-value" style="vertical-align: .7em; width: 509px;">
+                                    <option value="" hidden></option>
+                                    <option value="^(-|\+)?(\d)*$">请输入一个整数</option>
+                                    <option value="^[\+\-]?\d*?\.?\d*?$">请输入一个数字</option>
+                                    <option value="^\w+([-+.]\w+)*@\w+([-.]\\w+)*\.\w+([-.]\w+)*$">请输入一个有效邮箱地址</option>
+                                    <option value="^1[3|4|5|6|7|8|9][0-9]{9}$">请输入一个有效手机号码</option>
+                                    <option value="^0\d{2,3}-?\d{7,8}$">请输入一个有效的电话号码</option>
+                                    <option value="^[1-9]\d{5}(?!\d)$">请输入一个有效的邮编</option>
+                                    <option value="^(\d{6})(\d{4})(\d{2})(\d{2})(\d{3})([0-9]|X)$">请输入一个有效的身份证</option>
+                                    <option value="^[\u4e00-\u9fa5]+$">请输入一个中文字符</option>
+                                    <option value="^http+[s]?://([\w-]+\.)+[\w-]+(/[\w-./?%&=]*)?$">请输入一个有效的URL地址</option>
+                                    <option value="">自定义</option>
+                                </select>
+                            </div>
+                            <div class="attr-item">
+                                <label for="regular_expression" class="attr-item-tag">正则表达式: </label>
+                                <input type="text" id="regular_expression" class="attr-item-value" style="width: 509px;" required>
+                            </div>
+                            <div class="attr-item">
+                                <label for="regular_tips" class="attr-item-tag">验证失败提示语: </label>
+                                <input type="text" id="regular_tips" class="attr-item-value" style="width: 509px;">
+                            </div>
+                        </div>
+                        <div id="submit_veri" style="display: none;">
+                            <div class="attr-item">
+                                <label for="veri_type" class="attr-item-tag">校验方式: </label>
+                                <select name="veri_template" id="veri_template" class="attr-item-value" style="width: 509px;">
+                                    <option value="1">常量</option>
+                                    <option value="2">动态值</option>
+                                </select>
+                            </div>
+                            <div class="attr-item">
+                                <label for="veri_rule" class="attr-item-tag">校验规则: </label>
+                                <select name="veri_relationship" id="veri_relationship" style="font-size: 14px; height: 30px; width: 100px; margin-left: 5px; box-sizing: border-box;">
+                                    <option value="1">等于</option>
+                                    <option value="2">大于</option>
+                                    <option value="3">小于</option>
+                                    <option value="4">大于等于</option>
+                                    <option value="5">小于等于</option>
+                                    <option value="6">介于</option>
+                                </select>
+                                <input type="text" id="veri_rule" class="attr-item-value" required value="123456" style="display: none;">
+                                <div id="veri_between" class="attr-item-value dib" style="font-size: 15px; margin-top: 5px; display: none;">
+                                    <input type="text" id="veri_begin" style="font-size: 14px; height: 30px; width: 185px; margin-right: 5px; box-sizing: border-box;"> ~
+                                    <input type="text" id="veri_end" style="font-size: 14px; height: 30px; width: 185px; margin-left: 5px; box-sizing: border-box;">
+                                </div>
+                                <select name="item_rule" id="item_rule" class="attr-item-value" style=" font-size: 15px; margin-top: 5px; display: none;">
+                                </select>
+                                <div id="item_between" class="attr-item-value dib" style="font-size: 15px; margin-top: 5px; display: none;">
+                                    <select name="item_begin" id="item_begin" style="font-size: 14px; height: 30px; width: 185px; margin-right: 5px; box-sizing: border-box;"></select> ~
+                                    <select name="item_end" id="item_end" style="font-size: 14px; height: 30px; width: 185px; margin-left: 5px; box-sizing: border-box;"></select>
+                                </div>
+                            </div>
+                            <div class="attr-item">
+                                <label for="veri_tips" class="attr-item-tag">校验失败提示语: </label>
+                                <input type="text" id="veri_tips" class="attr-item-value" style="width: 509px;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="edit-btn-group mt10 tr mr2">
+                        <button type="button" class="btn f-clear" style="width: 60px; height: 35px; font-size: 16px; margin-right: 10px;" onclick="checkDelete()">删除</button>
+                        <button type="button" class="btn f-clear" style="width: 60px; height: 35px; font-size: 16px; margin-right: 10px;" onclick="checkCancel()">取消</button>
+                        <button type="button" id="deter_btn" class="btn f-fill mr20" style="width: 60px; height: 35px; font-size: 16px;">确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="address_map" class="rulesContainer" style="display:none">
+        <div class="rulesPanel">
+            <div id="container" style="width:600px; height: 400px; border-top-left-radius: 6px; border-top-right-radius: 6px;"></div>
+            <div class="edit-btn-group mt10 tr mr2 mb8">
+                <div class="dib">
+                    <div class="dib" style="width:35px;height: 35px;box-sizing: border-box; padding: 9px; padding-right: 0; vertical-align: middle;">
+                        <svg t="1631868132304" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http: //www.w3.org/2000/svg" p-id="3284" width="16" height="16"><path d="M808.6 403.2c0-178.8-129.8-308.5-308.5-308.5-170.1 0-308.5 138.4-308.5 308.5 0 125.6 170.6 338.3 262.3 452.6l6.8 8.4c9.6 12 24 18.9 39.5 18.9 15.4 0 29.8-6.9 39.5-18.9l6.8-8.4c91.5-114.3 262.1-327 262.1-452.6z m-310.1 89.4c-62.9 0-114-51.1-114-114s51.1-114 114-114 114 51.1 114 114-51.1 114-114 114z" fill="#FFFFFF" p-id="3285"></path><path d="M500.1 67.8c-184.9 0-335.4 150.4-335.4 335.4 0 135 174.5 352.5 268.2 469.4l6.7 8.4c14.8 18.4 36.8 29 60.4 29s45.6-10.6 60.4-29l6.8-8.4C661 755.7 835.4 538.2 835.4 403.2c0-194.3-141-335.4-335.3-335.4z m0 815.3c-15.4 0-29.8-6.9-39.5-18.9l-6.8-8.4c-91.7-114.3-262.3-327-262.3-452.6 0-170.1 138.4-308.5 308.5-308.5 178.8 0 308.5 129.8 308.5 308.5 0 125.6-170.6 338.3-262.3 452.6l-6.8 8.4c-9.5 12-23.9 18.9-39.3 18.9z" fill="" p-id="3286"></path><path d="M498.5 378.6m-87.2 0a87.2 87.2 0 1 0 174.4 0 87.2 87.2 0 1 0-174.4 0Z" fill="#FFFFFF" p-id="3287"></path><path d="M612.5 378.6c0-62.9-51.1-114-114-114s-114 51.1-114 114 51.1 114 114 114 114-51.1 114-114z m-201.2 0c0-48.1 39.1-87.2 87.2-87.2s87.2 39.1 87.2 87.2-39.1 87.2-87.2 87.2-87.2-39.1-87.2-87.2z" fill="" p-id="3288"></path></svg>
+                    </div>
+                    <input type="text" id="chosen_address" style="margin-right: 15px; width: 385px; height: 35px; box-sizing: border-box; border: 0; outline: none; overflow: hidden;" readonly>
+                </div>
+                <button type="button" id="addr_cancel_btn" class="btn f-clear" style="width: 60px; height: 35px; font-size: 16px; margin-right: 10px;vertical-align: middle;">取消</button>
+                <button type="button" id="addr_deter_btn" class="btn f-fill mr20" style="width: 60px; height: 35px; font-size: 16px;vertical-align: middle;">确定</button>
+            </div>
+        </div>
+    </div>
+    <div id="requVeriProm" class="requVeriProm">
+        <div>
+            <div id="requVeriProm_img" class="requVeriProm_img"></div>
+            <div id="requVeriProm_text" class="requVeriProm_text"></div>
+        </div>
     </div>
 
-    <!-- 表单设计——单行文本，多行文本，密码，下拉单选，下拉多选，日期，数值，邮箱，电话，URL -->
+    <!-- 表单设计——单行文本，多行文本，密码，下拉单选，下拉多选，日期，数值，邮箱，电话，URL，地图定位 -->
     <template>
         <div class="i" draggable="true" ondragstart="dragItem(event)">
             <input type="radio" name="item" id="ShortText" hidden>
@@ -274,7 +399,7 @@
             <button class="attr-option-del" name="option_del"></button>
         </div>
     </template>
-    <!-- 表单填写——单行文本，密码，日期，数值，邮箱，电话，URL，附件 -->
+    <!-- 表单填写——单行文本，密码，日期，数值，邮箱，电话，URL，附件，地图定位 -->
     <template>
         <div class="f-item">
             <div class="f-title">单行文本:</div>
@@ -339,6 +464,12 @@
                 <label for="item_required" class="logic-item l"></label>
             </div>
         </div>
+    </template>
+
+    <template></template>
+    <!-- 表单填写——地址 -->
+    <template>
+
     </template>
 </body>
 
