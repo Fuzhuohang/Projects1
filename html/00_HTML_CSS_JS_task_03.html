@@ -10,15 +10,6 @@
     <script src="../js/00_HTML_CSS_JS_task_03_formdesign.js"></script>
     <script src="../js/00_HTML_CSS_JS_task_03_ dataverification.js"></script>
     <script src="https://cdn.bootcss.com/FileSaver.js/2014-11-29/FileSaver.js"></script>
-    <!-- <script type="text/javascript">
-        window.init = function() {
-            var map = new AMap.Map('container', {
-                center: [117.000923, 36.675807],
-                zoom: 11
-            });
-        }
-    </script> -->
-    <!-- <script src="https://webapi.amap.com/maps?v=1.4.15&key=69e39611336dcadd621c3aae2cee42e4&callback=init"></script> -->
     <script src="https://webapi.amap.com/maps?v=1.4.15&key=69e39611336dcadd621c3aae2cee42e4&plugin=AMap.Geocoder,AMap.CitySearch"></script>
     <script src="../js/jquery.min.js"></script>
 </head>
@@ -29,7 +20,7 @@
             <h1 class="tc minw1024">具有基本校验和拖拽效果的表单</h1>
         </div>
     </header>
-    <article id="form_design" class="db">
+    <article id="form_design" style="display: block;">
         <div class="itg-group">
             <div class="mt10 ml8 mb8">
                 <div id="form_item_01" class="itg" draggable="true" ondragstart="drag(event)">
@@ -103,7 +94,18 @@
         </div>
     </article>
     <article id="form-fill" class="dn">
-        <div class="form-tab minw1024">
+        <div class="form-canvas-fill tc">
+            <div class="w1024 dib pt8 pb8">
+                <form id="new-form" action="http://192.168.114.128:8080/form" method="POST" target="_blank">
+                    <button type="submit" id="submit" class="abs-clip" onclick="return submitForm()">提交表单</button>
+                    <button type="reset" id="reset" class="abs-clip">清除数据</button>
+                    <div id="form-body">
+
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="form-tab-fill minw1024">
             <div class="btn-group">
                 <div class="dib">
                     <input class="abs-clip">
@@ -116,19 +118,8 @@
                 <button type="button" class="btn" onclick="designForm()">修改设计</button>
             </div>
         </div>
-        <div class="form-canvas tc">
-            <div class="w1024 dib pt8 pb8">
-                <form id="new-form" action="http://192.168.114.128:8080/form" method="POST" target="_blank">
-                    <button type="submit" id="submit" class="abs-clip" onclick="return submitForm()">提交表单</button>
-                    <button type="reset" id="reset" class="abs-clip">清除数据</button>
-                    <div id="form-body">
-
-                    </div>
-                </form>
-            </div>
-        </div>
     </article>
-    <div class="container">
+    <div class="container" style="display: none;">
         <div id="editPanel" class="dialog">
             <div class="content">
                 <div class="edit-item">

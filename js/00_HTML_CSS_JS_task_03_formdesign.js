@@ -1,28 +1,21 @@
 // 表单设计画布
 let formCanvas;
 // 表单项数据集
-let itemsData = [];
+const itemsData = [];
 // 表单项校验规则数据集
-let checkRules = [{}, {}];
+const checkRules = [{}, {}];
 // 当前编辑表单数据项
 let editItem;
-// 表单数据项属性设置面板"选项组"相关组件(选项标签,选项值,选项删除按钮)
-let optionTags;
-let optionValues;
-let optionDels;
-
 // HTML模板组
 let temps;
-
 // 表单项拖拽添加时，占位空节点控件
 let nullNode;
-
 // 表单数据项下标
 let index = -1;
-// 地图控件
-let map;
 
-// 页面加载
+/**
+ * 网页初始化加载基础数据
+ */
 window.onload = function() {
     formCanvas = document.getElementById("form_canvas");
     temps = document.getElementsByTagName("template");
@@ -32,7 +25,7 @@ window.onload = function() {
     // request.open("get", url);
     // request.send(null);
     // request.onload = function() {
-    //     if (request.status == 200) {
+    //     if (request.status === 200) {
     //         itemsData = JSON.parse(request.responseText).itemsData;
     //         console.log(itemsData);
     //         for (const itemData of itemsData) {
@@ -57,7 +50,7 @@ window.onload = function() {
 
     const itemDatatype = document.getElementById("item_datatime");
     itemDatatype.onchange = function() {
-        if (editItem.type == "date") {
+        if (editItem.type === "date") {
             let value;
             switch (itemDatatype.value) {
                 case "1900/01":
@@ -134,11 +127,15 @@ window.onload = function() {
         }
     };
 };
-// 拖拽过程响应事件
+
+/**
+ * 表单设计页面——拖拽式表单设计——拖拽过程响应事件
+ * @param {object} ev 
+ */
 function allowDrop(ev) {
     ev.preventDefault();
     if (ev.target != nullNode) {
-        if (ev.target.className != "form-canvas") {
+        if (ev.target.className !== "form-canvas") {
             let y = ev.clientY;
             let top = ev.target.getBoundingClientRect().top;
             let height = ev.target.getBoundingClientRect().height;
@@ -221,17 +218,29 @@ function allowDrop(ev) {
     }
 
 }
-// 拖拽选中响应
+
+/**
+ * 表单设计页面——拖拽式表单设计——拖拽选中响应
+ * @param {object} ev 
+ */
 function drag(ev) {
     ev.dataTransfer.setData("Text", ev.target.id);
 }
-// 拖拽设置表单项布局
+
+/**
+ * 表单设计页面——拖拽式表单设计——拖拽设置表单项布局
+ * @param {object} ev 
+ */
 function dragItem(ev) {
     ev.dataTransfer.setData("Item", ev.target.firstChild.nextSibling.id);
     ev.target.firstChild.nextSibling.checked = true;
 
 }
-// 拖入操作,表单设计组件添加
+
+/**
+ * 表单设计页面——拖拽式表单设计——拖入操作,表单设计组件添加
+ * @param {object} ev 
+ */
 function drop(ev) {
     ev.preventDefault();
     let data = ev.dataTransfer.getData("Text");
@@ -241,8 +250,8 @@ function drop(ev) {
     // console.log(data.length);
     // console.log(Item.length);
     formCanvas = document.getElementById("form_canvas");
-    // console.log(ev.target);
-    if (data.length != 0) {
+    // console.log(ev);
+    if (data.length !== 0) {
         let itemData;
         let newItem;
 
@@ -254,7 +263,7 @@ function drop(ev) {
 
         formCanvas.removeChild(nullNode);
 
-        if (index != -1) {
+        if (index !== -1) {
             itemsData.splice(index, 0, itemData);
             console.log(itemsData);
             console.log(checkRules);
@@ -264,7 +273,7 @@ function drop(ev) {
             console.log(checkRules);
         }
     }
-    if (Item.length != 0) {
+    if (Item.length !== 0) {
         let itemIndex = getItemIndex(Item);
         let itemData = itemsData[itemIndex];
 
@@ -275,7 +284,7 @@ function drop(ev) {
         formCanvas.insertBefore(dragItem, nullNode);
         formCanvas.removeChild(nullNode);
 
-        if (index != -1) {
+        if (index !== -1) {
             // console.log("index: " + index);
             // console.log("itemIndex: " + itemIndex);
             itemsData.splice(index, 0, itemData);
@@ -294,16 +303,26 @@ function drop(ev) {
         }
     }
 }
-// 获取数据项下标
+
+/**
+ * 获取数据项下标
+ * @param {string} id 
+ * @returns 
+ */
 function getItemIndex(id) {
     for (let i = 0; i < itemsData.length; ++i) {
-        if (itemsData[i].id == id) {
+        if (itemsData[i].id === id) {
             return i;
         }
     }
     return itemsData.length - 1;
 }
-// 拖入操作，生成表单数据项数据
+
+/**
+ * 表单设计页面——拖拽式表单设计——生成表单数据项数据对象
+ * @param {object} data 
+ * @returns 
+ */
 function addItem(data) {
     const itemData = {};
     switch (data) {
@@ -485,7 +504,12 @@ function addItem(data) {
     // console.log(itemData);
     return itemData;
 }
-// 表单设计拖入数据项,设计展示操作
+
+/**
+ * 表单设计页面——拖拽式表单设计——生成可视化表单项布局
+ * @param {object} obj 
+ * @returns 
+ */
 function formdesign(obj) {
     let item, aItem, input, label, title, body, button;
 
@@ -503,9 +527,9 @@ function formdesign(obj) {
             item = temps[0].content.querySelector("div");
             aItem = document.importNode(item, true);
             body = aItem.getElementsByClassName("i-body-text")[0];
-            if (obj.type == "textarea") {
+            if (obj.type === "textarea") {
                 body.className = "i-body-textarea";
-            } else if (obj.type == "dropdown" || obj.type == "dropdownmulti") {
+            } else if (obj.type === "dropdown" || obj.type === "dropdownmulti") {
                 body.className = "i-body-select";
             }
             break;
@@ -562,29 +586,40 @@ function formdesign(obj) {
     button.setAttribute("onclick", "edit(\'" + obj.id + "\')");
     return aItem;
 }
-// 表单设计页面创建表单项的选项组选项
+
+/**
+ * 表单设计页面——拖拽式表单设计——单选框、复选框模拟选项样式
+ * @param {string} type 
+ * @param {string} value 
+ * @returns 
+ */
 function createFormOptionsItem(type, value) {
     const item = temps[2].content.querySelector("div");
     const aItem = document.importNode(item, true);
     const box = aItem.getElementsByTagName("div")[0];
-    if (type == "radio") {
+    if (type === "radio") {
         box.className = "i-check-box-r";
-    } else if (type == "checkbox") {
+    } else if (type === "checkbox") {
         box.className = "i-check-box-c";
     }
     const text = aItem.getElementsByTagName("div")[1];
     text.innerHTML = value;
     return aItem;
 }
-// 打开表单项属性值设置面板
+
+/**
+ * 表单设计页面——抽屉式表单项属性值设置面板——打开面板
+ * @param {string} id 
+ */
 function edit(id) {
-    console.log(id.valueOf());
-    console.log(itemsData);
+    // console.log(id.valueOf());
+    // console.log(itemsData);
     const editPanel = document.getElementById("editPanel");
-    editPanel.parentNode.style.backgroundColor = "rgba(0, 0, 0, .5)";
-    editPanel.parentNode.style.left = "0";
-    editPanel.parentNode.style.animation = "none";
-    editPanel.style.animation = "attrfadeIn .5s";
+    // editPanel.parentNode.style.backgroundColor = "rgba(0, 0, 0, .5)";
+    // editPanel.parentNode.style.left = "0";
+    // editPanel.parentNode.style.animation = "none";
+    editPanel.parentNode.style.display = "block";
+    editPanel.style.animation = "attrfadeIn .25s";
     editPanel.style.left = "0";
 
     for (const item of itemsData) {
@@ -604,9 +639,9 @@ function edit(id) {
         const Default = document.getElementById("default");
         Default.style.display = "block";
         const itemDefault = document.getElementById("item_default");
-        if (editItem.type != "address") {
+        if (editItem.type !== "address") {
             itemDefault.type = editItem.type;
-            if (editItem.type == "date") {
+            if (editItem.type === "date") {
                 switch (editItem.attr.datatype) {
                     case "1900/01":
                         itemDefault.type = "month";
@@ -639,7 +674,7 @@ function edit(id) {
             clearIcon.style = "top:0px;bottom:0px;right:20px;";
             Default.appendChild(clearIcon);
             Default.style = "display:block; position:relative;";
-            if (editItem.attr.default.length != 0) {
+            if (editItem.attr.default.length !== 0) {
                 itemDefault.className += " notNull";
             }
             itemDefault.onclick = function() {
@@ -721,14 +756,17 @@ function edit(id) {
         }
     }
 
-    optionTags = document.getElementsByName("option_tag");
-    optionValues = document.getElementsByName("option_value");
-    optionDels = document.getElementsByName("option_del");
-
     optionsOpe();
 
 }
-// 表单项属性值设置面板创建表单项"选项组"属性数据项
+
+/**
+ * 表单设计页面——抽屉式表单项属性值设置面板——创建单选框、复选框、下拉框“选项组”属性数据项
+ * @param {string} type 
+ * @param {string} value 
+ * @param {boolean} check 
+ * @returns 
+ */
 function createEditOptionsItem(type, value, check) {
     const item = temps[4].content.querySelector("div");
     const aItem = document.importNode(item, true);
@@ -756,31 +794,31 @@ function createEditOptionsItem(type, value, check) {
 
     return aItem;
 }
-// 表单项"选项组"属性数据项添加操作
+
+/**
+ * 表单设计页面——抽屉式表单项属性值设置面板——单选框、复选框、下拉框“选项组”属性添加数据项
+ */
 function addOption() {
     let itemOptionGroup = document.getElementById("item_options_group");
 
     itemOptionGroup.appendChild(createEditOptionsItem(editItem.type, "", false));
 
-    optionTags = document.getElementsByName("option_tag");
-    optionValues = document.getElementsByName("option_value");
-    optionDels = document.getElementsByName("option_del");
-
     const item = {};
     item.value = "";
     item.check = false;
     editItem.attr.options.push(item);
-    console.log(editItem);
-    console.log(itemsData);
-
-    console.log(optionTags);
-    console.log(optionValues);
-    console.log(optionDels);
 
     optionsOpe();
 }
-// 表单项"选项组"属性数据项响应操作
+
+/**
+ * 表单设计页面——抽屉式表单项属性值设置面板——单选框、复选框、下拉框“选项组”属性数据项新增监听事件
+ */
 function optionsOpe() {
+    const optionTags = document.getElementsByName("option_tag");
+    const optionValues = document.getElementsByName("option_value");
+    const optionDels = document.getElementsByName("option_del");
+
     for (let i = 0; i < optionTags.length; ++i) {
         optionTags[i].onchange = function() {
             console.log(optionTags);
@@ -807,26 +845,32 @@ function optionsOpe() {
         optionDels[i].onclick = function() {
             editItem.attr.options.splice(i, 1);
             optionDels[i].parentNode.parentNode.removeChild(optionDels[i].parentNode);
-            optionTags = document.getElementsByName("option_tag");
-            optionValues = document.getElementsByName("option_value");
-            optionDels = document.getElementsByName("option_del");
             console.log(editItem);
             optionsOpe();
         }
     }
 }
-// 关闭表单项属性值设置面板
+
+/**
+ * 表单设计页面——抽屉式表单项属性值设置面板——关闭面板
+ */
 function exitEdit() {
     const editPanel = document.getElementById("editPanel");
-    editPanel.parentNode.style.backgroundColor = "transparent";
+    // editPanel.parentNode.style.backgroundColor = "transparent";
     editPanel.style.animation = "attrfadeOut .25s";
     editPanel.style.left = "100%";
-    editPanel.parentNode.style.animation = "attrfadeOut .5s";
-    editPanel.parentNode.style.left = "100%";
+    // editPanel.parentNode.style.animation = "attrfadeOut .5s";
+    // editPanel.parentNode.style.left = "100%";
+    let timer = null;
+    clearTimeout(timer);
+    timer = setTimeout(function() {
+        editPanel.parentNode.style.display = "none";
+    }, 200);
+
 
     const Default = document.getElementById("default");
     Default.style.display = "none";
-    if (editItem.type == "address") {
+    if (editItem.type === "address") {
         Default.removeChild(document.getElementById("addressIcon"));
         Default.removeChild(document.getElementById("clearIcon"));
         const itemDefault = document.getElementById("item_default");
@@ -847,16 +891,17 @@ function exitEdit() {
     const Placeholder = document.getElementById("placeholder");
     Placeholder.style.display = "none";
     const Options = document.getElementById("options");
-    if (Options.style.display != "none") {
+    if (Options.style.display !== "none") {
         const formOptions = document.getElementById(editItem.id + "_options");
         // console.log(formOptions);
         while (formOptions != null && formOptions.hasChildNodes()) {
             formOptions.removeChild(formOptions.firstChild);
         }
+        const optionValues = document.getElementsByName("option_value");
         for (let i = 0; formOptions != null && i < optionValues.length; ++i) {
-            if (optionValues[i].value.length == 0) {
+            if (optionValues[i].value.length === 0) {
                 editItem.attr.options.splice(i, 1);
-                optionDels[i].parentNode.parentNode.removeChild(optionDels[i].parentNode);
+                optionValues[i].parentNode.parentNode.removeChild(optionValues[i].parentNode);
                 i--;
             } else {
                 formOptions.appendChild(createFormOptionsItem(editItem.type, optionValues[i].value));
@@ -878,17 +923,18 @@ function exitEdit() {
     submitVeri.style.display = "none";
 
     editItem = null;
-    optionTags = null;
-    optionValues = null;
-    optionDels = null;
 }
 // 删除表单项
+/**
+ * 表单设计页面——拖拽式表单设计——删除表单项
+ * @returns 
+ */
 function delItem() {
     if (confirm("确定要删除数据项 “" + editItem.name + "” 吗？")) {
         const item = document.getElementById(editItem.id);
         let i = 0;
         for (; i < itemsData.length; ++i) {
-            if (itemsData[i] == editItem) {
+            if (itemsData[i] === editItem) {
                 // console.log(i);
                 break;
             }
@@ -898,7 +944,7 @@ function delItem() {
         }
         if (editItem.attr.submitVeri != undefined) {
             for (const submitVeri in checkRules[1]) {
-                if (checkRules[1][submitVeri].beginValue == (editItem.id + "_fBody") || checkRules[1][submitVeri].endValue == (editItem.id + "_fBody")) {
+                if (checkRules[1][submitVeri].beginValue === (editItem.id + "_fBody") || checkRules[1][submitVeri].endValue === (editItem.id + "_fBody")) {
                     // alert("当前数据项在其他数据项的校验规则中被使用，不可删除");
                     delayPrompt("当前数据项在其他数据项的校验规则中被使用，不可删除。");
                     return;
@@ -915,7 +961,10 @@ function delItem() {
         exitEdit();
     }
 }
-// 表单设计界面,"填写表单"按钮
+
+/**
+ * 表单设计页面——"填写表单"按钮——跳转表单填写页面
+ */
 function fillForm() {
     const formDesign = document.getElementById("form_design");
     const formFill = document.getElementById("form-fill");
@@ -930,7 +979,11 @@ function fillForm() {
     formDesign.style.display = "none";
     formFill.style.display = "block";
 }
-// 根据表单项数据集创建可以填写提交的表单
+
+/**
+ * "填写表单"按钮——跳转表单填写页面——根据表单项数据集创建可以填写提交的表单
+ * @param {object} obj 
+ */
 function formCreate(obj) {
     const formBody = document.getElementById("form-body");
 
@@ -946,7 +999,7 @@ function formCreate(obj) {
         case "url":
         case "file":
         case "textarea":
-            if (obj.type == "textarea") {
+            if (obj.type === "textarea") {
                 item = temps[6].content.querySelector("div");
                 aItem = document.importNode(item, true);
                 fBody = aItem.getElementsByTagName("textarea")[0];
@@ -956,7 +1009,7 @@ function formCreate(obj) {
                 fBody = aItem.getElementsByTagName("input")[0];
             }
             fBody.id = obj.id + "_fBody";
-            if (obj.type == "date") {
+            if (obj.type === "date") {
                 switch (obj.attr.datatype) {
                     case "1900/01":
                         fBody.type = "month";
@@ -978,9 +1031,9 @@ function formCreate(obj) {
             if (obj.attr.default != undefined) {
                 fBody.value = obj.attr.default;
             }
-            if (obj.type == "file") {
+            if (obj.type === "file") {
                 fBody.className = "f-body-file";
-            } else if (obj.type == "textarea") {
+            } else if (obj.type === "textarea") {
                 fBody.className = "f-body-textarea";
             }
             if (obj.attr.readonly) {
@@ -1035,7 +1088,7 @@ function formCreate(obj) {
             fBody.name = obj.name + "(" + obj.id + ")";
             fBody.id = obj.id + "_fBody";
 
-            if (obj.type == "dropdownmulti") {
+            if (obj.type === "dropdownmulti") {
                 var optionHide = document.createElement("option");
                 var values = [];
                 optionHide.hidden = true;
@@ -1046,7 +1099,7 @@ function formCreate(obj) {
                 fDropdownmulti.value = obj.attr.options[i].value;
                 fDropdownmulti.innerHTML = obj.attr.options[i].value;
                 if (obj.attr.options[i].check) {
-                    if (obj.type == "dropdownmulti") {
+                    if (obj.type === "dropdownmulti") {
                         fDropdownmulti.style = "background: skyblue";
                         values.push(obj.attr.options[i].value);
                         optionHide.text = values.toString();
@@ -1068,7 +1121,7 @@ function formCreate(obj) {
 
             formBody.appendChild(aItem);
 
-            if (obj.type == "dropdownmulti") {
+            if (obj.type === "dropdownmulti") {
                 dropDownMulti(fBody.id, values);
             }
             break;
@@ -1091,7 +1144,7 @@ function formCreate(obj) {
                 logic.required = true;
             }
             logic.onclick = function() {
-                if (logic.value == "true") {
+                if (logic.value === "true") {
                     logic.value = "false";
                     logic.checked = true;
                     fBody.getElementsByTagName("label")[0].className = "logic-item";
@@ -1133,7 +1186,7 @@ function formCreate(obj) {
                     clearIcon.style = "top:9px;bottom:9px;right:6px;";
                     aItem.appendChild(clearIcon);
                     aItem.style = "position:relative;";
-                    if (fBody.value.length != 0) {
+                    if (fBody.value.length !== 0) {
                         fBody.className += " notNull";
                     }
                     fBody.onclick = function() {
@@ -1159,7 +1212,10 @@ function formCreate(obj) {
         fTitle.className += " required";
     }
 }
-// 表单设计界面,"清空设计"按钮
+
+/**
+ * 表单设计页面——"清空设计"按钮——清空当前的表单设计
+ */
 function clearDesign() {
     // console.log("clear");
     if (confirm("确定要清除当前表单的全部设计吗？")) {
@@ -1171,8 +1227,13 @@ function clearDesign() {
         // console.log(jsonText);
         // let blob = new Blob([jsonText], { type: "text/plain;charset=utf-8" });
         // saveAs(blob, "00_HTML_CSS_JS_task_01.json");
-        itemsData = [];
-        checkRules = [{}, {}];
+        itemsData.length = 0;
+        for (const key in checkRules[0]) {
+            delete checkRules[0][key];
+        }
+        for (const key in checkRules[1]) {
+            delete checkRules[1][key];
+        }
         console.log(itemsData);
         console.log(checkRules);
         while (formCanvas.hasChildNodes()) {
@@ -1180,14 +1241,22 @@ function clearDesign() {
         }
     }
 }
-// 表单填写界面,"修改设计"按钮
+
+/**
+ * 表单填写页面——"修改设计"按钮——跳转表单设计页面
+ */
 function designForm() {
     const formDesign = document.getElementById("form_design");
     const formFill = document.getElementById("form-fill");
     formFill.style.display = "none";
     formDesign.style.display = "block";
 }
-// 下拉多选框控件功能设计
+
+/**
+ * 表单填写界面——下拉多选框控件功能设计
+ * @param {string} objId 
+ * @param {Array} v 
+ */
 function dropDownMulti(objId, v) {
     let values = v;
     let opts = [];
@@ -1223,7 +1292,13 @@ function dropDownMulti(objId, v) {
         // console.log(select.value);
     });
 }
-// 日期格式转换
+
+/**
+ * 日期格式转换
+ * @param {string} date 
+ * @param {string} toFormat 
+ * @returns 
+ */
 function dateFormatConversion(date, toFormat) {
     const datevalue = new Date(date);
     console.log(datevalue);
@@ -1238,17 +1313,35 @@ function dateFormatConversion(date, toFormat) {
             return dataToString(datevalue.getFullYear(), 4) + "-W" + dataToString(getYearWeek(datevalue, datevalue.getFullYear()), 2);
     }
 }
-// 日期格式数值转换
+
+/**
+ * 日期格式数值转换为字符串
+ * @param {number} num 
+ * @param {number} len 
+ * @returns 
+ */
 function dataToString(num, len) {
     return (Array(len).join('0') + num.toString()).slice(-len);
 }
-// 获取当前周
+
+/**
+ * 获取当前周
+ * @param {Date} date 
+ * @param {number} yyyy 
+ * @returns 
+ */
 function getYearWeek(date, yyyy) {
     const year = new Date(yyyy, 0, 1);
     const d = Math.round((date.valueOf() - year.valueOf()) / 86400000);
     return Math.ceil((d + year.getDay()) / 7);
 }
-// 计算一定偏移量后的日期
+
+/**
+ * 计算一定偏移量后的日期
+ * @param {string} date 
+ * @param {number} offset 
+ * @returns 
+ */
 function dateOptions(date, offset) {
     const datevalue = new Date(date);
     console.log(datevalue);
@@ -1256,7 +1349,11 @@ function dateOptions(date, offset) {
     console.log(datevalue);
     return datevalue;
 }
-// 打开校验规则弹窗
+
+/**
+ * 表单设计页面——抽屉式表单项属性值设置面板——校验规则设置项点击响应事件——打开校验规则弹窗
+ * @param {number} type 
+ */
 function rulesContainer(type) {
     const checkAttr = document.getElementById("checkAttr");
     checkAttr.style.display = "block";
@@ -1317,7 +1414,7 @@ function rulesContainer(type) {
             veriTips.value = checkRules[1][editItem.id].tips;
             switch (veriTemplate.value) {
                 case "1":
-                    if (veriRelationship.value != 6) {
+                    if (veriRelationship.value !== "6") {
                         veriRule.style.display = "inline-block";
                         veriBetween.style.display = "none";
                         itemRule.style.display = "none";
@@ -1336,16 +1433,16 @@ function rulesContainer(type) {
                     }
                     break;
                 case "2":
-                    if (veriRelationship.value != 6) {
+                    if (veriRelationship.value !== "6") {
                         veriRule.style.display = "none";
                         veriBetween.style.display = "none";
                         itemRule.style.display = "inline-block";
                         itemBetween.style.display = "none";
                         itemRule.value = checkRules[1][editItem.id].beginValue;
-                        if (itemRule.options.length == 0) {
+                        if (itemRule.options.length === 0) {
                             itemRule.innerHTML = "<option value=\"\" selected disabled class=\"dn\"></option>";
                             getItemObjects(itemRule);
-                        } else if (itemRule.options.length == 1) {
+                        } else if (itemRule.options.length === 1) {
                             getItemObjects(itemRule);
                         }
                     } else {
@@ -1354,17 +1451,17 @@ function rulesContainer(type) {
                         itemRule.style.display = "none";
                         itemBetween.style.display = "inline-block";
                         itemBegin.value = checkRules[1][editItem.id].beginValue;
-                        if (itemBegin.options.length == 0) {
+                        if (itemBegin.options.length === 0) {
                             itemBegin.innerHTML = "<option value=\"\" selected disabled class=\"dn\"></option>";
                             getItemObjects(itemBegin);
-                        } else if (itemBegin.options.length == 1) {
+                        } else if (itemBegin.options.length === 1) {
                             getItemObjects(itemBegin);
                         }
                         itemEnd.value = checkRules[1][editItem.id].endValue;
-                        if (itemEnd.options.length == 0) {
+                        if (itemEnd.options.length === 0) {
                             itemEnd.innerHTML = "<option value=\"\" selected disabled class=\"dn\"></option>";
                             getItemObjects(itemEnd);
-                        } else if (itemEnd.options.length == 1) {
+                        } else if (itemEnd.options.length === 1) {
                             getItemObjects(itemEnd);
                         }
                     }
@@ -1381,7 +1478,11 @@ function rulesContainer(type) {
     const deterBtn = document.getElementById("deter_btn");
     deterBtn.setAttribute("onclick", "checkDeter(" + type + ")");
 }
-// 校验规则弹窗“保存”按钮事件
+
+/**
+ * 表单设计页面——抽屉式表单项属性值设置面板——校验规则弹窗——“保存”按钮点击响应事件
+ * @param {number} type 
+ */
 function checkDeter(type) {
     const veriRule = document.getElementById("veri_rule");
     const veriBetween = document.getElementById("veri_between");
@@ -1395,7 +1496,7 @@ function checkDeter(type) {
             const index = regularTemplate.selectedIndex;
             const regularExpression = document.getElementById("regular_expression");
             const regularTips = document.getElementById("regular_tips");
-            if (regularExpression.value.length == 0) {
+            if (regularExpression.value.length === 0) {
                 checkRules[0][editItem.id].template = "0";
                 checkRules[0][editItem.id].expression = "";
                 checkRules[0][editItem.id].tips = "";
@@ -1417,12 +1518,12 @@ function checkDeter(type) {
             const veriEnd = document.getElementById("veri_end");
             const veriTips = document.getElementById("veri_tips");
 
-            if (veriRule.value.length == 0 &&
-                veriBegin.value.length == 0 &&
-                veriEnd.value.length == 0 &&
-                itemRule.value.length == 0 &&
-                itemBegin.value.length == 0 &&
-                itemEnd.value.length == 0) {
+            if (veriRule.value.length === 0 &&
+                veriBegin.value.length === 0 &&
+                veriEnd.value.length === 0 &&
+                itemRule.value.length === 0 &&
+                itemBegin.value.length === 0 &&
+                itemEnd.value.length === 0) {
                 checkRules[1][editItem.id].template = "1";
                 checkRules[1][editItem.id].relationship = "1";
                 checkRules[1][editItem.id].beginValue = "";
@@ -1433,7 +1534,7 @@ function checkDeter(type) {
             } else {
                 switch (veriTemplate.value) {
                     case "1":
-                        if (veriRelationship.value != 6) {
+                        if (veriRelationship.value !== "6") {
                             checkRules[1][editItem.id].template = veriTemplate.value;
                             checkRules[1][editItem.id].relationship = veriRelationship.value;
                             checkRules[1][editItem.id].beginValue = veriRule.value;
@@ -1448,7 +1549,7 @@ function checkDeter(type) {
                         }
                         break;
                     case "2":
-                        if (veriRelationship.value != 6) {
+                        if (veriRelationship.value !== "6") {
                             checkRules[1][editItem.id].template = veriTemplate.value;
                             checkRules[1][editItem.id].relationship = veriRelationship.value;
                             checkRules[1][editItem.id].beginValue = itemRule.value;
@@ -1488,7 +1589,10 @@ function checkDeter(type) {
         itemEnd.removeChild(itemEnd.firstChild);
     }
 }
-// 校验规则弹窗“取消”按钮事件
+
+/**
+ * 表单设计页面——抽屉式表单项属性值设置面板——校验规则弹窗——“取消”按钮点击响应事件
+ */
 function checkCancel() {
     const checkAttr = document.getElementById("checkAttr");
     checkAttr.style.display = "none";
@@ -1520,7 +1624,10 @@ function checkCancel() {
         itemEnd.removeChild(itemEnd.firstChild);
     }
 }
-// 校验规则弹窗“删除”按钮事件
+
+/**
+ * 表单设计页面——抽屉式表单项属性值设置面板——校验规则弹窗——“删除”按钮点击响应事件
+ */
 function checkDelete() {
     if (editItem.attr.regularCheck != undefined) {
         checkRules[0][editItem.id].template = 0;
@@ -1544,7 +1651,11 @@ function checkDelete() {
 
     checkCancel();
 }
-// 提交校验规则弹窗内部细节调整1
+
+/**
+ * 表单设计页面——抽屉式表单项属性值设置面板——校验规则弹窗——提交校验规则细节切换——模板/关系
+ * @param {string} value 
+ */
 function veriTemplateChange(value) {
     const veriRelationship = document.getElementById("veri_relationship");
     const veriRule = document.getElementById("veri_rule");
@@ -1558,7 +1669,7 @@ function veriTemplateChange(value) {
 
     switch (value) {
         case "1":
-            if (veriRelationship.value != 6) {
+            if (veriRelationship.value !== "6") {
                 veriRule.style.display = "inline-block";
                 veriBetween.style.display = "none";
                 itemRule.style.display = "none";
@@ -1574,15 +1685,15 @@ function veriTemplateChange(value) {
             }
             break;
         case "2":
-            if (veriRelationship.value != 6) {
+            if (veriRelationship.value !== "6") {
                 veriRule.style.display = "none";
                 veriBetween.style.display = "none";
                 itemRule.style.display = "inline-block";
                 itemBetween.style.display = "none";
-                if (itemRule.options.length == 0) {
+                if (itemRule.options.length === 0) {
                     itemRule.innerHTML = "<option value=\"\" selected disabled class=\"dn\"></option>";
                     getItemObjects(itemRule);
-                } else if (itemRule.options.length == 1) {
+                } else if (itemRule.options.length === 1) {
                     getItemObjects(itemRule);
                 }
             } else {
@@ -1590,23 +1701,27 @@ function veriTemplateChange(value) {
                 veriBetween.style.display = "none";
                 itemRule.style.display = "none";
                 itemBetween.style.display = "inline-block";
-                if (itemBegin.options.length == 0) {
+                if (itemBegin.options.length === 0) {
                     itemBegin.innerHTML = "<option value=\"\" selected disabled class=\"dn\"></option>";
                     getItemObjects(itemBegin);
-                } else if (itemBegin.options.length == 1) {
+                } else if (itemBegin.options.length === 1) {
                     getItemObjects(itemBegin);
                 }
-                if (itemEnd.options.length == 0) {
+                if (itemEnd.options.length === 0) {
                     itemEnd.innerHTML = "<option value=\"\" selected disabled class=\"dn\"></option>";
                     getItemObjects(itemEnd);
-                } else if (itemEnd.options.length == 1) {
+                } else if (itemEnd.options.length === 1) {
                     getItemObjects(itemEnd);
                 }
             }
             break;
     }
 }
-// 提交校验规则弹窗内部细节调整2
+
+/**
+ * 表单设计页面——抽屉式表单项属性值设置面板——校验规则弹窗——提交校验规则细节切换——关系/模板
+ * @param {string} value 
+ */
 function veriRelationshipChange(value) {
     const veriTemplate = document.getElementById("veri_template");
     const veriRule = document.getElementById("veri_rule");
@@ -1623,59 +1738,63 @@ function veriRelationshipChange(value) {
         case "3":
         case "4":
         case "5":
-            if (veriTemplate.value == 1) {
+            if (veriTemplate.value === "1") {
                 veriRule.style.display = "inline-block";
                 veriBetween.style.display = "none";
                 itemRule.style.display = "none";
                 itemBetween.style.display = "none";
                 veriRule.type = editItem.type;
-            } else if (veriTemplate.value == 2) {
+            } else if (veriTemplate.value === "2") {
                 veriRule.style.display = "none";
                 veriBetween.style.display = "none";
                 itemRule.style.display = "inline-block";
                 itemBetween.style.display = "none";
-                if (itemRule.options.length == 0) {
+                if (itemRule.options.length === 0) {
                     itemRule.innerHTML = "<option value=\"\" selected disabled class=\"dn\"></option>";
                     getItemObjects(itemRule);
-                } else if (itemRule.options.length == 1) {
+                } else if (itemRule.options.length === 1) {
                     getItemObjects(itemRule);
                 }
             }
             break;
         case "6":
-            if (veriTemplate.value == 1) {
+            if (veriTemplate.value === "1") {
                 veriRule.style.display = "none";
                 veriBetween.style.display = "inline-block";
                 itemRule.style.display = "none";
                 itemBetween.style.display = "none";
                 veriBegin.type = editItem.type;
                 veriEnd.type = editItem.type;
-            } else if (veriTemplate.value == 2) {
+            } else if (veriTemplate.value === "2") {
                 veriRule.style.display = "none";
                 veriBetween.style.display = "none";
                 itemRule.style.display = "none";
                 itemBetween.style.display = "inline-block";
-                if (itemBegin.options.length == 0) {
+                if (itemBegin.options.length === 0) {
                     itemBegin.innerHTML = "<option value=\"\" selected disabled class=\"dn\"></option>";
                     getItemObjects(itemBegin);
-                } else if (itemBegin.options.length == 1) {
+                } else if (itemBegin.options.length === 1) {
                     getItemObjects(itemBegin);
                 }
-                if (itemEnd.options.length == 0) {
+                if (itemEnd.options.length === 0) {
                     itemEnd.innerHTML = "<option value=\"\" selected disabled class=\"dn\"></option>";
                     getItemObjects(itemEnd);
-                } else if (itemEnd.options.length == 1) {
+                } else if (itemEnd.options.length === 1) {
                     getItemObjects(itemEnd);
                 }
             }
             break;
     }
 }
-// 获取相同类型的校验项
+
+/**
+ * 表单设计页面——抽屉式表单项属性值设置面板——校验规则弹窗——提交校验规则获取关系数据项列表
+ * @param {object} obj 
+ */
 function getItemObjects(obj) {
     console.log(obj);
     for (const item of itemsData) {
-        if (item.type != editItem.type || item.id == editItem.id) {
+        if (item.type !== editItem.type || item.id === editItem.id) {
             continue;
         }
         const opt = document.createElement("option");
@@ -1685,7 +1804,12 @@ function getItemObjects(obj) {
         obj.appendChild(opt);
     }
 }
-// 创建校验规则对象
+
+/**
+ * 创建校验规则对象
+ * @param {number} type 
+ * @returns 
+ */
 function createCheckRules(type) {
     const checkRule = new Object();
     switch (type) {
@@ -1704,12 +1828,15 @@ function createCheckRules(type) {
     }
     return checkRule;
 }
-// 可填写表单生成时，给表单项添加提交校验属性
+
+/**
+ * "填写表单"按钮——跳转表单填写页面——根据表单项数据集创建可以填写提交的表单——给表单项添加提交校验属性
+ */
 function addSubmitVeri() {
     for (const submitVeri in checkRules[1]) {
         console.log(submitVeri);
         const item = document.getElementById(submitVeri + "_fBody");
-        if (checkRules[1][submitVeri].template == 1) {
+        if (checkRules[1][submitVeri].template === "1") {
             switch (checkRules[1][submitVeri].relationship) {
                 case "1":
                     item.setAttribute("min", dateFormatConversion(checkRules[1][submitVeri].beginValue, item.type));

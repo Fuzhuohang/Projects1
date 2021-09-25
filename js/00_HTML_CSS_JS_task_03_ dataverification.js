@@ -1,9 +1,12 @@
-// 表单提交校验
+/**
+ * 表单提交时——对提交数据进行规则校验
+ * @returns 
+ */
 function submitForm() {
     // 必填
     for (const item of itemsData) {
         if (item.attr.required) {
-            if (item.type == "checkbox" || item.type == "radio") {
+            if (item.type === "checkbox" || item.type === "radio") {
                 if (!requiredVeri(item.name + "(" + item.id + ")")) {
                     document.getElementById(item.id + "_form").style.backgroundColor = "rgba(255,0,0,.1)";
                     for (const option of document.getElementsByName(item.name + "(" + item.id + ")")) {
@@ -14,7 +17,7 @@ function submitForm() {
                     delayPrompt("数据项 " + item.name + "(" + item.id + ")” 必填校验不通过");
                     return false;
                 }
-            } else if (document.getElementsByName(item.name + "(" + item.id + ")")[0].value.length == 0) {
+            } else if (document.getElementsByName(item.name + "(" + item.id + ")")[0].value.length === 0) {
                 document.getElementById(item.id + "_form").style.backgroundColor = "rgba(255,0,0,.1)";
                 document.getElementById(item.id + "_fBody").onfocus = function() {
                     document.getElementById(item.id + "_form").style.backgroundColor = "";
@@ -50,7 +53,7 @@ function submitForm() {
             const item = document.getElementById(submitVeri + "_fBody");
             const submitVeriValue = item.value;
             let beginValue, endValue;
-            if (checkRules[1][submitVeri].template == "1") {
+            if (checkRules[1][submitVeri].template === "1") {
                 beginValue = checkRules[1][submitVeri].beginValue;
                 endValue = checkRules[1][submitVeri].endValue;
             } else {
@@ -101,7 +104,12 @@ function submitForm() {
 
     return true;
 }
-// 单选框、复选框必填校验
+
+/**
+ * 表单提交时——对单选框、复选框进行必填校验
+ * @param {string} name 
+ * @returns 
+ */
 function requiredVeri(name) {
     const options = document.getElementsByName(name);
     for (const option of options) {
@@ -111,7 +119,11 @@ function requiredVeri(name) {
     }
     return false;
 }
-// 延时错误提示框
+
+/**
+ * 延时错误提示框
+ * @param {string} text 
+ */
 function delayPrompt(text) {
     let timer = null;
     const Prompt = document.getElementById("requVeriProm");
@@ -124,14 +136,18 @@ function delayPrompt(text) {
     }, 2500);
 
 }
-// 地址控件弹窗
+
+/**
+ * 地址控件弹窗
+ * @param {object} obj 
+ */
 function getLocation(obj) {
     const addressMap = document.getElementById("address_map");
     addressMap.style.display = "block";
     const chosenAddress = document.getElementById("chosen_address");
     let coordinate, market;
 
-    map = new AMap.Map('container', {
+    const map = new AMap.Map('container', {
         resizeEnable: true,
         zoom: 12
     });
@@ -139,7 +155,7 @@ function getLocation(obj) {
     map.on('complete', function() {
         if (obj.value.length != 0) {
             AMap.plugin('AMap.Geocoder', function() {
-                var geocoder = new AMap.Geocoder({
+                const geocoder = new AMap.Geocoder({
 
                 })
 
@@ -158,7 +174,7 @@ function getLocation(obj) {
             })
         } else {
             AMap.plugin('AMap.CitySearch', function() {
-                var citySearch = new AMap.CitySearch()
+                const citySearch = new AMap.CitySearch()
                 citySearch.getLocalCity(function(status, result) {
                     if (status === 'complete' && result.info === 'OK') {
                         // 查询成功，result即为当前所在城市信息
@@ -177,9 +193,9 @@ function getLocation(obj) {
 
     map.on('click', function(ev) {
         // 触发事件的地理坐标，AMap.LngLat 类型
-        var lnglat = ev.lnglat;
+        const lnglat = ev.lnglat;
         AMap.plugin('AMap.Geocoder', function() {
-            var geocoder = new AMap.Geocoder({
+            const geocoder = new AMap.Geocoder({
 
             })
 
