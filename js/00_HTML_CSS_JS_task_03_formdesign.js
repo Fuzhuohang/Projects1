@@ -927,7 +927,7 @@ function exitEdit() {
 
     editItem = null;
 }
-// 删除表单项
+
 /**
  * 表单设计页面——拖拽式表单设计——删除表单项
  * @returns 
