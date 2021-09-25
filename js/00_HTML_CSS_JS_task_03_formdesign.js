@@ -1,9 +1,17 @@
 // 表单设计画布
 let formCanvas;
-// 表单项数据集
-const itemsData = [];
-// 表单项校验规则数据集
-const checkRules = [{}, {}];
+// 表单数据集
+const myFormData = {
+    // 表单标题
+    title: "具有基本校验和拖拽效果的表单",
+    // 表单布局
+    tableLayout: [],
+    // 表单项数据集
+    itemsData: {},
+    // 表单项校验规则数据集
+    r_check: {},
+    s_check: {}
+};
 // 当前编辑表单数据项
 let editItem;
 // HTML模板组
@@ -27,7 +35,7 @@ window.onload = function() {
     // request.onload = function() {
     //     if (request.status === 200) {
     //         itemsData = JSON.parse(request.responseText).itemsData;
-    //         console.log(itemsData);
+    //         
     //         for (const itemData of itemsData) {
     //             console.log(itemData);
     //             formCanvas.appendChild(formdesign(itemData));
@@ -252,32 +260,29 @@ function drop(ev) {
     formCanvas = document.getElementById("form_canvas");
     // console.log(ev);
     if (data.length !== 0) {
-        let itemData;
-        let newItem;
-
-        itemData = addItem(data);
+        const itemData = addItem(data);
         // console.log(itemData);
-        newItem = formdesign(itemData);
+        const newItem = formdesign(itemData);
 
         formCanvas.insertBefore(newItem, nullNode);
 
         formCanvas.removeChild(nullNode);
 
         if (index !== -1) {
-            itemsData.splice(index, 0, itemData);
-            console.log(itemsData);
-            console.log(checkRules);
+            myFormData.tableLayout.splice(index, 0, itemData.id);
+            myFormData.itemsData[itemData.id] = itemData;
+            console.log(myFormData);
         } else {
-            itemsData.push(itemData);
-            console.log(itemsData);
-            console.log(checkRules);
+            myFormData.tableLayout.push(itemData.id);
+            myFormData.itemsData[itemData.id] = itemData;
+            console.log(myFormData);
         }
     }
     if (Item.length !== 0) {
-        let itemIndex = getItemIndex(Item);
-        let itemData = itemsData[itemIndex];
+        const itemIndex = getItemIndex(Item);
+        const itemData = myFormData.itemsData[myFormData.tableLayout[itemIndex]];
 
-        let dragItem = document.getElementById(Item).parentElement;
+        const dragItem = document.getElementById(Item).parentElement;
 
         formCanvas.removeChild(dragItem);
 
@@ -287,19 +292,17 @@ function drop(ev) {
         if (index !== -1) {
             // console.log("index: " + index);
             // console.log("itemIndex: " + itemIndex);
-            itemsData.splice(index, 0, itemData);
+            myFormData.tableLayout.splice(index, 0, itemData.id);
             if (index >= itemIndex) {
-                itemsData.splice(itemIndex, 1);
+                myFormData.tableLayout.splice(itemIndex, 1);
             } else {
-                itemsData.splice(itemIndex + 1, 1);
+                myFormData.tableLayout.splice(itemIndex + 1, 1);
             }
-            console.log(itemsData);
-            console.log(checkRules);
+            console.log(myFormData);
         } else {
-            itemsData.push(itemData);
-            itemsData.splice(itemIndex, 1);
-            console.log(itemsData);
-            console.log(checkRules);
+            myFormData.tableLayout.push(itemData.id);
+            myFormData.tableLayout.splice(itemIndex, 1);
+            console.log(myFormData);
         }
     }
 }
@@ -310,12 +313,12 @@ function drop(ev) {
  * @returns 
  */
 function getItemIndex(id) {
-    for (let i = 0; i < itemsData.length; ++i) {
-        if (itemsData[i].id === id) {
+    for (let i = 0; i < myFormData.tableLayout.length; ++i) {
+        if (myFormData.tableLayout[i] === id) {
             return i;
         }
     }
-    return itemsData.length - 1;
+    return myFormData.tableLayout.length - 1;
 }
 
 /**
@@ -337,7 +340,7 @@ function addItem(data) {
             itemData.attr.placeholder = "请输入";
             itemData.attr.maxLength = 200;
             itemData.attr.regularCheck = false;
-            checkRules[0][itemData.id] = createCheckRules(1);
+            myFormData.r_check[itemData.id] = createCheckRules(1);
             break;
         case "form_item_02":
             itemData.id = "Password_" + Date.now().valueOf();
@@ -359,7 +362,7 @@ function addItem(data) {
             itemData.attr.placeholder = "请输入";
             itemData.attr.maxLength = 2000;
             itemData.attr.regularCheck = false;
-            checkRules[0][itemData.id] = createCheckRules(1);
+            myFormData.r_check[itemData.id] = createCheckRules(1);
             break;
         case "form_item_04":
             itemData.id = "Dropdown_" + Date.now().valueOf();
@@ -429,7 +432,7 @@ function addItem(data) {
             itemData.attr.required = false;
             itemData.attr.datatype = "1900/01/01";
             itemData.attr.submitVeri = false;
-            checkRules[1][itemData.id] = createCheckRules(2);
+            myFormData.s_check[itemData.id] = createCheckRules(2);
             break;
         case "form_item_09":
             itemData.id = "Number_" + Date.now().valueOf();
@@ -442,7 +445,7 @@ function addItem(data) {
             itemData.attr.placeholder = "请输入";
             // itemData.attr.datatype = "1000";
             itemData.attr.submitVeri = false;
-            checkRules[1][itemData.id] = createCheckRules(2);
+            myFormData.s_check[itemData.id] = createCheckRules(2);
             break;
         case "form_item_10":
             itemData.id = "Email_" + Date.now().valueOf();
@@ -613,7 +616,7 @@ function createFormOptionsItem(type, value) {
  */
 function edit(id) {
     // console.log(id.valueOf());
-    // console.log(itemsData);
+    // 
     const editPanel = document.getElementById("editPanel");
     // editPanel.parentNode.style.backgroundColor = "rgba(0, 0, 0, .5)";
     // editPanel.parentNode.style.left = "0";
@@ -622,11 +625,11 @@ function edit(id) {
     editPanel.style.animation = "attrfadeIn .25s";
     editPanel.style.left = "0";
 
-    for (const item of itemsData) {
-        if (id !== item.id) {
+    for (const item in myFormData.itemsData) {
+        if (id !== item) {
             continue;
         } else {
-            editItem = item;
+            editItem = myFormData.itemsData[item];
         }
     }
     console.log(editItem);
@@ -932,31 +935,26 @@ function exitEdit() {
 function delItem() {
     if (confirm("确定要删除数据项 “" + editItem.name + "” 吗？")) {
         const item = document.getElementById(editItem.id);
-        let i = 0;
-        for (; i < itemsData.length; ++i) {
-            if (itemsData[i] === editItem) {
-                // console.log(i);
-                break;
-            }
-        }
+        const i = getItemIndex(editItem.id);
         if (editItem.attr.regularCheck != undefined) {
-            delete checkRules[0][editItem.id];
+            delete myFormData.r_check[editItem.id];
         }
         if (editItem.attr.submitVeri != undefined) {
-            for (const submitVeri in checkRules[1]) {
-                if (checkRules[1][submitVeri].beginValue === (editItem.id + "_fBody") || checkRules[1][submitVeri].endValue === (editItem.id + "_fBody")) {
+            for (const submitVeri in myFormData.s_check) {
+                if (myFormData.s_check[submitVeri].beginValue === (editItem.id + "_fBody") || myFormData.s_check[submitVeri].endValue === (editItem.id + "_fBody")) {
                     // alert("当前数据项在其他数据项的校验规则中被使用，不可删除");
                     delayPrompt("当前数据项在其他数据项的校验规则中被使用，不可删除。");
                     return;
                 }
             }
-            delete checkRules[1][editItem.id];
+            delete myFormData.s_check[editItem.id];
         }
         // console.log(i);
         formCanvas.removeChild(item.parentNode);
-        itemsData.splice(i, 1);
-        console.log(itemsData);
-        console.log(checkRules);
+        myFormData.tableLayout.splice(i, 1);
+        delete myFormData.itemsData[editItem.id];
+
+        console.log(myFormData);
 
         exitEdit();
     }
@@ -972,8 +970,8 @@ function fillForm() {
     while (formBody.hasChildNodes()) {
         formBody.removeChild(formBody.firstChild);
     }
-    for (const itemData of itemsData) {
-        formCreate(itemData);
+    for (const itemId of myFormData.tableLayout) {
+        formCreate(myFormData.itemsData[itemId]);
     }
     addSubmitVeri();
     formDesign.style.display = "none";
@@ -1227,15 +1225,18 @@ function clearDesign() {
         // console.log(jsonText);
         // let blob = new Blob([jsonText], { type: "text/plain;charset=utf-8" });
         // saveAs(blob, "00_HTML_CSS_JS_task_01.json");
-        itemsData.length = 0;
-        for (const key in checkRules[0]) {
-            delete checkRules[0][key];
+        myFormData.tableLayout.length = 0;
+        for (const id in myFormData.itemsData) {
+            delete myFormData.itemsData[id];
         }
-        for (const key in checkRules[1]) {
-            delete checkRules[1][key];
+        for (const key in myFormData.r_check) {
+            delete myFormData.r_check[key];
         }
-        console.log(itemsData);
-        console.log(checkRules);
+        for (const key in myFormData.s_check) {
+            delete myFormData.s_check[key];
+        }
+
+        console.log(myFormData);
         while (formCanvas.hasChildNodes()) {
             formCanvas.removeChild(formCanvas.firstChild);
         }
@@ -1371,12 +1372,12 @@ function rulesContainer(type) {
             const regularTemplate = document.getElementById("regular_template");
             const regularExpression = document.getElementById("regular_expression");
             const regularTips = document.getElementById("regular_tips");
-            regularTemplate.options[checkRules[0][editItem.id].template].selected = true;
-            if (checkRules[0][editItem.id].template > 0 && checkRules[0][editItem.id].template < regularTemplate.options.length - 1) {
+            regularTemplate.options[myFormData.r_check[editItem.id].template].selected = true;
+            if (myFormData.r_check[editItem.id].template > 0 && myFormData.r_check[editItem.id].template < regularTemplate.options.length - 1) {
                 regularExpression.disabled = true;
             }
-            regularExpression.value = checkRules[0][editItem.id].expression;
-            regularTips.value = checkRules[0][editItem.id].tips;
+            regularExpression.value = myFormData.r_check[editItem.id].expression;
+            regularTips.value = myFormData.r_check[editItem.id].tips;
             regularTemplate.onchange = function() {
                 const index = regularTemplate.selectedIndex;
                 regularExpression.value = regularTemplate.value;
@@ -1409,9 +1410,9 @@ function rulesContainer(type) {
             const itemOffset = document.getElementById("item_offset");
             const veriTips = document.getElementById("veri_tips");
 
-            veriTemplate.value = checkRules[1][editItem.id].template;
-            veriRelationship.value = checkRules[1][editItem.id].relationship;
-            veriTips.value = checkRules[1][editItem.id].tips;
+            veriTemplate.value = myFormData.s_check[editItem.id].template;
+            veriRelationship.value = myFormData.s_check[editItem.id].relationship;
+            veriTips.value = myFormData.s_check[editItem.id].tips;
             switch (veriTemplate.value) {
                 case "1":
                     if (veriRelationship.value !== "6") {
@@ -1419,15 +1420,15 @@ function rulesContainer(type) {
                         veriBetween.style.display = "none";
                         itemRule.style.display = "none";
                         itemBetween.style.display = "none";
-                        veriRule.value = checkRules[1][editItem.id].beginValue;
+                        veriRule.value = myFormData.s_check[editItem.id].beginValue;
                         veriRule.type = editItem.type;
                     } else {
                         veriRule.style.display = "none";
                         veriBetween.style.display = "inline-block";
                         itemRule.style.display = "none";
                         itemBetween.style.display = "none";
-                        veriBegin.value = checkRules[1][editItem.id].beginValue;
-                        veriEnd.value = checkRules[1][editItem.id].endValue;
+                        veriBegin.value = myFormData.s_check[editItem.id].beginValue;
+                        veriEnd.value = myFormData.s_check[editItem.id].endValue;
                         veriBegin.type = editItem.type;
                         veriEnd.type = editItem.type;
                     }
@@ -1438,7 +1439,7 @@ function rulesContainer(type) {
                         veriBetween.style.display = "none";
                         itemRule.style.display = "inline-block";
                         itemBetween.style.display = "none";
-                        itemRule.value = checkRules[1][editItem.id].beginValue;
+                        itemRule.value = myFormData.s_check[editItem.id].beginValue;
                         if (itemRule.options.length === 0) {
                             itemRule.innerHTML = "<option value=\"\" selected disabled class=\"dn\"></option>";
                             getItemObjects(itemRule);
@@ -1450,14 +1451,14 @@ function rulesContainer(type) {
                         veriBetween.style.display = "none";
                         itemRule.style.display = "none";
                         itemBetween.style.display = "inline-block";
-                        itemBegin.value = checkRules[1][editItem.id].beginValue;
+                        itemBegin.value = myFormData.s_check[editItem.id].beginValue;
                         if (itemBegin.options.length === 0) {
                             itemBegin.innerHTML = "<option value=\"\" selected disabled class=\"dn\"></option>";
                             getItemObjects(itemBegin);
                         } else if (itemBegin.options.length === 1) {
                             getItemObjects(itemBegin);
                         }
-                        itemEnd.value = checkRules[1][editItem.id].endValue;
+                        itemEnd.value = myFormData.s_check[editItem.id].endValue;
                         if (itemEnd.options.length === 0) {
                             itemEnd.innerHTML = "<option value=\"\" selected disabled class=\"dn\"></option>";
                             getItemObjects(itemEnd);
@@ -1497,15 +1498,15 @@ function checkDeter(type) {
             const regularExpression = document.getElementById("regular_expression");
             const regularTips = document.getElementById("regular_tips");
             if (regularExpression.value.length === 0) {
-                checkRules[0][editItem.id].template = "0";
-                checkRules[0][editItem.id].expression = "";
-                checkRules[0][editItem.id].tips = "";
+                myFormData.r_check[editItem.id].template = "0";
+                myFormData.r_check[editItem.id].expression = "";
+                myFormData.r_check[editItem.id].tips = "";
                 editItem.attr.regularCheck = false;
                 document.getElementById("item_regularCheck").value = "未设置";
             } else {
-                checkRules[0][editItem.id].template = index;
-                checkRules[0][editItem.id].expression = regularExpression.value;
-                checkRules[0][editItem.id].tips = regularTips.value;
+                myFormData.r_check[editItem.id].template = index;
+                myFormData.r_check[editItem.id].expression = regularExpression.value;
+                myFormData.r_check[editItem.id].tips = regularTips.value;
                 editItem.attr.regularCheck = true;
                 document.getElementById("item_regularCheck").value = "已设置";
             }
@@ -1524,43 +1525,43 @@ function checkDeter(type) {
                 itemRule.value.length === 0 &&
                 itemBegin.value.length === 0 &&
                 itemEnd.value.length === 0) {
-                checkRules[1][editItem.id].template = "1";
-                checkRules[1][editItem.id].relationship = "1";
-                checkRules[1][editItem.id].beginValue = "";
-                checkRules[1][editItem.id].endValue = "";
-                checkRules[1][editItem.id].tips = "";
+                myFormData.s_check[editItem.id].template = "1";
+                myFormData.s_check[editItem.id].relationship = "1";
+                myFormData.s_check[editItem.id].beginValue = "";
+                myFormData.s_check[editItem.id].endValue = "";
+                myFormData.s_check[editItem.id].tips = "";
                 editItem.attr.submitVeri = false;
                 document.getElementById("item_submitVeri").value = "未设置";
             } else {
                 switch (veriTemplate.value) {
                     case "1":
                         if (veriRelationship.value !== "6") {
-                            checkRules[1][editItem.id].template = veriTemplate.value;
-                            checkRules[1][editItem.id].relationship = veriRelationship.value;
-                            checkRules[1][editItem.id].beginValue = veriRule.value;
-                            checkRules[1][editItem.id].endValue = veriRule.value;
-                            checkRules[1][editItem.id].tips = veriTips.value;
+                            myFormData.s_check[editItem.id].template = veriTemplate.value;
+                            myFormData.s_check[editItem.id].relationship = veriRelationship.value;
+                            myFormData.s_check[editItem.id].beginValue = veriRule.value;
+                            myFormData.s_check[editItem.id].endValue = veriRule.value;
+                            myFormData.s_check[editItem.id].tips = veriTips.value;
                         } else {
-                            checkRules[1][editItem.id].template = veriTemplate.value;
-                            checkRules[1][editItem.id].relationship = veriRelationship.value;
-                            checkRules[1][editItem.id].beginValue = veriBegin.value;
-                            checkRules[1][editItem.id].endValue = veriEnd.value;
-                            checkRules[1][editItem.id].tips = veriTips.value;
+                            myFormData.s_check[editItem.id].template = veriTemplate.value;
+                            myFormData.s_check[editItem.id].relationship = veriRelationship.value;
+                            myFormData.s_check[editItem.id].beginValue = veriBegin.value;
+                            myFormData.s_check[editItem.id].endValue = veriEnd.value;
+                            myFormData.s_check[editItem.id].tips = veriTips.value;
                         }
                         break;
                     case "2":
                         if (veriRelationship.value !== "6") {
-                            checkRules[1][editItem.id].template = veriTemplate.value;
-                            checkRules[1][editItem.id].relationship = veriRelationship.value;
-                            checkRules[1][editItem.id].beginValue = itemRule.value;
-                            checkRules[1][editItem.id].endValue = itemRule.value;
-                            checkRules[1][editItem.id].tips = veriTips.value;
+                            myFormData.s_check[editItem.id].template = veriTemplate.value;
+                            myFormData.s_check[editItem.id].relationship = veriRelationship.value;
+                            myFormData.s_check[editItem.id].beginValue = itemRule.value;
+                            myFormData.s_check[editItem.id].endValue = itemRule.value;
+                            myFormData.s_check[editItem.id].tips = veriTips.value;
                         } else {
-                            checkRules[1][editItem.id].template = veriTemplate.value;
-                            checkRules[1][editItem.id].relationship = veriRelationship.value;
-                            checkRules[1][editItem.id].beginValue = itemBegin.value;
-                            checkRules[1][editItem.id].endValue = itemEnd.value;
-                            checkRules[1][editItem.id].tips = veriTips.value;
+                            myFormData.s_check[editItem.id].template = veriTemplate.value;
+                            myFormData.s_check[editItem.id].relationship = veriRelationship.value;
+                            myFormData.s_check[editItem.id].beginValue = itemBegin.value;
+                            myFormData.s_check[editItem.id].endValue = itemEnd.value;
+                            myFormData.s_check[editItem.id].tips = veriTips.value;
                         }
                         break;
                 }
@@ -1630,20 +1631,20 @@ function checkCancel() {
  */
 function checkDelete() {
     if (editItem.attr.regularCheck != undefined) {
-        checkRules[0][editItem.id].template = 0;
-        checkRules[0][editItem.id].expression = "";
-        checkRules[0][editItem.id].tips = "";
+        myFormData.r_check[editItem.id].template = 0;
+        myFormData.r_check[editItem.id].expression = "";
+        myFormData.r_check[editItem.id].tips = "";
         editItem.attr.regularCheck = false;
         const itemRegularCheck = document.getElementById("item_regularCheck");
         itemRegularCheck.value = "未设置";
     }
 
     if (editItem.attr.submitVeri != undefined) {
-        checkRules[1][editItem.id].template = 1;
-        checkRules[1][editItem.id].relationship = 1;
-        checkRules[1][editItem.id].beginValue = "";
-        checkRules[1][editItem.id].endValue = "";
-        checkRules[1][editItem.id].tips = "";
+        myFormData.s_check[editItem.id].template = 1;
+        myFormData.s_check[editItem.id].relationship = 1;
+        myFormData.s_check[editItem.id].beginValue = "";
+        myFormData.s_check[editItem.id].endValue = "";
+        myFormData.s_check[editItem.id].tips = "";
         editItem.attr.submitVeri = false;
         const itemSubmitVeri = document.getElementById("item_submitVeri");
         itemSubmitVeri.value = "未设置";
@@ -1793,13 +1794,13 @@ function veriRelationshipChange(value) {
  */
 function getItemObjects(obj) {
     console.log(obj);
-    for (const item of itemsData) {
-        if (item.type !== editItem.type || item.id === editItem.id) {
+    for (const id in myFormData.itemsData) {
+        if (myFormData.itemsData[id].type !== editItem.type || id === editItem.id) {
             continue;
         }
         const opt = document.createElement("option");
-        opt.innerHTML = item.name + "(" + item.id + ")";
-        opt.value = item.id + "_fBody";
+        opt.innerHTML = myFormData.itemsData[id].name + "(" + id + ")";
+        opt.value = id + "_fBody";
         console.log(opt);
         obj.appendChild(opt);
     }
@@ -1833,38 +1834,38 @@ function createCheckRules(type) {
  * "填写表单"按钮——跳转表单填写页面——根据表单项数据集创建可以填写提交的表单——给表单项添加提交校验属性
  */
 function addSubmitVeri() {
-    for (const submitVeri in checkRules[1]) {
+    for (const submitVeri in myFormData.s_check) {
         console.log(submitVeri);
         const item = document.getElementById(submitVeri + "_fBody");
-        if (checkRules[1][submitVeri].template === "1") {
-            switch (checkRules[1][submitVeri].relationship) {
+        if (myFormData.s_check[submitVeri].template === "1") {
+            switch (myFormData.s_check[submitVeri].relationship) {
                 case "1":
-                    item.setAttribute("min", dateFormatConversion(checkRules[1][submitVeri].beginValue, item.type));
-                    item.setAttribute("max", dateFormatConversion(checkRules[1][submitVeri].endValue, item.type));
+                    item.setAttribute("min", dateFormatConversion(myFormData.s_check[submitVeri].beginValue, item.type));
+                    item.setAttribute("max", dateFormatConversion(myFormData.s_check[submitVeri].endValue, item.type));
                     break;
                 case "2":
-                    item.setAttribute("min", dateFormatConversion(dateOptions(checkRules[1][submitVeri].beginValue, 1), item.type));
+                    item.setAttribute("min", dateFormatConversion(dateOptions(myFormData.s_check[submitVeri].beginValue, 1), item.type));
                     break;
                 case "3":
-                    item.setAttribute("max", dateFormatConversion(dateOptions(checkRules[1][submitVeri].beginValue, -1), item.type));
+                    item.setAttribute("max", dateFormatConversion(dateOptions(myFormData.s_check[submitVeri].beginValue, -1), item.type));
                     break;
                 case "4":
-                    item.setAttribute("min", dateFormatConversion(checkRules[1][submitVeri].beginValue, item.type));
+                    item.setAttribute("min", dateFormatConversion(myFormData.s_check[submitVeri].beginValue, item.type));
                     break;
                 case "5":
-                    item.setAttribute("max", dateFormatConversion(checkRules[1][submitVeri].endValue, item.type));
+                    item.setAttribute("max", dateFormatConversion(myFormData.s_check[submitVeri].endValue, item.type));
                     break;
                 case "6":
-                    item.setAttribute("min", dateFormatConversion(checkRules[1][submitVeri].beginValue, item.type));
-                    item.setAttribute("max", dateFormatConversion(checkRules[1][submitVeri].endValue, item.type));
+                    item.setAttribute("min", dateFormatConversion(myFormData.s_check[submitVeri].beginValue, item.type));
+                    item.setAttribute("max", dateFormatConversion(myFormData.s_check[submitVeri].endValue, item.type));
                     break;
             }
         } else {
-            const beginItem = document.getElementById(checkRules[1][submitVeri].beginValue);
-            const endItem = document.getElementById(checkRules[1][submitVeri].endValue);
+            const beginItem = document.getElementById(myFormData.s_check[submitVeri].beginValue);
+            const endItem = document.getElementById(myFormData.s_check[submitVeri].endValue);
 
             endItem.onchange = function() {
-                switch (checkRules[1][submitVeri].relationship) {
+                switch (myFormData.s_check[submitVeri].relationship) {
                     case "1":
                     case "2":
                     case "3":
@@ -1878,7 +1879,7 @@ function addSubmitVeri() {
             }
 
             beginItem.onchange = function() {
-                switch (checkRules[1][submitVeri].relationship) {
+                switch (myFormData.s_check[submitVeri].relationship) {
                     case "1":
                         item.setAttribute("min", dateFormatConversion(beginItem.value, item.type));
                         item.setAttribute("max", dateFormatConversion(beginItem.value, item.type));
