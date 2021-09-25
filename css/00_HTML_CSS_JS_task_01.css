@@ -57,6 +57,8 @@ article {
 .itg {
     margin: 5px;
     border: 1px dashed lightgray;
+    display: inline-block;
+    width: 77px;
     height: 38px;
     text-align: center;
 }
