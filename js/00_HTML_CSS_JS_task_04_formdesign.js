@@ -18,6 +18,8 @@ let editItem;
 let temps;
 // 表单项拖拽添加时，占位空节点控件
 let nullNode;
+
+let lineNode;
 // 表单数据项下标
 let index = -1;
 
@@ -93,11 +95,45 @@ window.onload = function() {
         }
     }
 
+    const itemRequired = document.getElementById("item_required");
+    itemRequired.onchange = function() {
+        editItem.attr.required = !editItem.attr.required;
+        if (itemReadonly.checked) {
+            itemReadonly.checked = false;
+            editItem.attr.readonly = false;
+        }
+    }
+
+    const itemReadonly = document.getElementById("item_readonly");
+    itemReadonly.onchange = function() {
+        editItem.attr.readonly = !editItem.attr.readonly;
+        if (itemRequired.checked) {
+            itemRequired.checked = false;
+            editItem.attr.required = false;
+        }
+    }
+
+    const itemMaxlength = document.getElementById("item_maxlength");
+    itemMaxlength.onchange = function() {
+        console.log(itemMaxlength.value);
+        editItem.attr.maxLength = itemMaxlength.value;
+    }
+
+    const itemPlaceholder = document.getElementById("item_placeholder");
+    itemPlaceholder.onchange = function() {
+        console.log(itemPlaceholder.value);
+        editItem.attr.placeholder = itemPlaceholder.value;
+    }
+
     nullNode = document.createElement("div");
     nullNode.className = "add";
     nullNode.ondrop = function(ev) {
         ev.preventDefault();
     };
+
+    lineNode = document.createElement("div");
+    lineNode.className = "f";
+    lineNode.appendChild(nullNode);
 
     document.ondragend = function() {
         if (nullNode.parentElement != null) {
@@ -124,7 +160,7 @@ function allowDrop(ev) {
                 switch (ev.target.className) {
                     case "item":
                     case "i-icon":
-                        formCanvas.insertBefore(nullNode, ev.target.parentElement.parentElement);
+                        formCanvas.insertBefore(lineNode, ev.target.parentElement.parentElement.parentElement);
                         // console.log(ev.target.className);
                         index = getItemIndex(ev.target.parentElement.parentElement.firstChild.nextSibling.id);
                         break;
@@ -134,7 +170,7 @@ function allowDrop(ev) {
                     case "i-body-textarea":
                     case "i-body-check":
                     case "i-body-file":
-                        formCanvas.insertBefore(nullNode, ev.target.parentElement.parentElement.parentElement);
+                        formCanvas.insertBefore(lineNode, ev.target.parentElement.parentElement.parentElement.parentElement);
                         // console.log(ev.target.className);
                         index = getItemIndex(ev.target.parentElement.parentElement.parentElement.firstChild.nextSibling.id);
                         break;
@@ -142,14 +178,14 @@ function allowDrop(ev) {
                     case "i-file-button":
                     case "i-logic":
                     case "logic-item":
-                        formCanvas.insertBefore(nullNode, ev.target.parentElement.parentElement.parentElement.parentElement);
+                        formCanvas.insertBefore(lineNode, ev.target.parentElement.parentElement.parentElement.parentElement.parentElement);
                         // console.log(ev.target.className);
                         index = getItemIndex(ev.target.parentElement.parentElement.parentElement.parentElement.firstChild.nextSibling.id);
                         break;
                     case "i-check-box-c":
                     case "i-check-box-r":
                     case "i-check-text":
-                        formCanvas.insertBefore(nullNode, ev.target.parentElement.parentElement.parentElement.parentElement.parentElement);
+                        formCanvas.insertBefore(lineNode, ev.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement);
                         // console.log(ev.target.className);
                         index = getItemIndex(ev.target.parentElement.parentElement.parentElement.parentElement.parentElement.firstChild.nextSibling.id);
                         break;
@@ -158,7 +194,7 @@ function allowDrop(ev) {
                 switch (ev.target.className) {
                     case "item":
                     case "i-icon":
-                        formCanvas.insertBefore(nullNode, ev.target.parentElement.parentElement);
+                        formCanvas.insertBefore(lineNode, ev.target.parentElement.parentElement.parentElement);
                         // console.log(ev.target.className);
                         index = getItemIndex(ev.target.parentElement.parentElement.firstChild.nextSibling.id);
                         break;
@@ -168,7 +204,7 @@ function allowDrop(ev) {
                     case "i-body-textarea":
                     case "i-body-check":
                     case "i-body-file":
-                        formCanvas.insertBefore(nullNode, ev.target.parentElement.parentElement.parentElement);
+                        formCanvas.insertBefore(lineNode, ev.target.parentElement.parentElement.parentElement.parentElement);
                         // console.log(ev.target.className);
                         index = getItemIndex(ev.target.parentElement.parentElement.parentElement.firstChild.nextSibling.id);
                         break;
@@ -176,21 +212,21 @@ function allowDrop(ev) {
                     case "i-file-button":
                     case "i-logic":
                     case "logic-item":
-                        formCanvas.insertBefore(nullNode, ev.target.parentElement.parentElement.parentElement.parentElement);
+                        formCanvas.insertBefore(lineNode, ev.target.parentElement.parentElement.parentElement.parentElement.parentElement);
                         // console.log(ev.target.className);
                         index = getItemIndex(ev.target.parentElement.parentElement.parentElement.parentElement.firstChild.nextSibling.id);
                         break;
                     case "i-check-box-c":
                     case "i-check-box-r":
                     case "i-check-text":
-                        formCanvas.insertBefore(nullNode, ev.target.parentElement.parentElement.parentElement.parentElement.parentElement);
+                        formCanvas.insertBefore(lineNode, ev.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement);
                         // console.log(ev.target.className);
                         index = getItemIndex(ev.target.parentElement.parentElement.parentElement.parentElement.parentElement.firstChild.nextSibling.id);
                         break;
                 }
             }
         } else {
-            formCanvas.appendChild(nullNode);
+            formCanvas.appendChild(lineNode);
             index = -1;
         }
     }
@@ -233,10 +269,10 @@ function drop(ev) {
         const itemData = addItem(data);
         // console.log(itemData);
         const newItem = formdesign(itemData);
+        console.log(nullNode.parentNode);
+        nullNode.parentElement.insertBefore(newItem, nullNode);
 
-        formCanvas.insertBefore(newItem, nullNode);
-
-        formCanvas.removeChild(nullNode);
+        nullNode.parentElement.removeChild(nullNode);
 
         if (index !== -1) {
             myFormData.tableLayout.splice(index, 0, itemData.id);
@@ -254,10 +290,10 @@ function drop(ev) {
 
         const dragItem = document.getElementById(Item).parentElement;
 
-        formCanvas.removeChild(dragItem);
+        formCanvas.removeChild(dragItem.parentElement);
 
-        formCanvas.insertBefore(dragItem, nullNode);
-        formCanvas.removeChild(nullNode);
+        nullNode.parentElement.insertBefore(dragItem, nullNode);
+        nullNode.parentElement.removeChild(nullNode);
 
         if (index !== -1) {
             // console.log("index: " + index);
@@ -275,6 +311,9 @@ function drop(ev) {
             console.log(myFormData);
         }
     }
+    lineNode = document.createElement("div");
+    lineNode.className = "f";
+    lineNode.appendChild(nullNode);
 }
 
 /**
@@ -675,13 +714,6 @@ function edit(id) {
         Required.style.display = "block";
         const itemRequired = document.getElementById("item_required");
         itemRequired.checked = editItem.attr.required;
-        itemRequired.addEventListener("change", () => {
-            editItem.attr.required = !editItem.attr.required;
-            if (itemReadonly.checked) {
-                itemReadonly.checked = false;
-                editItem.attr.readonly = false;
-            }
-        });
     }
 
     if (editItem.attr.readonly != undefined) {
@@ -689,13 +721,6 @@ function edit(id) {
         Readonly.style.display = "block";
         const itemReadonly = document.getElementById("item_readonly");
         itemReadonly.checked = editItem.attr.readonly;
-        itemReadonly.addEventListener("change", () => {
-            editItem.attr.readonly = !editItem.attr.readonly;
-            if (itemRequired.checked) {
-                itemRequired.checked = false;
-                editItem.attr.required = false;
-            }
-        });
     }
 
     if (editItem.attr.placeholder != undefined) {
@@ -703,10 +728,6 @@ function edit(id) {
         Placeholder.style.display = "block";
         const itemPlaceholder = document.getElementById("item_placeholder");
         itemPlaceholder.value = editItem.attr.placeholder;
-        itemPlaceholder.addEventListener("change", () => {
-            console.log(itemPlaceholder.value);
-            editItem.attr.placeholder = itemPlaceholder.value;
-        });
     }
 
     if (editItem.attr.options != undefined) {
@@ -723,10 +744,6 @@ function edit(id) {
         maxLength.style.display = "block";
         const itemMaxlength = document.getElementById("item_maxlength");
         itemMaxlength.value = editItem.attr.maxLength;
-        itemMaxlength.addEventListener("change", () => {
-            console.log(itemMaxlength.value);
-            editItem.attr.maxLength = itemMaxlength.value;
-        });
     }
 
     if (editItem.attr.regularCheck != undefined) {

@@ -435,4 +435,75 @@ window.onload = function() {
     const date = new Date();
     console.log(date.getHours());
 
+    let ints = [1, 2, 3];
+    console.log(ints.map(1));
 }
+
+function function1(params) {
+    return function(obj1, obj2) {
+        let val1 = obj1[params];
+        let val2 = obj2[params];
+        if (val1 < val2) {
+            return -1;
+        } else if (val1 > val2) {
+            return 1;
+        } else {
+            return 0;
+        }
+    };
+}
+
+let compare = function1('name');
+console.log(compare);
+let result = compare({ name: 'Nicholas' }, { name: 'Matt' });
+console.log(result);
+
+function function2(params, obj1, obj2) {
+    let val1 = obj1[params];
+    let val2 = obj2[params];
+    if (val1 < val2) {
+        return -1;
+    } else if (val1 > val2) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+let compare = function2('name', { name: 'Nicholas' }, { name: 'Matt' });
+console.log(compare);
+
+function Person(name) {
+    this.getName = () => { return name; };
+    this.setName = (value) => { name = value; };
+}
+let person = new Person('Nicholas');
+console.log(person);
+console.log(person.getName());
+person.setName('Greg');
+console.log(person.getName());
+
+let p = new Promise(() => {});
+setTimeout(console.log, 0, p);
+
+let p1 = new Promise((resolve, reject) => resolve());
+setTimeout(console.log, 0, p1);
+let p2 = new Promise((resolve, reject) => reject());
+setTimeout(console.log, 0, p2);
+
+let m = false;
+if (m) {
+    const x = 1;
+    console.log(x);
+} else {
+    const x = 2;
+    console.log(x);
+}
+
+const wgsx = '已12345';
+// 不得填无、某某某、纯数字、纯字母、纯符号、数字字母符号组合；需要包含有汉字
+if (wgsx === '无' || wgsx === '某某某' || !/^[\u4E00-\u9FFF]+$/.test(wgsx)) {
+    console.log('务工事项不得填无、某某某、纯数字、纯字母、纯符号、数字字母符号组合；需要包含有汉字');
+}
+
+console.log(new Date().getTime());
